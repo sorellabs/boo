@@ -55,6 +55,7 @@
 	var mod    = root.b.proto = {}
 	  , proto  = Object.getPrototypeOf
 	  , create = Object.create
+      , slice  = Array.prototype.slice
 
 
 
@@ -81,8 +82,31 @@
 		 *** ENDIF */
 
 		props.constructor = ctor
-		ctor.prototype    = create(base, props)
-		return ctor
+		ctor.prototype    = create(base)
+		return extend(ctor.prototype, props)
+	}
+
+
+	///// Function `extend' //////////////////////////////////////////////////
+	//
+	//    extend(Obj:obj, Obj:sources...) → Obj:obj
+	// 
+	// Copies the given source's **own** properties in `obj', and returns
+	// the object.
+	// 
+	// > Note that this is only a **shallow** copy, anything other than
+	// > primitives will be copied just as a reference to the original
+	// > object.
+	//
+	function extend(obj) {
+		var sources = slice.call(arguments, 1)
+		  , src, prop
+
+		while ((src = sources.shift())) {
+			for (prop in src)
+				if (src.hasOwnProperty(prop)) obj[prop] = src[prop] }
+
+		return obj
 	}
 
 
