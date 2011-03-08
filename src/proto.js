@@ -9,7 +9,6 @@
  *****************************************************************************/
 
 
-
 //// The `proto` module //////////////////////////////////////////////////////
 //
 // The goal is to provide a handier prototypal inheritance structure for
@@ -48,7 +47,6 @@
 // `upper` and `can`, which are discussed in more detail below.
 
 
-
 (function (root) {
 	// Makes sure the base framework object is defined
 	if (!root.b) root.b = {}
@@ -57,6 +55,35 @@
 	var mod    = root.b.proto = {}
 	  , proto  = Object.getPrototypeOf
 	  , create = Object.create
+
+
+
+	///// Function `inherit` /////////////////////////////////////////////////
+	//
+	//     inherit(Fun:ctor, Obj:base[, Obj:props]) → Fun:ctor
+	//
+	// Takes a constructor and a base object, and sets the prototype in
+	// the constructor without breaking `instanceof`.
+	//
+	// If an additional object is passed (as `props`), the properties
+	// defined in that object will be copied into the prototype of the
+	// constructor as well.
+	//
+	// Note that these *additional properties* won't have a special
+	// inheritance relationship with the constructor's prototype. In
+	// fact, they **will** be treated as just being the constructor's
+	// own prototype properties.
+	//
+	function inherit(ctor, base, props) {
+		/*** IFDEF DEBUG
+		 assert(base, "Missing `base' parameter")
+		 assert(dbg.isfn(ctor), "`ctor' isn't a function")
+		 *** ENDIF */
+
+		props.constructor = ctor
+		ctor.prototype    = create(base, props)
+		return ctor
+	}
 
 
 })(this);
