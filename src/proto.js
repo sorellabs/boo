@@ -52,7 +52,8 @@
 	if (!root.b) root.b = {}
 
 	// Some alias for rather JavaLongCommandNamesAndIReallyMeanLong.
-	var mod    = root.b.proto = {}
+	var mod    = (typeof exports == "undefined") ? root.b.proto = {}
+	                                             : exports
 	  , proto  = Object.getPrototypeOf
 	  , create = Object.create
       , slice  = Array.prototype.slice
@@ -165,4 +166,11 @@
 			// If none of them does, continue on to the next accessors
 			obj = proto(obj) }
 	}
+
+
+
+	///// Exports ////////////////////////////////////////////////////////////
+	mod.inherit = inherit
+	mod.extend  = extend
+	mod.can     = can
 })(this);
