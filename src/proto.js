@@ -56,7 +56,7 @@
 	                                             : exports
 	  , proto  = Object.getPrototypeOf
 	  , create = Object.create
-      , slice  = Array.prototype.slice
+	  , slice  = Array.prototype.slice
 
 
 
@@ -91,10 +91,10 @@
 	///// Function `extend' //////////////////////////////////////////////////
 	//
 	//    extend(Obj:obj, Obj:sources...) → Obj:obj
-	// 
+	//
 	// Copies the given source's **own** properties in `obj', and returns
 	// the object.
-	// 
+	//
 	// > Note that this is only a **shallow** copy, anything other than
 	// > primitives will be copied just as a reference to the original
 	// > object.
