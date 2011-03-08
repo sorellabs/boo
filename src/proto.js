@@ -83,6 +83,7 @@
 		 *** ENDIF */
 
 		props.constructor = ctor
+		props.__super__   = base
 		ctor.prototype    = create(base)
 		return extend(ctor.prototype, props)
 	}
@@ -146,22 +147,24 @@
 		 assert(dbg.isobj(obj), "`obj' is not an object")
 		 assert(attr, "Missing `attr' parameter")
 		 *** ENDIF */
+		function add_traits(){ bases.push.apply(bases, obj.__traits__ || []) }
+		function get_base()  { return cur.__super__ || cur                   }
+		function has_attr()  { return cur && cur.hasOwnProperty(attr)        } 
 
-		var bases, imp
+		var bases, cur
 		if (allow_traits == null) allow_traits = true
 
 		while (obj) {
 			// Build a list of all the immediate accessors we should
 			// look at
 			bases = [proto(obj)]
-			if (allow_traits)
-				bases.push.apply(bases, obj.__traits__ || [])
+			if (allow_traits) add_traits()
 
 			// Then check each one, in order, to see if they have the
 			// requested property
-			while (bases) {
-				imp = bases.shift()
-				if (attr in imp) return imp }
+			while (bases.length) {
+				cur = bases.shift()
+				if (has_attr()) return get_base() }
 
 			// If none of them does, continue on to the next accessors
 			obj = proto(obj) }
