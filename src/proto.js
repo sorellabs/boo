@@ -86,4 +86,59 @@
 	}
 
 
+
+	///// Function `can` /////////////////////////////////////////////////////
+	//
+	//     can(Obj:obj, Str:attr[, Bool:allow_traits=true]) → Obj
+	//
+	// Searches which of the parents of the given objects implement the
+	// attribute, and returns it.
+	//
+	// Sometimes you want to know which object is capable of doing
+	// something, and most of the times a simple `in` check will be
+	// enough. For those times where you want to check which of the
+	// **ancestors** of an object implement a certain functionality (for
+	// calling a `super` method, for example), you have this method.
+	//
+	// By default, this function will search any of the objects that
+	// provides the requested functionality for the base object —
+	// traits included.
+	//
+	// The prototype is searched first, then, if the functionality is
+	// not found, we move on to searching the trait list, in the reverse
+	// order they were plugged in.
+	//
+	// If the method is not found in the immediate accessors, the
+	// function will keep searching up the prototype chain to try to
+	// find the requested functionality. And if it really can't find the
+	// attribute, `null` is returned.
+	//
+	// > Note that the trait's prototypes and the object itself are
+	// > **not** included in this search chain.
+	//
+	function can(obj, attr, allow_traits) {
+		/*** IFDEF DEBUG
+		 assert(dbg.isobj(obj), "`obj' is not an object")
+		 assert(attr, "Missing `attr' parameter")
+		 *** ENDIF */
+
+		var bases, imp
+		if (allow_traits == null) allow_traits = true
+
+		while (obj) {
+			// Build a list of all the immediate accessors we should
+			// look at
+			bases = [proto(obj)]
+			if (allow_traits)
+				bases.push.apply(bases, obj.__traits__ || [])
+
+			// Then check each one, in order, to see if they have the
+			// requested property
+			while (bases) {
+				imp = bases.shift()
+				if (attr in imp) return imp }
+
+			// If none of them does, continue on to the next accessors
+			obj = proto(obj) }
+	}
 })(this);
