@@ -231,9 +231,58 @@
 
 
 
+	///// Function `plugin' //////////////////////////////////////////////////
+	//
+	//     plugin(Fun|Obj:obj, Obj:traits...) → Fun|Obj:obj
+	//
+	// Takes a constructor or an object, and adds traits to the
+	// prototype, returning the given object/constructor.
+	//
+	// Traits are a mechanism to handle the same issue as
+	// multiple-inheritance, but in a Prototypal OO manner. The idea is
+	// that traits provide just a collection of, perhaps, incomplete
+	// functionality that's intended to be plugged in an object.
+	//
+	// This is more powerful than the classical multiple-inheritance
+	// system, because you can plugin traits in the constructor, long
+	// after several instances of an object have been created, and all
+	// of those instances will magically have that trait available too:
+	//
+	//     function Mage() {}
+	//     Mage.cast = function(spell){ return "You've cast " + spell }
+	//
+	//     var RedMage = { fira: function(){ this.cast("Fira") }}
+	//     var Vivi    = new Mage
+	//     Vivi.cast("Blizzard") // You've cast Blizzard
+	//
+	//     // Makes all Mages learn fire magic
+	//     b.one.proto.plugin(Mage, RedMage)
+	//     Vivi.fira()          // You've cast Fira
+	//
+	// Not only this, but the traits plugged to a constructor are
+	// tracked, and you can call their methods as `super` methods. And
+	// as with the prototypal inheritance, you don't need to create a
+	// separate meta-object for your functionality, ANY object can be a
+	// trait :3
+	//
+	function plugin(obj) {
+		function get_traits() {return (ctor.__traits__ || []).concat(args)}
+
+		var args = slice.call(arguments, 1)
+		  , base = proto(obj)
+		  , ctor = base.constructor
+
+		ctor.__traits__ = get_traits()
+		extend.apply(null, base, args)
+		return obj
+	}
+
+
+
 	///// Exports ////////////////////////////////////////////////////////////
 	mod.inherit = inherit
 	mod.extend  = extend
 	mod.can     = can
 	mod.upper   = upper
+	mod.plugin  = plugin
 })(this);
