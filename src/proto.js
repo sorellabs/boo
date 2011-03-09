@@ -224,7 +224,7 @@
 		_super       = can(base, meth)
 		obj.__$ctx__ = _super
 
-		if (_super) return _super[meth].apply(obj, args)
+		return _super[meth].apply(obj, args)
 	}
 
 
