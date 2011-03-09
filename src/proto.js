@@ -82,6 +82,8 @@
 		 assert(dbg.isfn(ctor), "`ctor' isn't a function")
 		 *** ENDIF */
 
+		if (!props) props = {}
+
 		props.constructor = ctor
 		props.__super__   = base
 		ctor.prototype    = create(base)
