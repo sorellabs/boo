@@ -57,6 +57,8 @@ are not documented, just remember:
 -  Concise and meaningful names. Use local variables to bind long names,
    always.
    
+-  Tabs for indentation, spaces for alignment.
+   
 That's about it, you can figure the rest from the source code.
 
 
