@@ -208,12 +208,10 @@
 		  , base = args.shift()
 		  , meth
 
-		if (Object(base) !== base)
-			meth = base, base = null
-		else
-			meth = args.shift()
+		if (Object(base) !== base) meth = base, base = null
+		else                       meth = args.shift()
 
-		if (!base) base = obj.__$ctx__ || obj
+		if (!base)                 base = obj.__$ctx__ || obj
 
 		return __upper(obj, base, meth, args)
 	}
@@ -228,6 +226,7 @@
 
 		if (_super) return _super[meth].apply(obj, args)
 	}
+
 
 
 	///// Exports ////////////////////////////////////////////////////////////
