@@ -271,11 +271,11 @@
 		function get_traits() {return (ctor.__traits__ || []).concat(args)}
 
 		var args = slice.call(arguments, 1)
-		  , base = proto(obj)
+		  , base = (typeof obj == "function") ? obj.prototype : proto(obj)
 		  , ctor = base.constructor
 
 		ctor.__traits__ = get_traits()
-		extend.apply(null, base, args)
+		extend.apply(obj, [base].concat(args))
 		return obj
 	}
 
