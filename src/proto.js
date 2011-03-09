@@ -219,14 +219,16 @@
 	}
 
 	function __upper(obj, base, meth, args) {
-		var _super
+		var _super, rv
 
 		// try to find the first accessor to implement the method, then
 		// return the result of calling this method.
 		_super       = can(base, meth)
 		obj.__$ctx__ = _super
 
-		return _super[meth].apply(obj, args)
+		rv = _super[meth].apply(obj, args)
+		delete obj.__$ctx__
+		return rv
 	}
 
 
