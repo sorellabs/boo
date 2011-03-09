@@ -12,7 +12,7 @@ inheritance (including a basic trait system), and packaging utils.
 Running tests
 -------------
 
-You'll need Node.js and Claire to run the test cases. You should get
+You'll need Node.js and [Claire][] to run the test cases. You should get
 Claire automagically while cloning the repository. If you're using git
 though, you'll have to clone it manually.
 
@@ -65,3 +65,7 @@ Last, but not least
 
 I suck at writing README files. But expect it to get better when I feel
 more like writing it...
+
+
+[Github]: https://github.com/killdream/Bone
+[Claire]: https://github.com/killdream/Claire
