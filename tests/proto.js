@@ -1,65 +1,81 @@
 //////////////////////////////////////////////////////////////////////////////
 // Unit tests for the `proto' module.
-//
 
-proto  = require('../src/proto')
+proto   = require('../src/proto')
+upper   = proto.upper
+inherit = proto.inherit
 
 require('../vendor/claire/lib/claire')
 test = claire.test
 
-Animal = function(name) {
+
+//// SETUP ///////////////////////////////////////////////////////////////////
+function Mage(name) {
 	this.name = name
 }
-Animal.prototype.words = function(){}
-Animal.prototype.say   = function(){
-	return this.name + ": " + this.words()
+Mage.prototype.cast = function(spell, can) {
+	if (can) return this.name + " cast " + spell
+	else     return "Nothing happens!"
+}
+Mage.prototype.meditate = function() {
+	return "You start meditatin... zzz"
 }
 
-Cat = function(name, gender) {
-	proto.upper(this, "constructor", name)
-	this.gender = gender
+
+inherit(Apprentice, Mage.prototype)
+function Apprentice(name) {
+	upper(this, "constructor", name)
 }
-proto.inherit(Cat, Animal.prototype,
-	{ words: function(){ return "Nyah~!" } })
-
-LOLCat = function(name) {
-	proto.upper(this, "constructor", name, "LOL")
+Apprentice.prototype.cast = function(spell) {
+	upper(this, "cast", spell, Math.random() < 0.5)
 }
-proto.inherit(LOLCat, Cat.prototype,
-	{ words: function() { return "LOL HAI WORLD KTHXBYE" }})
 
 
+inherit(Sorcerer, Apprentice.prototype)
+function Sorcerer(name) {
+	upper(this, "constructor", "Mighty " + name)
+}
+Sorcerer.prototype.cast = function(spell) {
+	upper(this, "cast", spell, true)
+}
+Sorcerer.prototype.meditate = function() {
+	return "...Your magic has increased!"
+}
 
-test("Function `inherit'", function() {
-	assert(new Cat instanceof Animal)
-	assert(new LOLCat instanceof Cat)
-	assert(new LOLCat instanceof Animal)
+///// TRAITS /////////////////////////////////////////////////////////////////
+BlackMage = {
+	agi:  function(){ this.cast("Agi")  },
+	bufu: function(){ this.cast("Bufu") }
+}
+WhiteMage = {
+	dia:   function(){ this.cast("Dia") },
+	patra: function(){ this.cast("Patra") }
+}
+Necromancer = {
+	mudo: function(){ this.cast("Mudo") }
+}
 
-	var kitten = new Cat("Marie")
-	assert(kitten.say() <eq> "Marie: Nyah~!")
-}) 
 
-test("Function `can'", function() {
-	var kitten = new Cat("Marie")
-	var lolq   = new LOLCat()
+//// EXPORT STUFF ////////////////////////////////////////////////////////////
+var root        = (typeof global != "undefined") ? global : window
+root.Mage       = Mage
+root.Apprentice = Apprentice
+root.Sorcerer   = Sorcerer
 
-	assert(proto.can(kitten, "say") === Animal.prototype)
-	assert(proto.can(lolq, "say") === Animal.prototype)
-	assert(proto.can(kitten, "constructor") === Animal.prototype)
-	assert(proto.can(lolq, "constructor") === Cat.prototype)
 
-	console.log(proto.can(kitten, "constructor"))
+///// TESTS //////////////////////////////////////////////////////////////////
+test("Inheritance [inherit]", function() {
+	assert(new Mage       instanceof Mage)
+	assert(new Apprentice instanceof Mage)
+	assert(new Apprentice instanceof Apprentice)
+	assert(new Sorcerer   instanceof Mage)
+	assert(new Sorcerer   instanceof Apprentice)
+	assert(new Sorcerer   instanceof Sorcerer)
+
+	assert(Apprentice.prototype.__super__ === Mage.prototype)
+	assert(Sorcerer.prototype.__super__   === Apprentice.prototype)
 })
 
-test("Function `upper'", function() {
-	var kitten = new Cat("Marie", "female")
-	var lolq   = new LOLCat("lolidunno")
 
-	assert(kitten.name   <eq> "Marie")
-	assert(kitten.gender <eq> "female")
-	assert(lolq.name     <eq> "lolidunno")
-	assert(lolq.gender   <eq> "LOL")
-})
-
+// Run the test cases...
 claire.run()
-	
