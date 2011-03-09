@@ -4,6 +4,8 @@
 proto   = require('../src/proto')
 upper   = proto.upper
 inherit = proto.inherit
+extend  = proto.extend
+can     = proto.can
 
 require('../vendor/claire/lib/claire')
 test = claire.test
@@ -74,6 +76,39 @@ test("Inheritance [inherit]", function() {
 
 	assert(Apprentice.prototype.__super__ === Mage.prototype)
 	assert(Sorcerer.prototype.__super__   === Apprentice.prototype)
+})
+
+test("Extension [extend]", function() {
+	var foo = {bar: 1}
+	var bar = {baz: 2}
+	var baz = {lol: 3}
+
+	extend(foo, bar)
+	assert(foo.bar <eq> 1)
+	assert(foo.baz <eq> 2)
+	
+	extend(foo, bar, baz)
+	assert(foo.lol <eq> 3)
+})
+
+test("Functionality checks [can]", function() {
+	var x = new Sorcerer, y = new Apprentice, z = new Mage
+
+	assert(can(x, "cast") === Apprentice.prototype)
+	assert(can(y, "cast") === Mage.prototype)
+	assert(can(x, "meditate") === Mage.prototype)
+	assert(can(y, "meditate") === Mage.prototype)
+})
+
+test("Supper calls [upper]", function() {
+	var m = new Apprentice("Mako")
+	  , v = new Sorcerer("Vivi")
+
+	assert(upper(m, "cast", "fire", false) == "Nothing happens!")
+	assert(upper(m, "cast", "fire", true)  == "Mako cast fire")
+	assert(m.meditate()                    == "You start meditatin... zzz")
+	
+	assert(v.cast("fire") == "Migthy Vivi cast fire")
 })
 
 
