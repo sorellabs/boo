@@ -172,8 +172,67 @@
 
 
 
+	///// Function `upper` ///////////////////////////////////////////////////
+	//
+	//     upper(Obj:obj[, Obj:base][, Str:meth][, args...]) → ?
+	//
+	// Calls a parent method in the context of the given object.
+	//
+	// This allows for fully prototypal inheritance, without loosing
+	// overwritten methods. Because, you see, we assume that methods
+	// that were overwritten are somehow **important** and you will want
+	// to refer to them on your functions.
+	//
+	// The given method will **always** be searched on all of the
+	// accessors, traits included, and it'll be called in the context of
+	// the given object.
+	//
+	// To avoid errors with *endless recursion*, the super call state
+	// (the object that was looked upon last time) is saved on each
+	// call, and removed when the function returns.
+	//
+	// This is done by simple writing to the `__$ctx__` property, and
+	// expects your function to be **synchronous**. If you're calling
+	// any asynchronous super method, you'll need to pass the previous
+	// stored context explicitly.
+	//
+	//     b.one.proto.upper(this, this.__$ctx__, "show")
+	//
+	// > Note that this assumes you won't be writing to `__$ctx__` in
+	// > your code. As a rule of thumb, you shouldn't ever have an
+	// > actual property with a dollar sign anyways.
+	//
+	function upper(obj) {
+		// Sanitize the arguments passed to the function
+		var args = slice.call(arguments, 1)
+		  , base = args.shift()
+		  , meth
+
+		if (Object(base) !== base)
+			meth = base, base = null
+		else
+			meth = args.shift()
+
+		if (!base) base = obj.__$ctx__ || obj
+
+		return __upper(obj, base, meth, args)
+	}
+
+	function __upper(obj, base, meth, args) {
+		var _super
+
+		// try to find the first accessor to implement the method, then
+		// return the result of calling this method.
+		_super       = can(base, meth)
+		obj.__$ctx__ = _super
+
+		if (_super) return _super[meth].apply(obj, args)
+	}
+
+
 	///// Exports ////////////////////////////////////////////////////////////
 	mod.inherit = inherit
 	mod.extend  = extend
 	mod.can     = can
+	mod.upper   = upper
 })(this);
