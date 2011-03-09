@@ -45,7 +45,7 @@ are not documented, just remember:
 
 -  Braces shouldn't be on a line of their own, unless they close a
    function.
--  No strict comparison algorithm, unless strictly needed.
+-  No strict comparison operator, unless strictly needed.
 
 -  Form feed characters to separate pages of the code.
 
