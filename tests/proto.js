@@ -6,6 +6,7 @@ upper   = proto.upper
 inherit = proto.inherit
 extend  = proto.extend
 can     = proto.can
+plugin  = proto.plugin
 
 require('../vendor/claire/lib/claire')
 test = claire.test
@@ -28,8 +29,8 @@ inherit(Apprentice, Mage.prototype)
 function Apprentice(name) {
 	upper(this, "constructor", name)
 }
-Apprentice.prototype.cast = function(spell) {
-	upper(this, "cast", spell, Math.random() < 0.5)
+Apprentice.prototype.cast = function(spell, can) {
+	return upper(this, "cast", spell, can || Math.random() < 0.5)
 }
 
 
@@ -38,7 +39,7 @@ function Sorcerer(name) {
 	upper(this, "constructor", "Mighty " + name)
 }
 Sorcerer.prototype.cast = function(spell) {
-	upper(this, "cast", spell, true)
+	return upper(this, "cast", spell, true)
 }
 Sorcerer.prototype.meditate = function() {
 	return "...Your magic has increased!"
@@ -46,15 +47,15 @@ Sorcerer.prototype.meditate = function() {
 
 ///// TRAITS /////////////////////////////////////////////////////////////////
 BlackMage = {
-	agi:  function(){ this.cast("Agi")  },
-	bufu: function(){ this.cast("Bufu") }
+	agi:  function(){ return this.cast("Agi", true)  },
+	bufu: function(){ return this.cast("Bufu", true) }
 }
 WhiteMage = {
-	dia:   function(){ this.cast("Dia") },
-	patra: function(){ this.cast("Patra") }
+	dia:   function(){ return this.cast("Dia", true) },
+	patra: function(){ return this.cast("Patra", true) }
 }
 Necromancer = {
-	mudo: function(){ this.cast("Mudo") }
+	mudo: function(){ return this.cast("Mudo", true) }
 }
 
 
@@ -95,6 +96,7 @@ test("Functionality checks [can]", function() {
 	var x = new Sorcerer, y = new Apprentice, z = new Mage
 
 	assert(can(x, "cast") === Apprentice.prototype)
+
 	assert(can(y, "cast") === Mage.prototype)
 	assert(can(x, "meditate") === Mage.prototype)
 	assert(can(y, "meditate") === Mage.prototype)
@@ -108,7 +110,29 @@ test("Supper calls [upper]", function() {
 	assert(upper(m, "cast", "fire", true)  == "Mako cast fire")
 	assert(m.meditate()                    == "You start meditatin... zzz")
 	
-	assert(v.cast("fire") == "Migthy Vivi cast fire")
+	assert(v.cast("fire") == "Mighty Vivi cast fire")
+})
+
+test("Traits [plugin]", function() {
+	var m = new Apprentice("Mako")
+	  , v = new Sorcerer("Vivi")
+
+	// Now Vivi is a black mage~
+	plugin(v, BlackMage)
+	assert(v.agi()  == "Mighty Vivi cast Agi")
+	assert(v.bufu() == "Mighty Vivi cast Bufu")
+
+	// Now Mako is a white mage~ (and Vivi too, as a side-effect)
+	plugin(Apprentice, WhiteMage)
+	assert(m.dia()   == "Mako cast Dia")
+	assert(m.patra() == "Mako cast Patra")
+	assert(v.dia()   == "Mighty Vivi cast Dia")
+	assert(v.patra() == "Mighty Vivi cast Patra")
+
+	// And everyone gets necromancy magic
+	plugin(Mage, Necromancer)
+	assert(m.mudo() == "Mako cast Mudo")
+	assert(v.mudo() == "Mighty Vivi cast Mudo")
 })
 
 
