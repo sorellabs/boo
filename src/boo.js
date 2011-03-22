@@ -46,12 +46,19 @@
 
 
 (function (root) {
+	
+	if (typeof exports == "undefined") {
+		root.b = root.b || {}
+		mod    = root.b.oo = {} }
+	else
+		mod    = exports
+
 	// Some alias for rather JavaLongCommandNamesAndIReallyMeanLong.
-	var mod    = (typeof exports == "undefined") ? root.b.proto = {}
-	                                             : exports
-	  , proto  = Object.getPrototypeOf
+	var proto  = Object.getPrototypeOf
 	  , create = Object.create
 	  , slice  = Array.prototype.slice
+	  , has    = Object.prototype.hasOwnProperty
+	  , mod
 
 
 
@@ -101,9 +108,9 @@
 		var sources = slice.call(arguments, 1)
 		  , src, prop
 
-		while ((src = sources.shift())) {
+		while (src = sources.shift()) {
 			for (prop in src)
-				if (src.hasOwnProperty(prop)) obj[prop] = src[prop] }
+				if (has.call(src, prop)) obj[prop] = src[prop] }
 
 		return obj
 	}
