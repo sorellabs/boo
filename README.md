@@ -1,12 +1,8 @@
-:: b.one
-========
+:: b.oo
+=======
 
-Bone is a library that provides a minimal core functionality missing on
-standard JavaScript. The modules include extensions to the prototypal
-inheritance (including a basic trait system), and packaging utils.
-
-> Note that the library is not ready for production use. It's alpha and
-> under heavy development. Some features are missing, some are buggy.
+Boo is a minimal javascript library to provide better prototypal inheritance,
+including a very basic trait system.
 
 
 Running tests
@@ -30,7 +26,7 @@ explain the code in great detail (literate programming, etc)
 Licence
 -------
 
-Bone is MIT/X11 licenced. Take a peek at the `LICENCE.txt` file for less
+Boo is MIT/X11 licenced. Take a peek at the `LICENCE.txt` file for `less`
 details.
 
 
@@ -45,6 +41,7 @@ are not documented, just remember:
 
 -  Braces shouldn't be on a line of their own, unless they close a
    function.
+   
 -  No strict comparison operator, unless strictly needed.
 
 -  Form feed characters to separate pages of the code.
@@ -69,5 +66,5 @@ I suck at writing README files. But expect it to get better when I feel
 more like writing it...
 
 
-[Github]: https://github.com/killdream/Bone
+[Github]: https://github.com/killdream/Boo
 [Claire]: https://github.com/killdream/Claire
