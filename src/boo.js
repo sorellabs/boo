@@ -1,15 +1,13 @@
-/*****************************************************************************
- *                              ~b.one.proto~                                *
- *                            ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾                              *
- * Provides prototypal utilities for inheritance, including a very basic     *
- * traits system.                                                            *
- *                                                                           *
- *     ________________________________________________________________      *
- *       Copyright (c) 2011 Quildreen Motta // Licenced under MIT/X11        *
- *****************************************************************************/
+/******************************************************************************
+ *                                   ~b.oo~                                   *
+ *                                 ‾‾‾‾‾‾‾‾‾‾‾                                 *
+ * Provides prototypal utilities for inheritance + basic traits system.       *
+ *     _________________________________________________________________      *
+ *        Copyright (c) 2011 Quildreen Motta // Licenced under MIT/X11        *
+ ******************************************************************************/
 
 
-//// The `proto` module //////////////////////////////////////////////////////
+//// ~ Module proto //////////////////////////////////////////////////////////
 //
 // The goal is to provide a handier prototypal inheritance structure for
 // JavaScript programs, by adding new functions to deal with the usual
@@ -48,9 +46,6 @@
 
 
 (function (root) {
-	// Makes sure the base framework object is defined
-	if (!root.b) root.b = {}
-
 	// Some alias for rather JavaLongCommandNamesAndIReallyMeanLong.
 	var mod    = (typeof exports == "undefined") ? root.b.proto = {}
 	                                             : exports
