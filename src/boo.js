@@ -43,6 +43,7 @@
 //
 // To solve this, the module provides three new functions: `inherit`,
 // `upper` and `can`, which are discussed in more detail below.
+
 '@boo',
 function (root) {
 

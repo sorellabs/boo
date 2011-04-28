@@ -1,12 +1,12 @@
 //////////////////////////////////////////////////////////////////////////////
-// Unit tests for the `proto' module.
+// Unit tests for the `boo' module.
 
-proto   = require('../src/proto')
-upper   = proto.upper
-inherit = proto.inherit
-extend  = proto.extend
-can     = proto.can
-plugin  = proto.plugin
+boo   = require('../src/boo')
+upper   = boo.upper
+inherit = boo.inherit
+extend  = boo.extend
+can     = boo.can
+plugin  = boo.plugin
 
 require('../vendor/claire/lib/claire')
 test = claire.test
