@@ -1,8 +1,21 @@
-:: b.oo
-=======
+Boo
+===
 
 Boo is a minimal javascript library to provide better prototypal inheritance,
 including a very basic trait system.
+
+
+Downloading
+-----------
+
+Boo is nicely hosted (and developed) on [Github][]. You can
+[download the lastest snapshot][snapshot] or clone the entire
+repository:
+
+    $ git clone git://github.com/killdream/boo.git
+    
+[Github]:   https://github.com/killdream/boo
+[snapshot]: https://github.com/killdream/boo/zipball/master
 
 
 Running tests
@@ -15,56 +28,33 @@ though, you'll have to clone it manually.
 Please refer to the `.hgsub` file in the root directory for the path and
 url for each dependency.
 
+[Claire]: https://github.com/killdream/Claire
+
 
 Documentation
 -------------
 
 Currently, there are no docs. Just refer to the source code, as they
-explain the code in great detail (literate programming, etc)
+explain the code in great detail ({i,}literate programming, etc)
+
+
+Getting support
+---------------
+
+- Use the [Github tracker][] to report bugs or request features. Like a
+  boss!
+  
+- Fork, do your changes and send me a pull request if you want to~
+
+- For general support, you can send me an e-mail on quildreen@gmail.com
+
+[Github tracker]: https://github.com/killdream/boo/issues
 
 
 Licence
 -------
 
 Boo is MIT/X11 licenced. Take a peek at the `LICENCE.txt` file for `less`
-details.
+details:
 
-
-Reporting issues/patches
-------------------------
-
-Just use the [Github][] repository for all of this. Please make sure
-your patch/pull-request adhere to the library's conventions. Though they
-are not documented, just remember:
-
--  Less noises. No semicolons or braces, unless strictly needed.
-
--  Braces shouldn't be on a line of their own, unless they close a
-   function.
-   
--  No strict comparison operator, unless strictly needed.
-
--  Form feed characters to separate pages of the code.
-
--  Heading comments with at least four slashes (for outline-mode)
-
--  Avoid comments inside the function unless strictly needed. Prefer
-   naming confuse or big chunks of code with a function.
-   
--  Concise and meaningful names. Use local variables to bind long names,
-   always.
-   
--  Tabs for indentation, spaces for alignment.
-   
-That's about it, you can figure the rest from the source code.
-
-
-Last, but not least
--------------------
-
-I suck at writing README files. But expect it to get better when I feel
-more like writing it...
-
-
-[Github]: https://github.com/killdream/Boo
-[Claire]: https://github.com/killdream/Claire
+    $ less LICENCE.txt
