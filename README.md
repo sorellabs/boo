@@ -28,6 +28,11 @@ though, you'll have to clone it manually.
 Please refer to the `.hgsub` file in the root directory for the path and
 url for each dependency.
 
+To run the test suite:
+
+    $ cd tests
+    $ node suite.js
+
 [Claire]: https://github.com/killdream/Claire
 
 
