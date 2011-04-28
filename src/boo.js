@@ -1,6 +1,6 @@
 /******************************************************************************
- *                                   ~b.oo~                                   *
- *                                 ‾‾‾‾‾‾‾‾‾‾‾                                 *
+ *                                   ~boo~                                    *
+ *                                 ‾‾‾‾‾‾‾‾‾                                  *
  * Provides prototypal utilities for inheritance + basic traits system.       *
  *     _________________________________________________________________      *
  *        Copyright (c) 2011 Quildreen Motta // Licenced under MIT/X11        *
@@ -43,9 +43,8 @@
 //
 // To solve this, the module provides three new functions: `inherit`,
 // `upper` and `can`, which are discussed in more detail below.
-
-
-(function (root) {
+'@boo',
+function (root) {
 	
 	if (typeof exports == "undefined") {
 		root.b = root.b || {}
@@ -273,7 +272,8 @@
 		function get_traits() {return (ctor.__traits__ || []).concat(args)}
 
 		var args = slice.call(arguments, 1)
-		  , base = (typeof obj == "function") ? obj.prototype : proto(obj)
+		  , base = typeof obj == "function"? obj.prototype
+                                           : proto(obj)
 		  , ctor = base.constructor
 
 		ctor.__traits__ = get_traits()
@@ -289,4 +289,4 @@
 	mod.can     = can
 	mod.upper   = upper
 	mod.plugin  = plugin
-})(this);
+}(this);
