@@ -45,7 +45,7 @@
 // `upper` and `can`, which are discussed in more detail below.
 '@boo',
 function (root) {
-    
+
     if (typeof exports == "undefined") {
         old = root.boo
         boo = root.boo = {}
@@ -218,8 +218,8 @@ function (root) {
         if (Object(base) !== base) meth = base, base = null
         else                       meth = args.shift()
 
-        if (!base)                 base = obj.__$ctx__ || obj
-
+        if (!base)
+            base = obj.__$ctx__ || obj
         return __upper(obj, base, meth, args)
     }
 
