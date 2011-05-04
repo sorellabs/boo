@@ -7,7 +7,7 @@
  ******************************************************************************/
 
 
-//// ~ Module proto //////////////////////////////////////////////////////////
+//// Module proto //////////////////////////////////////////////////////////////
 //
 // The goal is to provide a handier prototypal inheritance structure for
 // JavaScript programs, by adding new functions to deal with the usual
@@ -21,7 +21,7 @@
 // the object's prototype rather than directly in the object itself.
 
 
-//// Objects and inheritance /////////////////////////////////////////////////
+//// -Objects and inheritance //////////////////////////////////////////////////
 //
 // There are a handful of problems with the way JavaScript handles
 // inheritance out of the box. And I'm not talking about being
@@ -50,10 +50,10 @@ function (root) {
     if (typeof exports == "undefined") {
         old = root.boo
         boo = root.boo = {}
+
         boo.clean = function() {
             root.boo = old
-            return boo
-        }}
+            return boo }}
     else
         boo = exports
 
@@ -66,9 +66,9 @@ function (root) {
 
 
 
-    ///// Function `inherit` /////////////////////////////////////////////////
+    ///// Function inherit /////////////////////////////////////////////////////
     //
-    //     inherit(Fun:ctor, Obj:base[, Obj:props]) → Fun:ctor
+    //   Function ctor, Object base, Object props? -> Function ctor
     //
     // Takes a constructor and a base object, and sets the prototype in
     // the constructor without breaking `instanceof`.
@@ -81,6 +81,9 @@ function (root) {
     // inheritance relationship with the constructor's prototype. In
     // fact, they **will** be treated as just being the constructor's
     // own prototype properties.
+    // 
+    // :warning: side-effects
+    //    The given constructor and properties are modified in-place.
     //
     function inherit(ctor, base, props) {
         /*** IFDEF DEBUG
@@ -97,11 +100,11 @@ function (root) {
     }
 
 
-    ///// Function `extend' //////////////////////////////////////////////////
+    ///// Function extend //////////////////////////////////////////////////////
     //
-    //    extend(Obj:obj, Obj:sources...) → Obj:obj
+    //   Object obj, Object sources... -> Object obj
     //
-    // Copies the given source's **own** properties in `obj', and returns
+    // Copies the given source's **own** properties in `obj`, and returns
     // the object.
     //
     // > Note that this is only a **shallow** copy, anything other than
@@ -121,9 +124,9 @@ function (root) {
 
 
 
-    ///// Function `can` /////////////////////////////////////////////////////
+    ///// Function can /////////////////////////////////////////////////////////
     //
-    //     can(Obj:obj, Str:attr[, Bool:allow_traits=true]) → Obj
+    //   Object obj, String attr, Boolean allow_traits? -> Object
     //
     // Searches which of the parents of the given objects implement the
     // attribute, and returns it.
@@ -180,9 +183,9 @@ function (root) {
 
 
 
-    ///// Function `upper` ///////////////////////////////////////////////////
+    ///// Function upper ///////////////////////////////////////////////////////
     //
-    //     upper(Obj:obj[, Obj:base][, Str:meth][, args...]) → ?
+    //   Object obj, Object base, String meth, args... -> mixed
     //
     // Calls a parent method in the context of the given object.
     //
@@ -239,9 +242,9 @@ function (root) {
 
 
 
-    ///// Function `plugin' //////////////////////////////////////////////////
+    ///// Function plugin //////////////////////////////////////////////////////
     //
-    //     plugin(Fun|Obj:obj, Obj:traits...) → Fun|Obj:obj
+    //   Function|Object obj, Object traits... -> Function|Object obj
     //
     // Takes a constructor or an object, and adds traits to the
     // prototype, returning the given object/constructor.
@@ -294,4 +297,5 @@ function (root) {
     boo.can     = can
     boo.upper   = upper
     boo.plugin  = plugin
+
 }(this);
