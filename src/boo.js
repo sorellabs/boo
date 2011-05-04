@@ -107,10 +107,14 @@ function (root) {
     // Copies the given source's **own** properties in `obj`, and returns
     // the object.
     //
-    // > Note that this is only a **shallow** copy, anything other than
-    // > primitives will be copied just as a reference to the original
-    // > object.
+    // :note:
+    //    This is only a **shallow** copy, anything other than
+    //    primitives will be copied just as a reference to the original
+    //    object.
     //
+    // :warning: side-effects
+    //    The given `obj` is modified in-place.
+    // 
     function extend(obj) {
         var sources = slice.call(arguments, 1)
           , src, prop
@@ -209,9 +213,10 @@ function (root) {
     //
     //     b.one.proto.upper(this, this.__$ctx__, "show")
     //
-    // > Note that this assumes you won't be writing to `__$ctx__` in
-    // > your code. As a rule of thumb, you shouldn't ever have an
-    // > actual property with a dollar sign anyways.
+    // :warning: potentially unsafe
+    //    This assumes you won't be writing to `__$ctx__` in your
+    //    code. As a rule of thumb, you shouldn't ever have an actual
+    //    property with a dollar sign anyways.
     //
     function upper(obj) {
         // Sanitize the arguments passed to the function
@@ -275,6 +280,9 @@ function (root) {
     // as with the prototypal inheritance, you don't need to create a
     // separate meta-object for your functionality, ANY object can be a
     // trait :3
+    // 
+    // :warning: side-effects
+    //    The given `obj` is modified in-place.
     //
     function plugin(obj) {
         function get_traits() {return (ctor.__traits__ || []).concat(args)}
