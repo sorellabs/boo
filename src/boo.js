@@ -45,7 +45,14 @@
 // `upper` and `can`, which are discussed in more detail below.
 
 '@boo',
-function (root) {
+function (root) { var boo, old
+
+    // Some alias for rather JavaLongCommandNamesAndIReallyMeanLong.
+    ,proto  = Object.getPrototypeOf
+    ,create = Object.create
+    ,slice  = Array.prototype.slice
+    ,has    = Object.prototype.hasOwnProperty
+
 
     if (typeof exports == "undefined") {
         old = root.boo
@@ -56,13 +63,6 @@ function (root) {
             return boo }}
     else
         boo = exports
-
-    // Some alias for rather JavaLongCommandNamesAndIReallyMeanLong.
-    var boo, old
-      , proto  = Object.getPrototypeOf
-      , create = Object.create
-      , slice  = Array.prototype.slice
-      , has    = Object.prototype.hasOwnProperty
 
 
 
@@ -115,9 +115,8 @@ function (root) {
     // :warning: side-effects
     //    The given `obj` is modified in-place.
     // 
-    function extend(obj) {
-        var sources = slice.call(arguments, 1)
-          , src, prop
+    function extend(obj) { var sources, src, prop
+        sources = slice.call(arguments, 1)
 
         while (src = sources.shift()) {
             for (prop in src)
@@ -157,7 +156,7 @@ function (root) {
     // > Note that the trait's prototypes and the object itself are
     // > **not** included in this search chain.
     //
-    function can(obj, attr, allow_traits) {
+    function can(obj, attr, allow_traits) { var bases, cur
         /*** IFDEF DEBUG
          assert(dbg.isobj(obj), "`obj' is not an object")
          assert(attr, "Missing `attr' parameter")
@@ -166,7 +165,6 @@ function (root) {
         function get_base()  { return cur.__super__ || cur                   }
         function has_attr()  { return cur && cur.hasOwnProperty(attr)        } 
 
-        var bases, cur
         if (allow_traits == null) allow_traits = true
 
         while (obj) {
@@ -218,11 +216,10 @@ function (root) {
     //    code. As a rule of thumb, you shouldn't ever have an actual
     //    property with a dollar sign anyways.
     //
-    function upper(obj) {
+    function upper(obj) { var args, base, meth
         // Sanitize the arguments passed to the function
-        var args = slice.call(arguments, 1)
-          , base = args.shift()
-          , meth
+        args = slice.call(arguments, 1)
+        base = args.shift()
 
         if (Object(base) !== base) meth = base, base = null
         else                       meth = args.shift()
@@ -232,11 +229,9 @@ function (root) {
         return __upper(obj, base, meth, args)
     }
 
-    function __upper(obj, base, meth, args) {
-        var _super, rv
-
-        // try to find the first accessor to implement the method, then
-        // return the result of calling this method.
+    // try to find the first accessor to implement the method, then
+    // return the result of calling this method.
+    function __upper(obj, base, meth, args) { var _super, rv
         _super       = can(base, meth)
         obj.__$ctx__ = _super
 
@@ -284,13 +279,13 @@ function (root) {
     // :warning: side-effects
     //    The given `obj` is modified in-place.
     //
-    function plugin(obj) {
+    function plugin(obj) { var args, base, ctor
         function get_traits() {return (ctor.__traits__ || []).concat(args)}
 
-        var args = slice.call(arguments, 1)
-          , base = typeof obj == "function"? obj.prototype
-                                           : proto(obj)
-          , ctor = base.constructor
+        args = slice.call(arguments, 1)
+        base = typeof obj == "function"? obj.prototype
+                                       : proto(obj)
+        ctor = base.constructor
 
         ctor.__traits__ = get_traits()
         extend.apply(obj, [base].concat(args))
