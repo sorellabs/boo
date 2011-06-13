@@ -220,11 +220,11 @@ void function (root) { var boo, old
 
     // try to find the first ancestor to implement the method, then
     // return the result of calling this method.
-    function find_ancestor(obj, base, method, args) { var _super, rv
-        _super   = can(base, method)
-        obj.$ctx = _super
+    function find_ancestor(obj, base, method, args) { var parent, rv
+        parent   = can(base, method)
+        obj.$ctx = parent
 
-        rv = _super[method].apply(obj, args)
+        rv = parent[method].apply(obj, args)
         delete obj.$ctx
         return rv
     }
