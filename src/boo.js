@@ -6,8 +6,7 @@
  *        Copyright (c) 2011 Quildreen Motta // Licenced under MIT/X11        *
  ******************************************************************************/
 
-
-//// Module proto //////////////////////////////////////////////////////////////
+//// Module boo ////////////////////////////////////////////////////////////////
 //
 // The goal is to provide a handier prototypal inheritance structure for
 // JavaScript programs, by adding new functions to deal with the usual
@@ -15,10 +14,8 @@
 // deal with *multiple-inheritance* — traits.
 //
 // Note that the Traits system implemented by this library is not the
-// same as the one in Self: prototype inheritance in JavaScript is
-// one->one. Thus, this system is, in fact, closer to `mixins` than
-// actual Traits. With the exception that these `traits` are burned in
-// the object's prototype rather than directly in the object itself.
+// same as the one in Self; This system is, in fact, closer to `mixins`
+// than actual Traits.
 
 
 //// -Objects and inheritance //////////////////////////////////////////////////
@@ -44,31 +41,27 @@
 // To solve this, the module provides three new functions: `inherit`,
 // `upper` and `can`, which are discussed in more detail below.
 
-'@boo',
-function (root) { var boo, old
+void function (root) { var boo, old
 
     // Some alias for rather JavaLongCommandNamesAndIReallyMeanLong.
-    ,proto  = Object.getPrototypeOf
-    ,create = Object.create
-    ,slice  = Array.prototype.slice
-    ,has    = Object.prototype.hasOwnProperty
+    , proto          = Object.getPrototypeOf
+    , create         = Object.create
+    , slice          = Array.prototype.slice
+    , has            = Object.prototype.hasOwnProperty
 
 
-    if (typeof exports == "undefined") {
-        old = root.boo
-        boo = root.boo = {}
 
-        boo.clean = function() {
-            root.boo = old
-            return boo }}
-    else
-        boo = exports
+    function objp(obj) {
+        return Object(obj) === obj }
+
+    function fnp(obj) {
+        return typeof obj == 'function' }
 
 
 
     ///// Function inherit /////////////////////////////////////////////////////
     //
-    //   Function ctor, Object base, Object props? -> Function ctor
+    //   Fn:ctor  Obj:base  Obj:props? -> Fn:ctor
     //
     // Takes a constructor and a base object, and sets the prototype in
     // the constructor without breaking `instanceof`.
@@ -87,14 +80,14 @@ function (root) { var boo, old
     //
     function inherit(ctor, base, props) {
         /*** IFDEF DEBUG
-         assert(base, "Missing `base' parameter")
-         assert(dbg.isfn(ctor), "`ctor' isn't a function")
+         assert(base,          "Missing `base' parameter")
+         assert(dbg.fnp(ctor), "`ctor' isn't a function")
          *** ENDIF */
 
         if (!props) props = {}
 
         props.constructor = ctor
-        props.__super__   = base
+        props.$super      = base
         ctor.prototype    = create(base)
         return extend(ctor.prototype, props)
     }
@@ -102,10 +95,9 @@ function (root) { var boo, old
 
     ///// Function extend //////////////////////////////////////////////////////
     //
-    //   Object obj, Object sources... -> Object obj
+    //   Obj:obj  Obj:sources... -> Obj:obj
     //
-    // Copies the given source's **own** properties in `obj`, and returns
-    // the object.
+    // Copies the given source's **own** properties in `obj`.
     //
     // :note:
     //    This is only a **shallow** copy, anything other than
@@ -115,12 +107,13 @@ function (root) { var boo, old
     // :warning: side-effects
     //    The given `obj` is modified in-place.
     // 
-    function extend(obj) { var sources, src, prop
+    function extend(obj) { var sources
         sources = slice.call(arguments, 1)
 
-        while (src = sources.shift()) {
-            for (prop in src)
-                if (has.call(src, prop)) obj[prop] = src[prop] }
+        sources.forEach(function(source) { var key
+            for (key in source) 
+                if (has.call(source, key))
+                    obj[key] = source[key] })
 
         return obj
     }
@@ -129,7 +122,7 @@ function (root) { var boo, old
 
     ///// Function can /////////////////////////////////////////////////////////
     //
-    //   Object obj, String attr, Boolean allow_traits? -> Object
+    //   Obj:obj, Str:attribute, Bool:allow_traits? -> Obj?
     //
     // Searches which of the parents of the given objects implement the
     // attribute, and returns it.
@@ -156,30 +149,23 @@ function (root) { var boo, old
     // > Note that the trait's prototypes and the object itself are
     // > **not** included in this search chain.
     //
-    function can(obj, attr, allow_traits) { var bases, cur
+    function can(obj, attribute, allow_traits) { var bases, cur
         /*** IFDEF DEBUG
-         assert(dbg.isobj(obj), "`obj' is not an object")
-         assert(attr, "Missing `attr' parameter")
+         assert(dbg.objp(obj), "`obj' is not an object")
+         assert(attribute,     "Missing `attribute' parameter")
          *** ENDIF */
-        function add_traits(){ bases.push.apply(bases, obj.__traits__ || []) }
-        function get_base()  { return cur.__super__ || cur                   }
-        function has_attr()  { return cur && cur.hasOwnProperty(attr)        } 
+        function get_base(obj) { return obj.$super || obj               }
+        function has_attr()    { return cur && has.call(cur, attribute) } 
 
         if (allow_traits == null) allow_traits = true
-
         while (obj) {
-            // Build a list of all the immediate accessors we should
-            // look at
-            bases = [proto(obj)]
-            if (allow_traits) add_traits()
+            bases = [get_base(obj)]
+            if (allow_traits) bases.concat(obj.$traits || [])
 
-            // Then check each one, in order, to see if they have the
-            // requested property
             while (bases.length) {
                 cur = bases.shift()
-                if (has_attr()) return get_base() }
+                if (has_attr()) return get_base(obj) }
 
-            // If none of them does, continue on to the next accessors
             obj = proto(obj) }
     }
 
@@ -187,7 +173,7 @@ function (root) { var boo, old
 
     ///// Function upper ///////////////////////////////////////////////////////
     //
-    //   Object obj, Object base, String meth, args... -> mixed
+    //   Obj:obj  Obj:base  Str:method  args... -> *mixed*
     //
     // Calls a parent method in the context of the given object.
     //
@@ -204,39 +190,42 @@ function (root) { var boo, old
     // (the object that was looked upon last time) is saved on each
     // call, and removed when the function returns.
     //
-    // This is done by simple writing to the `__$ctx__` property, and
+    // This is done by simple writing to the `$ctx` property, and
     // expects your function to be **synchronous**. If you're calling
     // any asynchronous super method, you'll need to pass the previous
-    // stored context explicitly.
+    // stored context explicitly:
     //
-    //     b.one.proto.upper(this, this.__$ctx__, "show")
+    //     boo.upper(this, this.$ctx, "show")
     //
     // :warning: potentially unsafe
-    //    This assumes you won't be writing to `__$ctx__` in your
+    //    This assumes you won't be writing to `$ctx` in your
     //    code. As a rule of thumb, you shouldn't ever have an actual
     //    property with a dollar sign anyways.
     //
-    function upper(obj) { var args, base, meth
-        // Sanitize the arguments passed to the function
+    function upper(obj) { var args, base, method
         args = slice.call(arguments, 1)
         base = args.shift()
 
-        if (Object(base) !== base) meth = base, base = null
-        else                       meth = args.shift()
+        if (!objp(base)) {
+            method = base
+            base   = null }
+        else
+            method = args.shift()
 
         if (!base)
-            base = obj.__$ctx__ || obj
-        return __upper(obj, base, meth, args)
+            base = obj.$ctx || obj
+
+        return find_ancestor(obj, base, method, args)
     }
 
-    // try to find the first accessor to implement the method, then
+    // try to find the first ancestor to implement the method, then
     // return the result of calling this method.
-    function __upper(obj, base, meth, args) { var _super, rv
-        _super       = can(base, meth)
-        obj.__$ctx__ = _super
+    function find_ancestor(obj, base, method, args) { var _super, rv
+        _super   = can(base, method)
+        obj.$ctx = _super
 
-        rv = _super[meth].apply(obj, args)
-        delete obj.__$ctx__
+        rv = _super[method].apply(obj, args)
+        delete obj.$ctx
         return rv
     }
 
@@ -244,7 +233,7 @@ function (root) { var boo, old
 
     ///// Function plugin //////////////////////////////////////////////////////
     //
-    //   Function|Object obj, Object traits... -> Function|Object obj
+    //   Fn|Obj:obj  Obj:traits... -> Fn|Obj:obj
     //
     // Takes a constructor or an object, and adds traits to the
     // prototype, returning the given object/constructor.
@@ -267,7 +256,7 @@ function (root) { var boo, old
     //     Vivi.cast("Blizzard") // You've cast Blizzard
     //
     //     // Makes all Mages learn fire magic
-    //     b.one.proto.plugin(Mage, RedMage)
+    //     boo.plugin(Mage, RedMage)
     //     Vivi.fira()          // You've cast Fira
     //
     // Not only this, but the traits plugged to a constructor are
@@ -280,14 +269,14 @@ function (root) { var boo, old
     //    The given `obj` is modified in-place.
     //
     function plugin(obj) { var args, base, ctor
-        function get_traits() {return (ctor.__traits__ || []).concat(args)}
+        function get_traits() { return (ctor.$traits || []).concat(args) }
 
         args = slice.call(arguments, 1)
-        base = typeof obj == "function"? obj.prototype
-                                       : proto(obj)
+        base = fnp(obj)? obj.prototype
+                       : proto(obj)
         ctor = base.constructor
 
-        ctor.__traits__ = get_traits()
+        ctor.$traits = get_traits()
         extend.apply(obj, [base].concat(args))
         return obj
     }
@@ -295,10 +284,20 @@ function (root) { var boo, old
 
 
     ///// Exports ////////////////////////////////////////////////////////////
+    if (typeof exports == "undefined") {
+        old = root.boo
+        boo = root.boo = {}
+
+        boo.make_local = function() {
+            root.boo = old
+            return boo }}
+    else
+        boo = exports
+
+
     boo.inherit = inherit
     boo.extend  = extend
     boo.can     = can
     boo.upper   = upper
     boo.plugin  = plugin
-
 }(this);

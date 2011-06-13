@@ -75,8 +75,8 @@ test("Inheritance [inherit]", function() {
 	assert(new Sorcerer   instanceof Apprentice)
 	assert(new Sorcerer   instanceof Sorcerer)
 
-	assert(Apprentice.prototype.__super__ === Mage.prototype)
-	assert(Sorcerer.prototype.__super__   === Apprentice.prototype)
+	assert(Apprentice.prototype.$super === Mage.prototype)
+	assert(Sorcerer.prototype.$super   === Apprentice.prototype)
 })
 
 test("Extension [extend]", function() {
@@ -95,9 +95,9 @@ test("Extension [extend]", function() {
 test("Functionality checks [can]", function() {
 	var x = new Sorcerer, y = new Apprentice, z = new Mage
 
-	assert(can(x, "cast") === Apprentice.prototype)
+	assert(can(x, "cast")     === Apprentice.prototype)
 
-	assert(can(y, "cast") === Mage.prototype)
+	assert(can(y, "cast")     === Mage.prototype)
 	assert(can(x, "meditate") === Mage.prototype)
 	assert(can(y, "meditate") === Mage.prototype)
 })
@@ -119,8 +119,8 @@ test("Traits [plugin]", function() {
 
 	// Now Vivi is a black mage~
 	plugin(v, BlackMage)
-	assert(v.agi()  == "Mighty Vivi cast Agi")
-	assert(v.bufu() == "Mighty Vivi cast Bufu")
+	assert(v.agi()   == "Mighty Vivi cast Agi")
+	assert(v.bufu()  == "Mighty Vivi cast Bufu")
 
 	// Now Mako is a white mage~ (and Vivi too, as a side-effect)
 	plugin(Apprentice, WhiteMage)
@@ -131,8 +131,8 @@ test("Traits [plugin]", function() {
 
 	// And everyone gets necromancy magic
 	plugin(Mage, Necromancer)
-	assert(m.mudo() == "Mako cast Mudo")
-	assert(v.mudo() == "Mighty Vivi cast Mudo")
+	assert(m.mudo()  == "Mako cast Mudo")
+	assert(v.mudo()  == "Mighty Vivi cast Mudo")
 })
 
 
