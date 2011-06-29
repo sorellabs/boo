@@ -299,6 +299,21 @@ void function (root) { var boo, old
         return obj
     }
 
+    
+    ///// Function clone ///////////////////////////////////////////////////////
+    //
+    //   (base[, extensions...]) ⇒ Object
+    // 
+    // Creates a new object by inheriting `base' and populating it with
+    // the given extensions.
+    // 
+    // :param: {Object} base
+    // :param: {Object} extensions...
+    //
+    function clone(obj) { var result
+        result = Object.create(obj)
+        return extend.apply(result, slice.call(arguments, 1))
+    }
 
 
 
