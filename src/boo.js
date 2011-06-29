@@ -61,11 +61,15 @@ void function (root) { var boo, old
 
     ///// Function inherit /////////////////////////////////////////////////////
     //
-    //   Fn:ctor  Obj:base  Obj:props? -> Fn:ctor
+    //   (ctor, base[, props]) ⇒ Function
     //
     // Takes a constructor and a base object, and sets the prototype in
     // the constructor without breaking `instanceof`.
     //
+    // :param: {Function} ctor
+    // :param: {Object}   base
+    // :param: {Object}   props
+    // 
     // If an additional object is passed (as `props`), the properties
     // defined in that object will be copied into the prototype of the
     // constructor as well.
@@ -95,10 +99,13 @@ void function (root) { var boo, old
 
     ///// Function extend //////////////////////////////////////////////////////
     //
-    //   Obj:obj  Obj:sources... -> Obj:obj
+    //   (obj, sources...) ⇒ Object
     //
     // Copies the given source's **own** properties in `obj`.
     //
+    // :param: {Object} obj
+    // :param: {Object} sources...
+    // 
     // :note:
     //    This is only a **shallow** copy, anything other than
     //    primitives will be copied just as a reference to the original
@@ -122,11 +129,15 @@ void function (root) { var boo, old
 
     ///// Function can /////////////////////////////////////////////////////////
     //
-    //   Obj:obj, Str:attribute, Bool:allow_traits? -> Obj?
+    //   (obj, attribute[, allow_traits = true]) ⇒ Object
     //
     // Searches which of the parents of the given objects implement the
     // attribute, and returns it.
     //
+    // :param: {Object}  obj
+    // :param: {String}  attribute
+    // :param: {Boolean} allow_traits
+    // 
     // Sometimes you want to know which object is capable of doing
     // something, and most of the times a simple `in` check will be
     // enough. For those times where you want to check which of the
@@ -173,10 +184,14 @@ void function (root) { var boo, old
 
     ///// Function upper ///////////////////////////////////////////////////////
     //
-    //   Obj:obj  Obj:base  Str:method  args... -> *mixed*
+    //   (obj, base, method, args...) ⇒ *mixed*
     //
     // Calls a parent method in the context of the given object.
     //
+    // :param: {Object} obj
+    // :param: {Object} base
+    // :param: {String} method
+    // 
     // This allows for fully prototypal inheritance, without loosing
     // overwritten methods. Because, you see, we assume that methods
     // that were overwritten are somehow **important** and you will want
@@ -233,11 +248,14 @@ void function (root) { var boo, old
 
     ///// Function plugin //////////////////////////////////////////////////////
     //
-    //   Fn|Obj:obj  Obj:traits... -> Fn|Obj:obj
+    //   (obj, traits...) ⇒ Function | Object
     //
     // Takes a constructor or an object, and adds traits to the
     // prototype, returning the given object/constructor.
     //
+    // :param: {Function | Object} obj
+    // :param: {Object}            traits...
+    // 
     // Traits are a mechanism to handle the same issue as
     // multiple-inheritance, but in a Prototypal OO manner. The idea is
     // that traits provide just a collection of, perhaps, incomplete
@@ -282,6 +300,7 @@ void function (root) { var boo, old
     }
 
 
+
 
     ///// Exports ////////////////////////////////////////////////////////////
     if (typeof exports == "undefined") {
@@ -294,7 +313,7 @@ void function (root) { var boo, old
     else
         boo = exports
 
-
+    ////// -Properties under boo ///////////////////////////////////////////////
     boo.inherit = inherit
     boo.extend  = extend
     boo.can     = can
