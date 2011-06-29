@@ -152,7 +152,7 @@ void function (root) { var boo, old
     // not found, we move on to searching the trait list, in the reverse
     // order they were plugged in.
     //
-    // If the method is not found in the immediate accessors, the
+    // If the method is not found in the immediate ancestors, the
     // function will keep searching up the prototype chain to try to
     // find the requested functionality. And if it really can't find the
     // attribute, `null` is returned.
@@ -198,7 +198,7 @@ void function (root) { var boo, old
     // to refer to them on your functions.
     //
     // The given method will **always** be searched on all of the
-    // accessors, traits included, and it'll be called in the context of
+    // ancestors, traits included, and it'll be called in the context of
     // the given object.
     //
     // To avoid errors with *endless recursion*, the super call state
