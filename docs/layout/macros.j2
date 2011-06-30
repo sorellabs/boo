@@ -1,0 +1,15 @@
+{% macro render_ember(data) -%}
+<figure>
+{% for image in data.images -%}
+
+<a
+    title="{{ image.description }}"
+    target="_hyde_basic"
+    href="{{ data.base~image.name~'/sizes/o' }}">
+    <img src="{{ data.base~image.name }}/sizes/s.png"
+         alt="{{ image.description }}">
+</a>
+{%- endfor %}
+<figcaption>Hyde Basic Template - Screenshots</figcaption>
+</figure>
+{%- endmacro %}
