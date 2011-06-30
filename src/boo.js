@@ -44,10 +44,11 @@
 void function (root) { var boo, old
 
     // Some alias for rather JavaLongCommandNamesAndIReallyMeanLong.
-    , proto          = Object.getPrototypeOf
-    , create         = Object.create
-    , slice          = Array.prototype.slice
-    , has            = Object.prototype.hasOwnProperty
+    , proto  = Object.getPrototypeOf
+    , keys   = Object.keys
+    , create = Object.create
+    , slice  = Array.prototype.slice
+    , has    = Object.prototype.hasOwnProperty
 
 
 
@@ -99,11 +100,11 @@ void function (root) { var boo, old
 
     ///// Function extend //////////////////////////////////////////////////////
     //
-    //   (obj, sources...) ⇒ Object
+    //   (target, sources...) ⇒ Object
     //
-    // Copies the given source's **own** properties in `obj`.
+    // Copies the given source's **own** enumerable properties in `target`.
     //
-    // :param: {Object} obj
+    // :param: {Object} target
     // :param: {Object} sources...
     // 
     // :note:
@@ -114,15 +115,14 @@ void function (root) { var boo, old
     // :warning: side-effects
     //    The given `obj` is modified in-place.
     // 
-    function extend(obj) { var sources
+    function extend(target) { var sources
         sources = slice.call(arguments, 1)
 
-        sources.forEach(function(source) { var key
-            for (key in source) 
-                if (has.call(source, key))
-                    obj[key] = source[key] })
+        sources.forEach(function(source) { 
+            keys(source).forEach(function(key) {
+                target[key] = source[key] })})
 
-        return obj
+        return target
     }
 
 
@@ -331,6 +331,7 @@ void function (root) { var boo, old
     ////// -Properties under boo ///////////////////////////////////////////////
     boo.inherit = inherit
     boo.extend  = extend
+    boo.clone   = clone
     boo.can     = can
     boo.upper   = upper
     boo.plugin  = plugin
