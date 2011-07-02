@@ -6,9 +6,37 @@ index: 1
 ===
 
 §§ blurb
+
 Boo is a minimal library to provide utilities for handling prototypical
 inheritance in JavaScript in a sane way.
+
 §§ /blurb
+
+
+~~~js~~~
+inherits(JavaScript, Self.prototype)
+function JavaScript() {
+    upper(this, 'constructor')
+    this.creator = 'Brendan Eich'
+}
+JavaScript.prototype = function() {
+    return extend( JavaScript.prototype
+                 , { awesomep: awesomep })
+                 
+    function awesomep() {
+        console.log('Are we awesome yet?')
+    }
+}()
+~~~~~~~~
+
+
+
+You can grab the [lastest release][], or clone the entire
+[Github repository][]:
+
+~~~bash~~~
+$ git clone git://github.com/killdream/boo.git
+~~~~~~~~~~
 
 
 ## Why Use It
@@ -30,24 +58,10 @@ inheritance in JavaScript in a sane way.
 &raquo; [Details on platform support](overview/supported.html)
 
 
-
-## Examples
-
-※ examples/overview.html as examples
-
-{{ examples.blurb }}
-
-&raquo; [More examples](examples/overview.html)
-
-
-
 ## Getting support
 
-※ overview/help.html as help
-
-{{ help.blurb }}
-
-&raquo; [Details on getting help](overview/help.html)
+Boo uses the [Github tracker][] for tracking bugs and new features. For
+any other stuff, you can probably nudge me on [@notSorella][]
 
 
 
@@ -56,6 +70,10 @@ inheritance in JavaScript in a sane way.
 [contributing][] | [style guide][] | [licence][]
 
 
-[style guide]:  http://killdream.github.com/projects/orpheos/dev/style-guide.html
-[contributing]: http://killdream.github.com/projects/orpheos/dev/contributing.html
-[licence]:      http://killdream.github.com/projects/orpheos/dev/licence.html
+[licence]:           licence.html
+[style guide]:       {{ links.style_guide }}
+[contributing]:      {{ links.contributing }}
+[lastest release]:   {{ project.release }}
+[Github repository]: {{ project.repository }}
+[Github tracker]:    {{ project.tracker }}
+[@notSorella]:       http://twitter.com/notSorella
