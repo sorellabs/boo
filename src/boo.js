@@ -137,7 +137,7 @@ void function (root) { var boo, old
     // :param: {Object} extensions...
     //
     function clone(obj) { var result
-        result = Object.create(obj)
+        result = create(obj)
         return extend.apply(result, slice.call(arguments, 1))
     }
 
