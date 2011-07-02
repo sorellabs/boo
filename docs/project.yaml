@@ -2,4 +2,7 @@ name: Boo
 snip: Prototypical utilities for inheritance in JavaScript
 page: https://github.com/killdream/Boo
 ack:  —Dragonfly icon by <a href="http://thenounproject.com/noun/dragonfly/">The Noun Project</a>
-version: 1.0
+version:    1.0
+release:    https://github.com/killdream/Boo/zipball/master
+repository: https://github.com/killdream/Boo
+tracker:    https://github.com/killdream/Boo/issues
