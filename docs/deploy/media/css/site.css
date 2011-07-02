@@ -655,6 +655,6 @@ footer li {
 .highlight pre {
   font-size: 12px;
   padding: 16px 12px 12px;
-  line-height: 24px;
+  line-height: 1.2em;
   margin-bottom: 8px;
 }

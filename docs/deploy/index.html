@@ -59,19 +59,24 @@
     </hgroup>
     <p>Boo is a minimal library to provide utilities for handling prototypical
 inheritance in JavaScript in a sane&nbsp;way.</p>
+<p><figure class="code"><div class="highlight"><pre><span class="nx">inherits</span><span class="p">(</span><span class="nx">JavaScript</span><span class="p">,</span> <span class="nx">Self</span><span class="p">.</span><span class="nx">prototype</span><span class="p">)</span><br /><span class="kd">function</span> <span class="nx">JavaScript</span><span class="p">()</span> <span class="p">{</span><br />    <span class="nx">upper</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;constructor&#39;</span><span class="p">)</span><br />    <span class="k">this</span><span class="p">.</span><span class="nx">creator</span> <span class="o">=</span> <span class="s1">&#39;Brendan Eich&#39;</span><br /><span class="p">}</span><br /><span class="nx">JavaScript</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span><br />    <span class="k">return</span> <span class="nx">extend</span><span class="p">(</span> <span class="nx">JavaScript</span><span class="p">.</span><span class="nx">prototype</span><br />                 <span class="p">,</span> <span class="p">{</span> <span class="nx">awesomep</span><span class="o">:</span> <span class="nx">awesomep</span> <span class="p">})</span><br />                 <br />    <span class="kd">function</span> <span class="nx">awesomep</span><span class="p">()</span> <span class="p">{</span><br />        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Are we awesome yet?&#39;</span><span class="p">)</span><br />    <span class="p">}</span><br /><span class="p">}()</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<p>You can grab the <a href="https://github.com/killdream/Boo/zipball/master">lastest release</a>, or clone the entire
+<a href="https://github.com/killdream/Boo">Github repository</a>:
+<figure class="code"><div class="highlight"><pre><span class="nv">$ </span>git clone git://github.com/killdream/boo.git<br /></pre></div><br /><figcaption>Bash</figcaption></figure></p>
 <h2 id="why_use_it">Why Use&nbsp;It</h2>
 <p>JavaScript has a nice prototypical inheritance system, but its
 implementation is just broken. Boo abstract the bad bits of this
 implementation in a neat package, while maintaining all the sweetness of&nbsp;prototypes.</p>
 <p>&raquo; <a href="overview/why.html">Other reasons to use&nbsp;Boo</a></p>
 <h2 id="supported_platforms">Supported&nbsp;platforms</h2>
+<p>Boo should work in any ECMAScript 5-compliant environment — like Node.js,
+Chrome and Firefox. Just load it and hack&nbsp;away.</p>
 <p>&raquo; <a href="overview/supported.html">Details on platform&nbsp;support</a></p>
-<h2 id="examples">Examples</h2>
-<p>&raquo; <a href="examples/overview.html">More&nbsp;examples</a></p>
 <h2 id="getting_support">Getting&nbsp;support</h2>
-<p>&raquo; <a href="overview/help.html">Details on getting&nbsp;help</a></p>
+<p>Boo uses the <a href="https://github.com/killdream/Boo/issues">Github tracker</a> for tracking bugs and new features. For
+any other stuff, you can probably nudge me on <a href="http://twitter.com/notSorella">@notSorella</a></p>
 <h2 id="development">Development</h2>
-<p><a href="http://killdream.github.com/projects/orpheos/dev/contributing.html">contributing</a> | <a href="http://killdream.github.com/projects/orpheos/dev/style-guide.html">style guide</a> | <a href="http://killdream.github.com/projects/orpheos/dev/licence.html">licence</a></p>    </article>
+<p><a href="http://killdream.github.com/projects/orpheos/dev/contributing.html">contributing</a> | <a href="http://killdream.github.com/projects/orpheos/dev/style-guide.html">style guide</a> | <a href="licence.html">licence</a></p>    </article>
     <aside>
         <ul class="toc">
         <li><mark class="version">Version: 1.0</mark></li>
@@ -81,34 +86,34 @@ implementation in a neat package, while maintaining all the sweetness of&nbsp;pr
                 <a                     title=""
                     href="/examples/overview.html">
                     Boo</a><li>
-                <a                     title=""
-                    href="/overview/supported.html">
-                    Boo</a><li>
-                <a                     title=""
-                    href="/overview/help.html">
-                    Boo</a><li>
                 <a class="active"                    title=""
                     href="/index.html">
-                    Overview</a>                </li>
+                    Overview</a><li>
+                <a                     title=""
+                    href="/licence.html">
+                    Licence</a>                </li>
             </ul>
         </li><li class="topic" id="topic2">
             <h2 class="">Overview</h2>            <ul class="links">
                 <li>
                 <a                     title=""
                     href="/overview/why.html">
-                    Why use&nbsp;Boo</a>                </li>
+                    Why use&nbsp;Boo</a><li>
+                <a                     title=""
+                    href="/overview/supported.html">
+                    Supported&nbsp;Platforms</a>                </li>
             </ul>
         </li>        </ul>
         <nav class="prevnext">
             <a
                 class="prev"
                 title="Boo"
-                href="/overview/help.html">
+                href="/examples/overview.html">
                 &larr;Previous
             </a>            <a
                 class="next"
-                title="Why use Boo"
-                href="/overview/why.html">
+                title="Licence"
+                href="/licence.html">
                 Next&rarr;
             </a>            <br class="clear">
         </nav>
