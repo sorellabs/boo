@@ -22,7 +22,7 @@
         compatibility mode is within the first 1K bytes
         code.google.com/p/chromium/issues/detail?id=23003 -->
 
-  <title>Overview</title>
+  <title>Installing</title>
   <meta name="description" content="">
   <meta name="author" content="Quildreen Motta">
 
@@ -44,7 +44,7 @@
         enables HTML5 elements & feature detects -->
     <script src="/media/js/libs/modernizr-1.6.min.js"></script>
     </head>
-<body id="index">
+<body id="installing">
     <div id="container">
             <div id="main" role="main">
           <header class="banner clearfix">
@@ -54,36 +54,42 @@
           <div class="doc">
     <article>
     <hgroup>
-        <h1 class="title">Overview</h1>
-        <h3 class="subtitle">Boo —at a glance—</h3>
+        <h1 class="title">Installing</h1>
+        <h3 class="subtitle">Getting it up and running</h3>
     </hgroup>
-    <p>Boo is a minimal library to provide utilities for handling prototypical
-inheritance in JavaScript in a sane&nbsp;way.</p>
-<p><figure class="code"><div class="highlight"><pre><span class="nx">inherit</span><span class="p">(</span><span class="nx">JavaScript</span><span class="p">,</span> <span class="nx">Self</span><span class="p">.</span><span class="nx">prototype</span><span class="p">)</span><br /><span class="kd">function</span> <span class="nx">JavaScript</span><span class="p">()</span> <span class="p">{</span><br />    <span class="nx">upper</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;constructor&#39;</span><span class="p">)</span><br />    <span class="k">this</span><span class="p">.</span><span class="nx">creator</span> <span class="o">=</span> <span class="s1">&#39;Brendan Eich&#39;</span><br /><span class="p">}</span><br /><span class="nx">extend</span><span class="p">(</span><span class="nx">JavaScript</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span><br />    <span class="k">return</span> <span class="p">{</span> <span class="nx">awesomep</span><span class="o">:</span> <span class="nx">awesomep</span> <span class="p">}</span><br />                 <br />    <span class="kd">function</span> <span class="nx">awesomep</span><span class="p">()</span> <span class="p">{</span><br />        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Are we awesome yet?&#39;</span><span class="p">)</span><br />    <span class="p">}</span><br /><span class="p">}())</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
-<p>You can grab the <a href="https://github.com/killdream/Boo/zipball/master">lastest release</a>, or clone the entire
-<a href="https://github.com/killdream/Boo">Github repository</a>:
-<figure class="code"><div class="highlight"><pre><span class="nv">$ </span>git clone git://github.com/killdream/boo.git<br /></pre></div><br /><figcaption>Bash</figcaption></figure></p>
-<h2 id="why_use_it">Why Use&nbsp;It</h2>
-<p>JavaScript has a nice prototypical inheritance system, but its
-implementation is just broken. Boo abstract the bad bits of this
-implementation in a neat package, while maintaining all the sweetness of&nbsp;prototypes.</p>
-<p>&raquo; <a href="overview/why.html">Other reasons to use&nbsp;Boo</a></p>
-<h2 id="supported_platforms">Supported&nbsp;platforms</h2>
-<p>Boo should work in any ECMAScript 5-compliant environment — like Node.js,
-Chrome and Firefox. Just load it and hack&nbsp;away.</p>
-<p>&raquo; <a href="overview/supported.html">Details on platform&nbsp;support</a></p>
-<h2 id="getting_support">Getting&nbsp;support</h2>
-<p>Boo uses the <a href="https://github.com/killdream/Boo/issues">Github tracker</a> for tracking bugs and new features. For
-any other stuff, you can probably nudge me on <a href="http://twitter.com/notSorella">@notSorella</a></p>
-<h2 id="development">Development</h2>
-<p><a href="dev/contributing.html">contributing</a> | <a href="dev/style-guide.html">style guide</a> | <a href="licence.html">licence</a></p>    </article>
+    <p>Getting Boo up and running is <em>easy-peasy</em>: Just put an script tag at
+the bottom of your page.
+<figure class="code"><div class="highlight"><pre><span class="cp">&lt;!<span class="caps">DOCTYPE</span> html&gt;</span><br /><span class="nt">&lt;html&gt;</span><br /><span class="nt">&lt;head&gt;</span> <span class="c">&lt;!-- ... --&gt;</span> <span class="nt">&lt;/head&gt;</span><br /><span class="nt">&lt;body&gt;</span><br />    <span class="c">&lt;!-- ... --&gt;</span><br />    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;path/to/boo.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span><br />    <span class="nt">&lt;script&gt;</span><span class="sr">/* Use Boo here */</span><span class="nt">&lt;/script&gt;</span><br /><span class="nt">&lt;/body&gt;</span><br /><span class="nt">&lt;/html&gt;</span><br /></pre></div><br /><figcaption><span class="caps">HTML</span></figcaption></figure></p>
+<p>Or, if you&#8217;re running Node.js:
+<figure class="code"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">boo</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;/path/to/boo&#39;</span><span class="p">)</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<h2 id="dependencies">Dependencies</h2>
+<p>Boo depends on the recent ECMAScript 5 additions, such as the functional
+array methods and the prototypical inheritance additions. If you want it
+to work on old dinosaurs, you can just include the awesome <a href="https://github.com/kriskowal/es5-shim">es5-shim</a>&nbsp;library.</p>
+<p>Otherwise, just make sure the platform supports the&nbsp;following:</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/GetPrototypeOf">Object.getPrototypeOf</a></li>
+<li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/keys">Object.keys</a></li>
+<li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/create">Object.create</a></li>
+<li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/forEach">Array.prototype.forEach</a></li>
+</ul>
+<h2 id="resolving_conflicts">Resolving&nbsp;conflicts</h2>
+<p>On platforms that don&#8217;t support CommonJS modules, Boo will take hold of
+the global <code>boo</code>. If you happen to have something else named <code>boo</code> in
+the global scope, you can resolve the conflict by calling
+<code>boo.make_local</code>:
+<figure class="code"><div class="highlight"><pre><span class="nt">&lt;script&gt;</span><br />    <span class="nb">window</span><span class="p">.</span><span class="nx">boo</span> <span class="o">=</span> <span class="s1">&#39;boo&#39;</span><br /><span class="nt">&lt;/script&gt;</span><br /><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/path/to/boo.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span><br /><span class="nt">&lt;script&gt;</span><br />    <span class="nx">alert</span><span class="p">(</span><span class="nx">boo</span><span class="p">)</span> <span class="c1">// [object Object]</span><br />    <span class="kd">var</span> <span class="nx">my_boo</span> <span class="o">=</span> <span class="nx">boo</span><span class="p">.</span><span class="nx">make_local</span><span class="p">()</span><br />    <span class="nx">alert</span><span class="p">(</span><span class="nx">boo</span><span class="p">)</span> <span class="c1">// &#39;boo&#39;</span><br /><span class="nt">&lt;/script&gt;</span><br /></pre></div><br /><figcaption><span class="caps">HTML</span></figcaption></figure></p>
+<h2 id="special_properties">Special&nbsp;properties</h2>
+<p>Boo uses the <code>$traits</code>, <code>$ctx</code> and <code>$super</code> properties in objects for a
+range of stuff, so avoid writing to those in objects that are going to
+be used by the library&nbsp;;3</p>    </article>
     <aside>
         <ul class="toc">
         <li><mark class="version">Version: 1.0</mark></li>
         <li class="topic" id="topic1">
                         <ul class="links">
                 <li>
-                <a class="active"                    title=""
+                <a                     title=""
                     href="/index.html">
                     Overview</a><li>
                 <a                     title=""
@@ -101,9 +107,9 @@ any other stuff, you can probably nudge me on <a href="http://twitter.com/notSor
                     Supported&nbsp;Platforms</a>                </li>
             </ul>
         </li><li class="topic" id="topic3">
-            <h2 class="">Getting&nbsp;Started</h2>            <ul class="links">
+            <h2 class=" active">Getting&nbsp;Started</h2>            <ul class="links">
                 <li>
-                <a                     title=""
+                <a class="active"                    title=""
                     href="/getting-started/installing.html">
                     Installing</a><li>
                 <a                     title=""
@@ -112,10 +118,15 @@ any other stuff, you can probably nudge me on <a href="http://twitter.com/notSor
             </ul>
         </li>        </ul>
         <nav class="prevnext">
-                        <a
+            <a
+                class="prev"
+                title="Supported Platforms"
+                href="/overview/supported.html">
+                &larr;Previous
+            </a>            <a
                 class="next"
-                title="Licence"
-                href="/licence.html">
+                title="Basic inheritance"
+                href="/getting-started/basic-inheritance.html">
                 Next&rarr;
             </a>            <br class="clear">
         </nav>

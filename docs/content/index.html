@@ -14,19 +14,18 @@ inheritance in JavaScript in a sane way.
 
 
 ~~~js~~~
-inherits(JavaScript, Self.prototype)
+inherit(JavaScript, Self.prototype)
 function JavaScript() {
     upper(this, 'constructor')
     this.creator = 'Brendan Eich'
 }
-JavaScript.prototype = function() {
-    return extend( JavaScript.prototype
-                 , { awesomep: awesomep })
+extend(JavaScript.prototype, function() {
+    return { awesomep: awesomep }
                  
     function awesomep() {
         console.log('Are we awesome yet?')
     }
-}()
+}())
 ~~~~~~~~
 
 
@@ -71,8 +70,8 @@ any other stuff, you can probably nudge me on [@notSorella][]
 
 
 [licence]:           licence.html
-[style guide]:       {{ links.style_guide }}
-[contributing]:      {{ links.contributing }}
+[style guide]:       dev/style-guide.html
+[contributing]:      dev/contributing.html
 [lastest release]:   {{ project.release }}
 [Github repository]: {{ project.repository }}
 [Github tracker]:    {{ project.tracker }}

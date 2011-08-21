@@ -314,9 +314,9 @@ body {
   color: #010202;
 }
 blockquote {
-  border-left: 3px solid rgba(0, 0, 0, 0.4);
+  border-left: 3px solid #555555;
   padding: 0px 24px;
-  color: rgba(0, 0, 0, 0.4);
+  color: #555555;
   margin: -1em 0 1.5em 0;
 }
 body {
@@ -387,7 +387,7 @@ code, .highlight pre {
   line-height: 100%;
 }
 code {
-  color: rgba(0, 0, 0, 0.4);
+  color: #555555;
 }
 ul > li {
   list-style-type: square;
@@ -647,7 +647,7 @@ footer li {
   position: absolute;
   bottom: 3px;
   right: 12px;
-  color: rgba(0, 0, 0, 0.4);
+  color: #555555;
 }
 .highlight {
   padding-left: 40px;
@@ -657,4 +657,19 @@ footer li {
   padding: 16px 12px 12px;
   line-height: 1.2em;
   margin-bottom: 8px;
+}
+pre code {
+  margin-top: -12px;
+  margin-bottom: 24px;
+  background: #eee;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-left: 5px solid #ccc;
+  display: block;
+}
+article > h3 {
+  border-top: 3px solid #dfdfdf;
+  padding-top: 5px;
+  margin-top: 12px;
+  color: #453f19;
 }

@@ -1,0 +1,49 @@
+===
+title: Basic inheritance
+subtitle: Making prototypical OO sweet
+created: 2011-07-02 14:53:19
+toc: getting started
+index: 2
+===
+
+§§ blurb
+
+Boo exposes four main methods for dealing with inheritance: `inherit`,
+for inheriting behaviours; `extend` for extending behaviours; and
+`upper` for accessing inherited behaviours.
+
+~~~js~~~
+function Person(name) {
+    this.name = name
+}
+boo.extend(Person.prototype, function() {
+    return { speak: speak }
+    
+    function speak(what) {
+        return this.name + ': ' + what
+    }
+}())
+
+boo.inherit(Student, Person.prototype)
+function Student(name, school) {
+    boo.upper(this, 'constructor', name)
+    this.school = school
+}
+boo.extend(Student.prototype, function() {
+    return { study_at: study_at }
+                     
+    function study_at() {
+        return this.speak('I study at ' + this.school)
+    }
+}())
+~~~~~~~~
+
+§§ /blurb
+
+
+## Inheriting behaviours
+
+An object in JavaScript is simply a collection of `key=value` pairs (or
+properties). We name this collection *behaviour*. Each object define its
+own behaviours, directly, rather than storing it in a class.
+

@@ -1,0 +1,466 @@
+<!doctype html>
+<!-- https://github.com/paulirish/html5-boilerplate/blob/master/index.html -->
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+       Remove this if you use the .htaccess -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <!-- encoding must be specified within the first 512 bytes
+        www.whatwg.org/specs/web-apps/current-work/multipage/semantics.html#charset -->
+
+  <!-- meta element for compatibility mode needs to be before
+        all elements except title & meta
+        msdn.microsoft.com/en-us/library/cc288325(VS.85).aspx -->
+  <!-- Chrome Frame is only invoked if meta element for
+        compatibility mode is within the first 1K bytes
+        code.google.com/p/chromium/issues/detail?id=23003 -->
+
+  <title>Style Guide</title>
+  <meta name="description" content="">
+  <meta name="author" content="Quildreen Motta">
+
+  <!--  Mobile viewport optimized: j.mp/bplateviewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Place favicon.ico & apple-touch-icon.png
+        in the root of your domain and delete these references -->
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+    <script type="text/javascript" src="http://use.typekit.com/hyw1bsz.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  
+    <link rel="stylesheet" href="/media/css/site.css">
+  <link rel="stylesheet" href="/media/css/syntax.css">
+  
+    <!-- All JavaScript at the bottom, except for Modernizr which
+        enables HTML5 elements & feature detects -->
+    <script src="/media/js/libs/modernizr-1.6.min.js"></script>
+    </head>
+<body id="style-guide">
+    <div id="container">
+            <div id="main" role="main">
+          <header class="banner clearfix">
+          <img src="/media/img/project-logo.png">
+            <h1>Boo</h1>
+            <h3>Prototypical utilities for inheritance in JavaScript</h3>          </header>
+          <div class="doc">
+    <article>
+    <hgroup>
+        <h1 class="title">Style Guide</h1>
+        <h3 class="subtitle">Guidelines for hacking in OrpheOS</h3>
+    </hgroup>
+    <p>OrpheOS&#8217;s coding guidelines are based on three main points
+(<em>style-triforce, yay</em>), which strives to make source code more&nbsp;readable:</p>
+<ul>
+<li>conciseness</li>
+<li>natural flow of&nbsp;readability</li>
+<li>descriptiveness. </li>
+</ul>
+<p>This document outlines how the code is structured and laid out to
+achieve these&nbsp;goals.</p>
+<h2 id="introduction">Introduction</h2>
+<p>OrpheOS&#8217;s source code should be sweet, readable and beautiful. And
+that&#8217;s what these conventions are for. Surely most of it will be biased
+or subjective, but I&#8217;ve tried my best to include my reasoning for every
+one of&nbsp;them.</p>
+<p>You may or may not agree with them (and it would be interesting to
+discuss these points, in case you don&#8217;t agree), but those are the
+conventions OrpheOS follows, so if you want to hack in, be sure to
+understand these and put them to good use&nbsp;:3</p>
+<h2 id="layout">Layout</h2>
+<h3 id="line_length">Line&nbsp;length</h3>
+<blockquote>
+<p>All lines of code should have less than 80 characters.
+All lines of comments should have less than 72&nbsp;characters.</p>
+</blockquote>
+<p>You may ask <strong>why be so goddamn restrictive nowadays?</strong>. Yes, we don&#8217;t
+use those limited terminals that could only display 25 lines with 80
+characters each at a time. <em>We use such big wide screens nowadays, for
+fucks sake, keeping it to 80 characters is stupid</em>.</p>
+<p>Well, not really. The limit of 80 characters is based on these&nbsp;items:</p>
+<ul>
+<li>
+<p>It&#8217;s difficult to keep track of the whole context while going back
+    and forth through a long line of&nbsp;code.</p>
+</li>
+<li>
+<p>If the lines are too long, you loose the ability of having another
+    screen of code, side-by-side, to analyse other sections that are
+    relevant to the current&nbsp;context.</p>
+<p>On Emacs, I can have two windows, leave the right one for the code
+I&#8217;m working on, and split the left one vertically to use it to
+display related functions, documentation and&nbsp;such.</p>
+</li>
+<li>
+<p>While striving for shorter lines of code, you&#8217;re forced to remove the
+    complexity of a line, which in turn increases&nbsp;readability.</p>
+</li>
+<li>
+<p>Shorter lines make it difficult to have run-on code lines, and forces
+    you to organise these in visually nice patterns which are also
+    quicker to recognise and&nbsp;grasp.</p>
+</li>
+</ul>
+<h3 id="vertical_space">Vertical&nbsp;Space</h3>
+<blockquote>
+<p>All functions should be self-contained in 21&nbsp;lines.</p>
+</blockquote>
+<p>That is, functions should be &#8220;black boxes&#8221; that you can understand (on
+the surface) by reading its source code alone. If you have to refer to
+several other parts to understand what&#8217;s going on with a function,
+something is very, very&nbsp;wrong.</p>
+<p>The number of lines is not arbitrary, 21 lines is about what you have in
+one terminal screen, if you take out the status bar and the menu
+bar. And I believe that functions should be fully visible in one&nbsp;screenful.</p>
+<p>Again, there are reasons for&nbsp;this:</p>
+<ul>
+<li>
+<p>Having to scroll either up or down to understand a function is
+    <strong>bad</strong>.</p>
+<p>Not only it&#8217;s annoying, but if you have to review something you have
+to scroll back up and find the place you were once&nbsp;again.</p>
+</li>
+<li>
+<p>Functions with more than 21 lines are too complex to actually&nbsp;understand.</p>
+<p>Having a low limit force people to think about abstractions, which in
+turn leads to more readable and maintainable&nbsp;code.</p>
+</li>
+</ul>
+<h3 id="indentation">Indentation</h3>
+<blockquote>
+<p>4 spaces for indentation. No tabs,&nbsp;whatsoever.</p>
+</blockquote>
+<p>The 4-space indentation is what I found to be ideal. 2-width indentation
+looks pretty confusing in JavaScript, and make it harder to get a good
+outline of the&nbsp;structure.</p>
+<p>8-width indentation, on the other hand, wastes too much horizontal
+space, making it rather difficult to keep down the 80-characters&nbsp;limit.</p>
+<p>On the subjective side, I find such long gaps ugly, and makes the
+structure seem more important than the&nbsp;contents.</p>
+<h3 id="alignment">Alignment</h3>
+<blockquote>
+<p>Properly aligned&nbsp;assignments.</p>
+</blockquote>
+<p>There&#8217;s quite some discussion in properly aligned code — eg.: aligning
+assignment values. Some say they add additional stress on your eyes. I
+believe tabulated data increases the readability, by making it easier
+and faster to check which values correspond to which key in a long list
+of data — although they don&#8217;t apply to rather small&nbsp;ones.</p>
+<p>I decided in favour of proper alignment because it looks visually nice,
+and makes long list of data — like object literals — far more
+readable. Small lists are aligned for consistency:
+<figure class="code"><div class="highlight"><pre><span class="nx">pos</span>    <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">]</span><br /><span class="nx">size</span>   <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span><br /><span class="nx">weight</span> <span class="o">=</span> <span class="mf">10.2</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<h3 id="literals">Literals</h3>
+<h4 id="arrays_and_objects">Arrays and&nbsp;Objects</h4>
+<blockquote>
+<p>Comma-first style, properly aligned with the opening bracket, a single
+space separating symbols from content, unless it&#8217;s a&nbsp;one-liner.</p>
+</blockquote>
+<p>Comma-first allows you to easily spot which of the lines create a new
+item, and are also good for item insertion.
+<figure class="code"><div class="highlight"><pre><span class="p">[</span> <span class="s1">&#39;Alice&#39;</span><br /><span class="p">,</span> <span class="s1">&#39;Red Queen&#39;</span><br /><span class="p">,</span> <span class="s1">&#39;White Queen&#39;</span><br /><span class="p">,</span> <span class="s1">&#39;White Rabbit&#39;</span> <span class="p">]</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<p>The extra whitespace is included to break a bit from the clutter — and
+to make a source more readable you have to reduce both useless noises
+and code&nbsp;complexity.</p>
+<p>Objects follow the same principles, only the keys and values are to be
+properly aligned according to the assignment rules:
+<figure class="code"><div class="highlight"><pre><span class="p">{</span> <span class="nx">x</span><span class="o">:</span>     <span class="mi">15</span><br /><span class="p">,</span> <span class="nx">y</span><span class="o">:</span>     <span class="mi">10</span><br /><span class="p">,</span> <span class="nx">angle</span><span class="o">:</span> <span class="mi">45</span> <span class="p">}</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<p>The only exception for the extra whitespace is the one-liner
+Object/Array literal:
+<figure class="code"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><br /><span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="p">{</span><span class="nx">foo</span><span class="o">:</span> <span class="nx">bar</span><span class="p">,</span> <span class="nx">me</span><span class="o">:</span> <span class="s1">&#39;you&#39;</span><span class="p">}</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<h4 id="strings">Strings</h4>
+<blockquote>
+<p>Single quotes, properly aligned in &#8220;multi-line&#8221;&nbsp;strings.</p>
+</blockquote>
+<p>Single quotes were chosen for the same motive the extra whitespace is
+required in object literals: remove clutter.
+<figure class="code"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="s1">&#39;Multi-line strings are not really supported &#39;</span><br />        <span class="o">+</span> <span class="s1">&#39;in JavaScript, thus explicit concatenation &#39;</span><br />        <span class="o">+</span> <span class="s1">&#39;should be used to improve readability.&#39;</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<h2 id="code_complexity">Code&nbsp;Complexity</h2>
+<p>Code complexity and readability don&#8217;t go well together, plus complex
+pieces of code hide away bugs more easily, and we sure don&#8217;t want&nbsp;that.</p>
+<p>We can reduce code complexity with refactoring, and can somehow
+workaround it a bit by documenting a complicated piece of&nbsp;code.</p>
+<h3 id="documenting">Documenting</h3>
+<p>Good documentation is hard to do and keep up-to-date, but it&#8217;s also one
+of the most important aspects when reading a source code. The source
+tells you <strong>how</strong> stuff gets done, the documentation tells you
+<strong>why</strong> such stuff needs to be done — or at least it should, otherwise
+you&#8217;re just repeating yourself for no&nbsp;benefits.</p>
+<p>There&#8217;s also a difference between <span class="caps">API</span> documentation, developer usage
+documentation and user documentation. All those three should get some
+love&nbsp;too.</p>
+<h4 id="api_documentation"><span class="caps">API</span>&nbsp;documentation</h4>
+<p>The <span class="caps">API</span> documentation should contemplate the following aspects of a
+given source code&nbsp;block:</p>
+<ul>
+<li>
+<p><strong>Why that code exists</strong>
+   — what&#8217;s supposed to&nbsp;do.</p>
+</li>
+<li>
+<p><strong>The implications of running that code</strong>
+   — does it have any side-effects? Does it throw any errors? Is it
+   dependant on something&nbsp;else?</p>
+</li>
+<li>
+<p><strong>Related pieces of code</strong>
+   — blocks that do some similar work (perhaps in a more high-level way)
+   or that are related in any&nbsp;way.</p>
+</li>
+<li>
+<p><strong>Expectations</strong>
+   — what kind of parameters or state it expects, and what the caller
+   should expect to get back from&nbsp;it.</p>
+</li>
+</ul>
+<p>So, given that, we need to define what is a code-block. A code-block is
+any self-contained functionality. In JavaScript, it&#8217;s usually a
+<code>Function</code>, an <code>Object</code> or a <code>Module</code>. </p>
+<p>The documentation should be placed right before the code-block, <em>not
+inside it</em>. The rationale is that adding comments inside the code-block
+makes it difficult to understand the <em>how things get done</em>, and
+conflicts with the 21-lines&nbsp;rule.</p>
+<p>The following are some good and bad examples of <span class="caps">API</span> documentation for
+the given piece of code:
+<figure class="code"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">add_callback</span><span class="p">(</span><span class="nx">promise</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span><br />    <span class="k">return</span> <span class="nx">callback</span><span class="o">?</span> <span class="nx">get_queue</span><span class="p">(</span><span class="nx">promise</span><span class="p">,</span> <span class="nx">event</span><span class="p">).</span><span class="nx">push</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span><br />                   <span class="o">:</span> <span class="kc">null</span><br /><span class="p">}</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<p>Good — tells you the purpose of the codes, and the implications of using
+it:
+<figure class="code"><div class="highlight"><pre><span class="c1">//// Function add_callback ////////////////////////////</span><br /><span class="c1">//</span><br /><span class="c1">//   Promise:promise  Str:event  Fn:callback? -&gt; Num?</span><br /><span class="c1">//</span><br /><span class="c1">// Adds a callback to handle the given event.</span><br /><span class="c1">//</span><br /><span class="c1">// The callback will be called whenever `event` happens</span><br /><span class="c1">// within the given promise.</span><br /><span class="c1">//</span><br /><span class="c1">// The arguments passed to the callback are the same</span><br /><span class="c1">// ones provided when the promise was fulfilled.</span><br /><span class="c1">//</span><br /><span class="c1">// `this` inside the callback will refer to the</span><br /><span class="c1">// promise object.</span><br /><span class="c1">//</span><br /><span class="c1">// :see also:</span><br /><span class="c1">//    * `flush` — how callbacks are called</span><br /><span class="c1">//</span><br /><span class="c1">// :warning: side-effects</span><br /><span class="c1">//     The list of callbacks is modified in-place.</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<p>Bad — tells you how the code does something, and nothing besides that:
+<figure class="code"><div class="highlight"><pre><span class="c1">//// Function add_callback ////////////////////////////</span><br /><span class="c1">//</span><br /><span class="c1">//   Promise:promise  Str:event  Fn:callback? -&gt; Num?</span><br /><span class="c1">//</span><br /><span class="c1">// When called with a callback, inserts that callback</span><br /><span class="c1">// at the end of the queue for the given event, then</span><br /><span class="c1">// returns the new length of the event queue.</span><br /><span class="c1">//</span><br /><span class="c1">// If the callback is null, does nothing.</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<p>The details on the documentation format expected are defined in the
+[Calliope][] project. The project also defines guidelines for end-user
+and developer usage documentation, which are entirely out of the scope
+of this style&nbsp;guide.</p>
+<h3 id="reducing_expressions">Reducing&nbsp;expressions</h3>
+<blockquote>
+<p>Always name large or complex expressions/actions. Either by assigning
+them to a variable or by using a named&nbsp;function.</p>
+</blockquote>
+<p>Large expressions are hard to read, and so are chunks of run-on
+code. For abstracting them, and making it easier to associate an
+expression with what it means, complex expressions should be&nbsp;named.</p>
+<p>In some cases, this means assigning it to a variable, in others,
+creating a new function that names a&nbsp;process.</p>
+<p>For example, the following piece of code:
+<figure class="code"><div class="highlight"><pre><span class="k">if</span> <span class="p">((</span><span class="o">!</span><span class="nx">field</span><span class="p">.</span><span class="nx">value</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">field</span><span class="p">.</span><span class="nx">checked</span><span class="p">)</span> <span class="o">||</span> <span class="nx">field</span><span class="p">.</span><span class="nx">hasAttribute</span><span class="p">(</span><span class="s1">&#39;data-special&#39;</span><span class="p">))</span><br />    <span class="nx">execute_black_magic</span><span class="p">()</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<p>Can be rewritten as:
+<figure class="code"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">emptyp</span><span class="p">(</span><span class="nx">field</span><span class="p">)</span>  <span class="p">{</span> <span class="k">return</span> <span class="o">!</span><span class="nx">field</span><span class="p">.</span><span class="nx">value</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">field</span><span class="p">.</span><span class="nx">checked</span><span class="p">)</span>    <span class="p">}</span><br /><span class="kd">function</span> <span class="nx">specialp</span><span class="p">(</span><span class="nx">field</span><span class="p">){</span> <span class="k">return</span> <span class="nx">field</span><span class="p">.</span><span class="nx">hasAttribute</span><span class="p">(</span><span class="s1">&#39;data-special&#39;</span><span class="p">)</span> <span class="p">}</span><br />&nbsp;<br /><span class="k">if</span> <span class="p">(</span><span class="nx">emptyp</span><span class="p">(</span><span class="nx">field</span><span class="p">)</span> <span class="o">||</span> <span class="nx">specialp</span><span class="p">(</span><span class="nx">field</span><span class="p">))</span><br />    <span class="nx">execute_black_magic</span><span class="p">()</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<p>This explicitly separates the qualities that defines a field, by naming
+them, and therefore makes it easier to grasp what&#8217;s happening in the
+conditional — don&#8217;t show just the <em>how</em>, convey the intent
+of the code as&nbsp;well.</p>
+<h3 id="naming">Naming</h3>
+<blockquote>
+<p>All lowercase, with words separated by underscores. Except for
+constructors, which should use&nbsp;CamelCase.</p>
+</blockquote>
+<p>OrpheOS follows a naming convention derived from Scheme/Common Lisp,
+Python and regular JavaScript. Mostly due to the fact CamelCased stuff
+makes it hard for me to read — yes, I need some breath between&nbsp;words.</p>
+<p>Words are <em>usually</em> separated with underscores — since JavaScript does
+not accept hyphens in identifiers, — with the sole exception of
+Constructors, which use&nbsp;CamelCase.</p>
+<p>Names should be concise, while still descriptive and meaningful. Avoid
+abbreviations — they don&#8217;t make the name concise, just shorter. Try not
+having names larger than 10 characters though, unless it&#8217;s strictly
+proven that there&#8217;s no better alternative. Always look for a good
+synonym or phrase that express the same idea&nbsp;though.</p>
+<p>Good names:
+<figure class="code"><div class="highlight"><pre>next_event<br />flush<br />reload<br /></pre></div><br /><figcaption>Text only</figcaption></figure></p>
+<p>Bad names:
+<figure class="code"><div class="highlight"><pre>get_next_item_in_the_frame   // too long<br />fireEvents                   // camel case<br />find_recursive_func_in_ast   // too long + abbreviations<br /></pre></div><br /><figcaption>Text only</figcaption></figure></p>
+<h4 id="variables">Variables</h4>
+<p>Describe the value a variable hold, <strong>not the data structure</strong> it
+uses. So, <code>stack</code>, <code>queue</code> and such are bad names. Hungarian notation
+will warrant you an insta-kill&nbsp;:3</p>
+<h4 id="constants">Constants</h4>
+<p>Constants are in no way different from variables in JavaScript,
+therefore should not be handled differently&nbsp;either.</p>
+<p>Actually, some engines do support <code>const</code> for real constants, but even
+so, they&#8217;re just naming a value, so I don&#8217;t feel they should get any
+special names. Plus, the usual conventions for constants&nbsp;suck.</p>
+<h4 id="functions">Functions</h4>
+<p>Describe the actions that are carried out by a procedure. Avoid stupid
+<code>get/set</code> prefixes in names, unless they actually mean
+something. Usually you expect a function to return a value, and the name
+of the function alone should tell you when you&#8217;re setting&nbsp;something.</p>
+<p>If a function abstracts the act of creating an object, prefix it with
+<code>make_</code>. So, a function that constructs a <code>Promise</code> object would be
+named <code>make_promise</code>.</p>
+<p>The only exception to this rule is the function for removing the library
+from the global scope, which does not actually construct an object —
+albeit returns one, — and which is named <code>make_local</code>.</p>
+<h4 id="predicates">Predicates</h4>
+<p>Predicates, that is, things for which the result is intended to be used
+as a boolean, should end with a <code>p</code>. So, <code>emptyp</code> would define whether
+or not something is empty. <code>specialp</code> would define whether or not
+something is&nbsp;special.</p>
+<p>Again, I would prefer to use a question mark (<code>?</code>), but that was already
+taken by the&nbsp;ternaries.</p>
+<h4 id="destructive">Destructive</h4>
+<p>Destructive functions, that is, those which modify the arguments they
+receive in-place, should start with a <code>n</code>. So, a sort function that
+executes in-place, should be named <code>nsort</code>. Though Common Lisp define
+this as a <code>non-consing function</code>, you can just think of it as a
+<code>not-safe function</code>.</p>
+<p>And yes, I would also rather use an exclamation mark (<code>!</code>)&nbsp;here&#8230; </p>
+<h4 id="abbreviations">Abbreviations</h4>
+<p>Though abbreviations should be avoided, a few of them are widely enough
+used in computer science that we can embrace them without loosing much
+on the readability side, while gaining a few more in neatness and
+horizontal screen&nbsp;space.</p>
+<h2 id="abbreviation-meaning">Abbreviation |&nbsp;Meaning</h2>
+<p>arg          | argument (function parameter)
+attr         | attribute
+bin          | binary
+bool         | boolean
+cat          | concatenate
+char         | character
+ctx          | context (usually, the <code>this</code> object)
+doc          | document
+elm          | element (an HTMLElement instance, usually)
+fn           | function
+hex          | hexadecimal
+id           | identifier
+int          | integer
+max          | maximum
+min          | minimum
+num          | number
+obj          | object
+oct          | octal
+pred         | predicate
+prop         | property
+seq          | sequence
+str          | string
+substr       |&nbsp;sub-string</p>
+<h2 id="readability">Readability</h2>
+<h3 id="braces">Braces</h3>
+<blockquote>
+<p>Braces should never be left alone in a line of their&nbsp;own.</p>
+</blockquote>
+<p>Braces starting a block of code should be placed in the same line as the
+statement that starts such a block. Likewise, braces ending a block of
+code should be placed in the same line as the statement that ends such
+block, unless the block happens to be a top-level function — that is, a
+function that defines an independent&nbsp;functionality.</p>
+<p>Good:
+<figure class="code"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span><br />    <span class="kd">function</span> <span class="nx">insert_callback</span><span class="p">()</span> <span class="p">{</span><br />        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>  <span class="nx">fire</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span><br />        <span class="k">else</span>             <span class="nx">add_callback</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">}</span><br />&nbsp;<br />    <span class="k">if</span> <span class="p">(</span><span class="nx">fnp</span><span class="p">(</span><span class="nx">event</span><span class="p">))</span> <span class="p">{</span><br />        <span class="nx">callback</span> <span class="o">=</span> <span class="nx">event</span><br />        <span class="nx">event</span>    <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">default_event</span> <span class="p">}</span><br />    <span class="nx">insert_callback</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">)</span><br />    <span class="k">return</span> <span class="k">this</span><br /><span class="p">}</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<p>Notice that the if-block and the internal function closing braces are
+all put in the same line as their last statements, however, the closing
+function&#8217;s one is put in a line of&nbsp;itself.</p>
+<p>This additional &#8220;wasted&#8221; line is used to add a distinction for
+self-contained and use-able&nbsp;functionality.</p>
+<p>Bad:
+<figure class="code"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span><br />    <span class="kd">function</span> <span class="nx">insert_callback</span><span class="p">()</span> <span class="p">{</span><br />        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span><br />            <span class="nx">fire</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span><br />        <span class="p">}</span><br />        <span class="k">else</span> <span class="p">{</span><br />            <span class="nx">add_callback</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span><br />        <span class="p">}</span><br />    <span class="p">}</span><br />&nbsp;<br />    <span class="k">if</span> <span class="p">(</span><span class="nx">fnp</span><span class="p">(</span><span class="nx">event</span><span class="p">))</span> <span class="p">{</span><br />        <span class="nx">callback</span> <span class="o">=</span> <span class="nx">event</span><br />        <span class="nx">event</span>    <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">default_event</span><br />    <span class="p">}</span><br />    <br />    <span class="nx">insert_callback</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">)</span><br />    <span class="k">return</span> <span class="k">this</span><br /><span class="p">}</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<p>Not only it wastes four of those lines just to place noises (braces),
+making the line count go up to whooping 19 lines — almost the
+vertical-line limit, — It also makes the function look more complex than
+it actually&nbsp;is.</p>
+<p>Also, leaving more noises decrease the&nbsp;readability.</p>
+<h3 id="semicolons">Semicolons</h3>
+<blockquote>
+<p>Use new lines to end your statements. Never use&nbsp;semicolons!</p>
+</blockquote>
+<p>Seriously, don&#8217;t use semicolons. Ever. They only add useless noises to
+each line, decreasing the overall readability of the whole&nbsp;program.</p>
+<p>And since we&#8217;re relying in <span class="caps">ASI</span>, as a rule of thumb, don&#8217;t start your
+lines with <code>[</code>, <code>(</code>, <code>/</code>, <code>+</code> and <code>-</code>, unless implicit line continuation
+is what you&#8217;re aiming&nbsp;at.</p>
+<p>You don&#8217;t need extraneous parenthesis for functions that&#8217;ll be called
+after their definition when you&#8217;re already inside an expression
+(eg.: assignment and function parameters). For all the other cases you
+should force an expression using the <code>void</code> operator.</p>
+<h3 id="function_hoisting">Function&nbsp;hoisting</h3>
+<blockquote>
+<p>Rely on function hoisting when it makes sense to have additional
+information associated with a function, so such information is
+not lost god-knows-how-many-lines far away the&nbsp;function.</p>
+</blockquote>
+<p>Function hoisting is one of the most awesome things to abuse in
+JavaScript, and something OrpheOS component&#8217;s source code do
+to the&nbsp;infinity.</p>
+<p>Basically, function hoisting allows you to have meta-data, or
+some kind of transformation information that should be associated
+with a function, to come before the physical definition of
+such function in the source code. Kinda like Python&#8217;s <code>@decorators</code>,
+therefore making the flow of readability more&nbsp;natural.</p>
+<p>For example, it&#8217;s used a lot for inheritance:
+<figure class="code"><div class="highlight"><pre><span class="nx">inherits</span><span class="p">(</span><span class="nx">Apprentice</span><span class="p">,</span> <span class="nx">Mage</span><span class="p">.</span><span class="nx">prototype</span><span class="p">)</span><br /><span class="kd">function</span> <span class="nx">Apprentice</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span><br />    <span class="nx">Mage</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span><br />    <span class="cm">/<em> define Apprentice&#39;s properties here </em>/</span><br /><span class="p">}</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<p>This allows you to quickly grasp that Apprentice inherits properties
+from Mage.prototype, which would not be as easy to notice if the
+inheritance declaration was somewhere 30 lines of code away from the
+function&nbsp;declaration.</p>
+<p>It&#8217;s also used for defining function&#8217;s prototypes, so you have an
+easy list of properties that will actually end up in the constructed
+object:
+<figure class="code"><div class="highlight"><pre><span class="nx">inherits</span><span class="p">(</span><span class="nx">Apprentice</span><span class="p">,</span> <span class="nx">Mage</span><span class="p">.</span><span class="nx">prototype</span><span class="p">)</span><br /><span class="kd">function</span> <span class="nx">Apprentice</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span><br />    <span class="nx">Mage</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span><br />    <span class="cm">/<em> instance definitions </em>/</span><br /><span class="p">}</span><br /><span class="nx">Apprentice</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span><br />    <span class="k">return</span> <span class="nx">extend</span><span class="p">(</span> <span class="nx">Aprentice</span><span class="p">.</span><span class="nx">prototype</span><br />                 <span class="p">,</span> <span class="nx">with_traits</span><span class="p">(</span><span class="nx">BlackMage</span><span class="p">)</span><br />                 <br />                 <span class="p">,</span> <span class="p">{</span> <span class="nx">cast</span><span class="o">:</span>     <span class="nx">cast</span><br />                   <span class="p">,</span> <span class="nx">meditate</span><span class="o">:</span> <span class="nx">meditate</span><br />                   <span class="p">,</span> <span class="nx">guard</span><span class="o">:</span>    <span class="nx">guard</span>  <span class="p">})</span><br />&nbsp;<br /><br />    <span class="kd">function</span> <span class="nx">cast</span><span class="p">()</span> <span class="p">{</span><br />        <span class="cm">/<em> ... </em>/</span><br />    <span class="p">}</span><br />    <span class="kd">function</span> <span class="nx">meditate</span><span class="p">()</span> <span class="p">{</span><br />        <span class="cm">/<em> ... </em>/</span><br />    <span class="p">}</span><br />    <span class="kd">function</span> <span class="nx">guard</span><span class="p">()</span> <span class="p">{</span><br />        <span class="cm">/<em> ... </em>/</span><br />    <span class="p">}</span><br /><span class="p">}()</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></p>
+<h3 id="blank_lines">Blank&nbsp;lines</h3>
+<p>Use blank lines sparingly to group related group of functionality.
+Doing such makes both it easier to spot what kind of stuff is related
+to what, and make it easier on the eyes by allowing the reader to
+breath a little while reading some&nbsp;code.</p>
+<p>You could say it&#8217;s analogous to paragraphs in your usual fiction&nbsp;books.</p>    </article>
+    <aside>
+        <ul class="toc">
+        <li><mark class="version">Version: 1.0</mark></li>
+        <li class="topic" id="topic1">
+                        <ul class="links">
+                <li>
+                <a                     title=""
+                    href="/index.html">
+                    Overview</a><li>
+                <a                     title=""
+                    href="/licence.html">
+                    Licence</a>                </li>
+            </ul>
+        </li><li class="topic" id="topic2">
+            <h2 class="">Overview</h2>            <ul class="links">
+                <li>
+                <a                     title=""
+                    href="/overview/why.html">
+                    Why use&nbsp;Boo</a><li>
+                <a                     title=""
+                    href="/overview/supported.html">
+                    Supported&nbsp;Platforms</a>                </li>
+            </ul>
+        </li><li class="topic" id="topic3">
+            <h2 class="">Getting&nbsp;Started</h2>            <ul class="links">
+                <li>
+                <a                     title=""
+                    href="/getting-started/installing.html">
+                    Installing</a><li>
+                <a                     title=""
+                    href="/getting-started/basic-inheritance.html">
+                    Basic&nbsp;inheritance</a>                </li>
+            </ul>
+        </li>        </ul>
+        <nav class="prevnext">
+                                    <br class="clear">
+        </nav>
+    </aside>
+</div>
+<footer>
+<p><a href="https://github.com/hyde/hyde">smelted with hyde</a> &mdash;
+<a href="https://github.com/killdream/Boo">fork <span class="amp">&amp;</span> hack away</a><br>
+—Dragonfly icon by <a href="http://thenounproject.com/noun/dragonfly/">The Noun Project</a><br> —Design mostly based on <a href="http://hyde.github.com/">Hyde&nbsp;docs</a></p></footer>      </div>
+      <footer>
+    </footer>
+      </div> <!--! end of #container -->
+      <!-- Javascript at the bottom for fast page loading -->
+    <!-- Grab Google CDN's jQuery. fall back to local if necessary -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/media/js/libs/jquery-1.4.4.min.js"%3E%3C/script%3E'))</script>
+  
+    
+      
+  </body>
+</html>

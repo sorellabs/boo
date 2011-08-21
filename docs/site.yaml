@@ -48,12 +48,9 @@ grouper:
                 name: root
                 hide_name: True
                 groups:
-                    -
-                        name: overview
-                    -
-                        name: getting started
-                    -
-                        name: api docs
+                    - name: overview
+                    - name: getting started
+                    - name: reference
 
 less:
     app: /usr/local/bin/lessc

@@ -1,0 +1,614 @@
+===
+title: Style Guide
+subtitle: Guidelines for hacking in OrpheOS
+created: 2011-05-12 21:04:50
+toc: development
+index: 1
+===
+
+§§ blurb
+OrpheOS's coding guidelines are based on three main points
+(*style-triforce, yay*), which strives to make source code more
+readable:
+
+- conciseness
+- natural flow of readability
+- descriptiveness. 
+
+This document outlines how the code is structured and laid out to
+achieve these goals.
+§§ /blurb
+
+
+## Introduction
+
+OrpheOS's source code should be sweet, readable and beautiful. And
+that's what these conventions are for. Surely most of it will be biased
+or subjective, but I've tried my best to include my reasoning for every
+one of them.
+
+You may or may not agree with them (and it would be interesting to
+discuss these points, in case you don't agree), but those are the
+conventions OrpheOS follows, so if you want to hack in, be sure to
+understand these and put them to good use :3
+
+
+
+## Layout
+
+### Line length
+
+> All lines of code should have less than 80 characters.
+> All lines of comments should have less than 72 characters.
+
+You may ask **why be so goddamn restrictive nowadays?**. Yes, we don't
+use those limited terminals that could only display 25 lines with 80
+characters each at a time. *We use such big wide screens nowadays, for
+fucks sake, keeping it to 80 characters is stupid*.
+
+Well, not really. The limit of 80 characters is based on these items:
+
+-   It's difficult to keep track of the whole context while going back
+    and forth through a long line of code.
+
+-   If the lines are too long, you loose the ability of having another
+    screen of code, side-by-side, to analyse other sections that are
+    relevant to the current context.
+   
+    On Emacs, I can have two windows, leave the right one for the code
+    I'm working on, and split the left one vertically to use it to
+    display related functions, documentation and such.
+   
+-   While striving for shorter lines of code, you're forced to remove the
+    complexity of a line, which in turn increases readability.
+   
+-   Shorter lines make it difficult to have run-on code lines, and forces
+    you to organise these in visually nice patterns which are also
+    quicker to recognise and grasp.
+  
+  
+### Vertical Space
+
+> All functions should be self-contained in 21 lines.
+
+That is, functions should be "black boxes" that you can understand (on
+the surface) by reading its source code alone. If you have to refer to
+several other parts to understand what's going on with a function,
+something is very, very wrong.
+
+The number of lines is not arbitrary, 21 lines is about what you have in
+one terminal screen, if you take out the status bar and the menu
+bar. And I believe that functions should be fully visible in one
+screenful.
+
+Again, there are reasons for this:
+
+-   Having to scroll either up or down to understand a function is
+    **bad**.
+   
+    Not only it's annoying, but if you have to review something you have
+    to scroll back up and find the place you were once again.
+   
+-   Functions with more than 21 lines are too complex to actually
+    understand.
+   
+    Having a low limit force people to think about abstractions, which in
+    turn leads to more readable and maintainable code.
+
+
+### Indentation
+
+> 4 spaces for indentation. No tabs, whatsoever.
+
+The 4-space indentation is what I found to be ideal. 2-width indentation
+looks pretty confusing in JavaScript, and make it harder to get a good
+outline of the structure.
+
+8-width indentation, on the other hand, wastes too much horizontal
+space, making it rather difficult to keep down the 80-characters
+limit.
+
+On the subjective side, I find such long gaps ugly, and makes the
+structure seem more important than the contents.
+
+
+### Alignment
+
+> Properly aligned assignments.
+
+There's quite some discussion in properly aligned code — eg.: aligning
+assignment values. Some say they add additional stress on your eyes. I
+believe tabulated data increases the readability, by making it easier
+and faster to check which values correspond to which key in a long list
+of data — although they don't apply to rather small ones.
+
+I decided in favour of proper alignment because it looks visually nice,
+and makes long list of data — like object literals — far more
+readable. Small lists are aligned for consistency:
+
+~~~js~~~
+pos    = [0,   0]
+size   = [100, 100]
+weight = 10.2
+~~~~~~~~
+
+
+### Literals
+
+#### Arrays and Objects
+
+> Comma-first style, properly aligned with the opening bracket, a single
+> space separating symbols from content, unless it's a one-liner.
+
+Comma-first allows you to easily spot which of the lines create a new
+item, and are also good for item insertion.
+
+~~~js~~~
+[ 'Alice'
+, 'Red Queen'
+, 'White Queen'
+, 'White Rabbit' ]
+~~~~~~~
+
+The extra whitespace is included to break a bit from the clutter — and
+to make a source more readable you have to reduce both useless noises
+and code complexity.
+
+Objects follow the same principles, only the keys and values are to be
+properly aligned according to the assignment rules:
+
+~~~js~~~
+{ x:     15
+, y:     10
+, angle: 45 }
+~~~~~~~~
+
+The only exception for the extra whitespace is the one-liner
+Object/Array literal:
+
+~~~js~~~
+var x = [1, 2, 3]
+var y = {foo: bar, me: 'you'}
+~~~~~~~
+
+
+
+#### Strings
+
+> Single quotes, properly aligned in "multi-line" strings.
+
+Single quotes were chosen for the same motive the extra whitespace is
+required in object literals: remove clutter.
+
+~~~js~~~
+var foo = 'Multi-line strings are not really supported '
+        + 'in JavaScript, thus explicit concatenation '
+        + 'should be used to improve readability.'
+~~~~~~~~
+
+
+## Code Complexity
+
+Code complexity and readability don't go well together, plus complex
+pieces of code hide away bugs more easily, and we sure don't want that.
+
+We can reduce code complexity with refactoring, and can somehow
+workaround it a bit by documenting a complicated piece of code.
+
+
+### Documenting
+
+Good documentation is hard to do and keep up-to-date, but it's also one
+of the most important aspects when reading a source code. The source
+tells you **how** stuff gets done, the documentation tells you
+**why** such stuff needs to be done — or at least it should, otherwise
+you're just repeating yourself for no benefits.
+
+There's also a difference between API documentation, developer usage
+documentation and user documentation. All those three should get some
+love too.
+
+
+#### API documentation
+
+The API documentation should contemplate the following aspects of a
+given source code block:
+
+-  **Why that code exists**
+   — what's supposed to do.
+
+-  **The implications of running that code**
+   — does it have any side-effects? Does it throw any errors? Is it
+   dependant on something else?
+
+-  **Related pieces of code**
+   — blocks that do some similar work (perhaps in a more high-level way)
+   or that are related in any way.
+   
+-  **Expectations**
+   — what kind of parameters or state it expects, and what the caller
+   should expect to get back from it.
+
+
+So, given that, we need to define what is a code-block. A code-block is
+any self-contained functionality. In JavaScript, it's usually a
+`Function`, an `Object` or a `Module`. 
+
+The documentation should be placed right before the code-block, *not
+inside it*. The rationale is that adding comments inside the code-block
+makes it difficult to understand the *how things get done*, and
+conflicts with the 21-lines rule.
+
+The following are some good and bad examples of API documentation for
+the given piece of code:
+
+~~~js~~~
+function add_callback(promise, event, callback) {
+    return callback? get_queue(promise, event).push(callback)
+                   : null
+}
+~~~~~~~
+
+Good — tells you the purpose of the codes, and the implications of using
+it:
+
+~~~js~~~
+//// Function add_callback ////////////////////////////
+//
+//   Promise:promise  Str:event  Fn:callback? -> Num?
+//
+// Adds a callback to handle the given event.
+//
+// The callback will be called whenever \`event\` happens
+// within the given promise.
+//
+// The arguments passed to the callback are the same
+// ones provided when the promise was fulfilled.
+//
+// \`this\` inside the callback will refer to the
+// promise object.
+//
+// :see also:
+//    * \`flush\` — how callbacks are called
+//
+// :warning: side-effects
+//     The list of callbacks is modified in-place.
+~~~~~~~    
+    
+Bad — tells you how the code does something, and nothing besides that:
+
+~~~js~~~
+//// Function add_callback ////////////////////////////
+//
+//   Promise:promise  Str:event  Fn:callback? -> Num?
+//
+// When called with a callback, inserts that callback
+// at the end of the queue for the given event, then
+// returns the new length of the event queue.
+//
+// If the callback is null, does nothing.
+~~~~~~~~
+
+The details on the documentation format expected are defined in the
+[Calliope][] project. The project also defines guidelines for end-user
+and developer usage documentation, which are entirely out of the scope
+of this style guide.
+
+
+### Reducing expressions
+
+> Always name large or complex expressions/actions. Either by assigning
+> them to a variable or by using a named function.
+
+
+Large expressions are hard to read, and so are chunks of run-on
+code. For abstracting them, and making it easier to associate an
+expression with what it means, complex expressions should be named.
+
+In some cases, this means assigning it to a variable, in others,
+creating a new function that names a process.
+
+For example, the following piece of code:
+
+~~~js~~~
+if ((!field.value && !field.checked) || field.hasAttribute('data-special'))
+    execute_black_magic()
+~~~~~~~~
+
+Can be rewritten as:
+
+~~~js~~~
+function emptyp(field)  { return !field.value && !field.checked)    }
+function specialp(field){ return field.hasAttribute('data-special') }
+
+if (emptyp(field) || specialp(field))
+    execute_black_magic()
+~~~~~~~
+
+This explicitly separates the qualities that defines a field, by naming
+them, and therefore makes it easier to grasp what's happening in the
+conditional — don't show just the *how*, convey the intent
+of the code as well.
+   
+
+### Naming
+
+> All lowercase, with words separated by underscores. Except for
+> constructors, which should use CamelCase.
+
+
+OrpheOS follows a naming convention derived from Scheme/Common Lisp,
+Python and regular JavaScript. Mostly due to the fact CamelCased stuff
+makes it hard for me to read — yes, I need some breath between words.
+
+Words are *usually* separated with underscores — since JavaScript does
+not accept hyphens in identifiers, — with the sole exception of
+Constructors, which use CamelCase.
+
+Names should be concise, while still descriptive and meaningful. Avoid
+abbreviations — they don't make the name concise, just shorter. Try not
+having names larger than 10 characters though, unless it's strictly
+proven that there's no better alternative. Always look for a good
+synonym or phrase that express the same idea though.
+
+Good names:
+
+~~~text~~~
+next\_event
+flush
+reload
+~~~~~~~~~~
+
+Bad names:
+
+~~~text~~~
+get\_next\_item\_in\_the\_frame   // too long
+fireEvents                   // camel case
+find\_recursive\_func\_in\_ast   // too long + abbreviations
+~~~~~~~~~~
+
+#### Variables
+
+Describe the value a variable hold, **not the data structure** it
+uses. So, `stack`, `queue` and such are bad names. Hungarian notation
+will warrant you an insta-kill :3
+
+
+#### Constants
+
+Constants are in no way different from variables in JavaScript,
+therefore should not be handled differently either.
+
+Actually, some engines do support `const` for real constants, but even
+so, they're just naming a value, so I don't feel they should get any
+special names. Plus, the usual conventions for constants suck.
+
+
+#### Functions
+
+Describe the actions that are carried out by a procedure. Avoid stupid
+`get/set` prefixes in names, unless they actually mean
+something. Usually you expect a function to return a value, and the name
+of the function alone should tell you when you're setting something.
+
+If a function abstracts the act of creating an object, prefix it with
+`make_`. So, a function that constructs a `Promise` object would be
+named `make_promise`.
+
+The only exception to this rule is the function for removing the library
+from the global scope, which does not actually construct an object —
+albeit returns one, — and which is named `make_local`.
+
+
+#### Predicates
+
+Predicates, that is, things for which the result is intended to be used
+as a boolean, should end with a `p`. So, `emptyp` would define whether
+or not something is empty. `specialp` would define whether or not
+something is special.
+
+Again, I would prefer to use a question mark (`?`), but that was already
+taken by the ternaries.
+
+
+#### Destructive
+
+Destructive functions, that is, those which modify the arguments they
+receive in-place, should start with a `n`. So, a sort function that
+executes in-place, should be named `nsort`. Though Common Lisp define
+this as a `non-consing function`, you can just think of it as a
+`not-safe function`.
+
+And yes, I would also rather use an exclamation mark (`!`) here... 
+
+
+#### Abbreviations
+
+Though abbreviations should be avoided, a few of them are widely enough
+used in computer science that we can embrace them without loosing much
+on the readability side, while gaining a few more in neatness and
+horizontal screen space.
+
+
+Abbreviation | Meaning
+------------ | -------
+arg          | argument (function parameter)
+attr         | attribute
+bin          | binary
+bool         | boolean
+cat          | concatenate
+char         | character
+ctx          | context (usually, the `this` object)
+doc          | document
+elm          | element (an HTMLElement instance, usually)
+fn           | function
+hex          | hexadecimal
+id           | identifier
+int          | integer
+max          | maximum
+min          | minimum
+num          | number
+obj          | object
+oct          | octal
+pred         | predicate
+prop         | property
+seq          | sequence
+str          | string
+substr       | sub-string
+
+
+## Readability
+
+### Braces
+
+> Braces should never be left alone in a line of their own.
+
+Braces starting a block of code should be placed in the same line as the
+statement that starts such a block. Likewise, braces ending a block of
+code should be placed in the same line as the statement that ends such
+block, unless the block happens to be a top-level function — that is, a
+function that defines an independent functionality.
+
+Good:
+
+~~~js~~~
+function add(event, callback) {
+    function insert_callback() {
+        if (this.value)  fire(this, event, callback)
+        else             add_callback(this, event, callback) }
+
+    if (fnp(event)) {
+        callback = event
+        event    = this.default_event }
+    insert_callback.call(this)
+    return this
+}
+~~~~~~~
+
+Notice that the if-block and the internal function closing braces are
+all put in the same line as their last statements, however, the closing
+function's one is put in a line of itself.
+
+This additional "wasted" line is used to add a distinction for
+self-contained and use-able functionality.
+
+
+Bad:
+
+~~~js~~~
+function add(event, callback) {
+    function insert_callback() {
+        if (this.value) {
+            fire(this, event, callback)
+        }
+        else {
+            add_callback(this, event, callback)
+        }
+    }
+
+    if (fnp(event)) {
+        callback = event
+        event    = this.default_event
+    }
+    
+    insert_callback.call(this)
+    return this
+}
+~~~~~~~
+
+Not only it wastes four of those lines just to place noises (braces),
+making the line count go up to whooping 19 lines — almost the
+vertical-line limit, — It also makes the function look more complex than
+it actually is.
+
+Also, leaving more noises decrease the readability.
+
+
+### Semicolons
+
+> Use new lines to end your statements. Never use semicolons!
+
+Seriously, don't use semicolons. Ever. They only add useless noises to
+each line, decreasing the overall readability of the whole program.
+
+And since we're relying in ASI, as a rule of thumb, don't start your
+lines with `[`, `(`, `/`, `+` and `-`, unless implicit line continuation
+is what you're aiming at.
+
+You don't need extraneous parenthesis for functions that'll be called
+after their definition when you're already inside an expression
+(eg.: assignment and function parameters). For all the other cases you
+should force an expression using the `void` operator.
+
+
+### Function hoisting
+
+> Rely on function hoisting when it makes sense to have additional
+> information associated with a function, so such information is
+> not lost god-knows-how-many-lines far away the function.
+
+Function hoisting is one of the most awesome things to abuse in
+JavaScript, and something OrpheOS component's source code do
+to the infinity.
+
+Basically, function hoisting allows you to have meta-data, or
+some kind of transformation information that should be associated
+with a function, to come before the physical definition of
+such function in the source code. Kinda like Python's `@decorators`,
+therefore making the flow of readability more natural.
+
+For example, it's used a lot for inheritance:
+
+~~~js~~~
+inherits(Apprentice, Mage.prototype)
+function Apprentice(name) {
+    Mage.call(this, name)
+    /* define Apprentice's properties here */
+}
+~~~~~~~
+
+This allows you to quickly grasp that Apprentice inherits properties
+from Mage.prototype, which would not be as easy to notice if the
+inheritance declaration was somewhere 30 lines of code away from the
+function declaration.
+
+It's also used for defining function's prototypes, so you have an
+easy list of properties that will actually end up in the constructed
+object:
+
+~~~js~~~
+inherits(Apprentice, Mage.prototype)
+function Apprentice(name) {
+    Mage.call(this, name)
+    /* instance definitions */
+}
+Apprentice.prototype = function() {
+    return extend( Aprentice.prototype
+                 , with_traits(BlackMage)
+                 
+                 , { cast:     cast
+                   , meditate: meditate
+                   , guard:    guard  })
+
+
+    function cast() {
+        /* ... */
+    }
+    function meditate() {
+        /* ... */
+    }
+    function guard() {
+        /* ... */
+    }
+}()
+~~~~~~~
+
+
+### Blank lines
+
+Use blank lines sparingly to group related group of functionality.
+Doing such makes both it easier to spot what kind of stuff is related
+to what, and make it easier on the eyes by allowing the reader to
+breath a little while reading some code.
+
+You could say it's analogous to paragraphs in your usual fiction books.
