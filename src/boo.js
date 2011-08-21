@@ -39,7 +39,7 @@
 // testing which one implements which attributes.
 //
 // To solve this, the module provides three new functions: `inherit`,
-// `upper` and `can`, which are discussed in more detail below.
+// `upper` and `extend`, which are discussed in more detail below.
 
 void function (root) { var boo, old
 
@@ -70,7 +70,7 @@ void function (root) { var boo, old
     // :param: {Function} ctor
     // :param: {Object}   base
     // :param: {Object}   props
-    // 
+    //
     // If an additional object is passed (as `props`), the properties
     // defined in that object will be copied into the prototype of the
     // constructor as well.
@@ -79,20 +79,15 @@ void function (root) { var boo, old
     // inheritance relationship with the constructor's prototype. In
     // fact, they **will** be treated as just being the constructor's
     // own prototype properties.
-    // 
+    //
     // :warning: side-effects
     //    The given constructor and properties are modified in-place.
     //
     function inherit(ctor, base, props) {
-        /*** IFDEF DEBUG
-         assert(base,          "Missing `base' parameter")
-         assert(dbg.fnp(ctor), "`ctor' isn't a function")
-         *** ENDIF */
-
         if (!props) props = {}
 
         props.constructor = ctor
-        props.$super      = base
+        props.$boo_super  = base
         ctor.prototype    = create(base)
         return extend(ctor.prototype, props)
     }
@@ -106,7 +101,7 @@ void function (root) { var boo, old
     //
     // :param: {Object} target
     // :param: {Object} sources...
-    // 
+    //
     // :note:
     //    This is only a **shallow** copy, anything other than
     //    primitives will be copied just as a reference to the original
@@ -114,11 +109,11 @@ void function (root) { var boo, old
     //
     // :warning: side-effects
     //    The given `obj` is modified in-place.
-    // 
+    //
     function extend(target) { var sources
         sources = slice.call(arguments, 1)
 
-        sources.forEach(function(source) { 
+        sources.forEach(function(source) {
             keys(source).forEach(function(key) {
                 target[key] = source[key] })})
 
@@ -129,10 +124,10 @@ void function (root) { var boo, old
     ///// Function clone ///////////////////////////////////////////////////////
     //
     //   (base[, extensions...]) ⇒ Object
-    // 
+    //
     // Creates a new object by inheriting `base' and populating it with
     // the given extensions.
-    // 
+    //
     // :param: {Object} base
     // :param: {Object} extensions...
     //
@@ -143,7 +138,7 @@ void function (root) { var boo, old
 
 
 
-    ///// Function can /////////////////////////////////////////////////////////
+    ///// Function find_able ///////////////////////////////////////////////////
     //
     //   (obj, attribute[, allow_traits = true]) ⇒ Object
     //
@@ -153,7 +148,7 @@ void function (root) { var boo, old
     // :param: {Object}  obj
     // :param: {String}  attribute
     // :param: {Boolean} allow_traits
-    // 
+    //
     // Sometimes you want to know which object is capable of doing
     // something, and most of the times a simple `in` check will be
     // enough. For those times where you want to check which of the
@@ -176,18 +171,14 @@ void function (root) { var boo, old
     // > Note that the trait's prototypes and the object itself are
     // > **not** included in this search chain.
     //
-    function can(obj, attribute, allow_traits) { var bases, cur
-        /*** IFDEF DEBUG
-         assert(dbg.objp(obj), "`obj' is not an object")
-         assert(attribute,     "Missing `attribute' parameter")
-         *** ENDIF */
-        function get_base(obj) { return obj.$super || obj               }
-        function has_attr()    { return cur && has.call(cur, attribute) } 
+    function find_able(obj, attribute, allow_traits) { var bases, cur
+        function get_base(obj) { return obj.$boo_super || obj           }
+        function has_attr()    { return cur && has.call(cur, attribute) }
 
         if (allow_traits == null) allow_traits = true
         while (obj) {
             bases = [get_base(obj)]
-            if (allow_traits) bases.concat(obj.$traits || [])
+            if (allow_traits) bases.concat(obj.$boo_traits || [])
 
             while (bases.length) {
                 cur = bases.shift()
@@ -207,7 +198,7 @@ void function (root) { var boo, old
     // :param: {Object} obj
     // :param: {Object} base
     // :param: {String} method
-    // 
+    //
     // This allows for fully prototypal inheritance, without loosing
     // overwritten methods. Because, you see, we assume that methods
     // that were overwritten are somehow **important** and you will want
@@ -221,15 +212,15 @@ void function (root) { var boo, old
     // (the object that was looked upon last time) is saved on each
     // call, and removed when the function returns.
     //
-    // This is done by simple writing to the `$ctx` property, and
+    // This is done by simple writing to the `$boo_ctx` property, and
     // expects your function to be **synchronous**. If you're calling
     // any asynchronous super method, you'll need to pass the previous
     // stored context explicitly:
     //
-    //     boo.upper(this, this.$ctx, "show")
+    //     boo.upper(this, this.$boo_ctx, "show")
     //
     // :warning: potentially unsafe
-    //    This assumes you won't be writing to `$ctx` in your
+    //    This assumes you won't be writing to `$boo_ctx` in your
     //    code. As a rule of thumb, you shouldn't ever have an actual
     //    property with a dollar sign anyways.
     //
@@ -244,7 +235,7 @@ void function (root) { var boo, old
             method = args.shift()
 
         if (!base)
-            base = obj.$ctx || obj
+            base = obj.$boo_ctx || obj
 
         return find_ancestor(obj, base, method, args)
     }
@@ -252,11 +243,11 @@ void function (root) { var boo, old
     // try to find the first ancestor to implement the method, then
     // return the result of calling this method.
     function find_ancestor(obj, base, method, args) { var parent, rv
-        parent   = can(base, method)
-        obj.$ctx = parent
+        parent       = find_able(base, method)
+        obj.$boo_ctx = parent
 
         rv = parent[method].apply(obj, args)
-        delete obj.$ctx
+        delete obj.$boo_ctx
         return rv
     }
 
@@ -271,7 +262,7 @@ void function (root) { var boo, old
     //
     // :param: {Function | Object} obj
     // :param: {Object}            traits...
-    // 
+    //
     // Traits are a mechanism to handle the same issue as
     // multiple-inheritance, but in a Prototypal OO manner. The idea is
     // that traits provide just a collection of, perhaps, incomplete
@@ -298,24 +289,24 @@ void function (root) { var boo, old
     // as with the prototypal inheritance, you don't need to create a
     // separate meta-object for your functionality, ANY object can be a
     // trait :3
-    // 
+    //
     // :warning: side-effects
     //    The given `obj` is modified in-place.
     //
     function plugin(obj) { var args, base, ctor
-        function get_traits() { return (ctor.$traits || []).concat(args) }
+        function get_traits() { return (ctor.$boo_traits || []).concat(args) }
 
         args = slice.call(arguments, 1)
         base = fnp(obj)? obj.prototype
                        : proto(obj)
         ctor = base.constructor
 
-        ctor.$traits = get_traits()
+        ctor.$boo_traits = get_traits()
         extend.apply(obj, [base].concat(args))
         return obj
     }
 
-    
+
 
     ///// Exports ////////////////////////////////////////////////////////////
     if (typeof exports == "undefined") {
@@ -329,10 +320,10 @@ void function (root) { var boo, old
         boo = exports
 
     ////// -Properties under boo ///////////////////////////////////////////////
-    boo.inherit = inherit
-    boo.extend  = extend
-    boo.clone   = clone
-    boo.can     = can
-    boo.upper   = upper
-    boo.plugin  = plugin
+    boo.inherit   = inherit
+    boo.extend    = extend
+    boo.clone     = clone
+    boo.find_able = find_able
+    boo.upper     = upper
+    boo.plugin    = plugin
 }(this);
