@@ -10,6 +10,7 @@
 void function (root) {
 
     var slice    = [].slice
+      , has      = {}.hasOwnProperty
       , keys     = Object.keys
       , make_obj = Object.create
       , proto    = Object.getPrototypeOf
@@ -40,6 +41,7 @@ void function (root) {
             keys(mixin).forEach(function(key) {
                 object[key] = mixin[key] })}
 
+        object.$boo_mixins = (object.$boo_mixins || []).concat(mixins)
         return object
     }
 
@@ -101,21 +103,21 @@ void function (root) {
     //   *not* included in this search chain. Mixins are expected to be
     //   parent-less anyways.
     //
+    function receiver(base, message, allow_mixins) { var parents, current
+        function get_parent(obj){ return obj.$boo_super || obj              }
+        function has_attr(attr) { return current && has.call(current, attr) }
 
-    //// Function receivers ////////////////////////////////////////////////////
-    //
-    //   (base:Obj, message:String[, allow_mixins:Bool = true]) → Obj
-    //
-    // Finds all the ancestors of ~base~ who can handle the given
-    // ~message~.
-    //
-    // The algorithm works similarly to [[fn:receiver]], except that it
-    // does not stop on the first receiver.
-    //
-    // :see-also:
-    //   - [[fn:receiver]] — finds only the first receiver for the
-    //                       message.
-    //
+        if (allow_mixins == null)  allow_mixins = true
+        while (base) {
+            parents = [get_parent(base)]
+            if (allow_mixins)  parents.concat(base.$boo_mixins || [])
+
+            while (parents.length) {
+                current = parents.shift()
+                if (has_attr(message))  return get_parent(base) }
+
+            base = proto(base) }
+    }
 
 
     ///// Exports //////////////////////////////////////////////////////////////
@@ -133,8 +135,9 @@ void function (root) {
         boo = exports
 
     ///// -Properties under boo ////////////////////////////////////////////////
-    boo.plugin  = plugin
-    boo.merge   = merge
-    boo.inherit = inherit
+    boo.plugin   = plugin
+    boo.merge    = merge
+    boo.inherit  = inherit
+    boo.receiver = receiver
 
 }(this)
