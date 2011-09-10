@@ -26,9 +26,10 @@ void function (root) {
     // environments that don't support ECMAScript 5 object additions for
     // inspecting properties.
     //
-    // This copying is done in order, from left to right, with
-    // properties of latter mixins taking priority over the properties
-    // of earlier ones.
+    // This copying is done in order, from left to right. If a previous
+    // mixin defines a property ~foo~, and a latter mixin also defines a
+    // property ~foo~, the latter mixin's property value will overwrite
+    // the previous value.
     //
     // :warning: side-effects
     //   The function will modify ~object~ in-place.
@@ -51,10 +52,8 @@ void function (root) {
     // Only the own enumerable properties of each mixin are carried over
     // to the fresh object.
     //
-    // This copying is done in order, from left to right. If a previous
-    // mixin defines a property ~foo~, and a latter mixin also defines a
-    // property ~foo~, the latter mixin's property value will overwrite
-    // the previous value.
+    // :see-also:
+    //   - [[fn:plugin]] — for information on how the copying is done.
     //
     function merge() {
         return plugin({}, arguments)
