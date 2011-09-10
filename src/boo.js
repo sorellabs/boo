@@ -12,8 +12,9 @@ void function (root) {
     var slice    = [].slice
       , keys     = Object.keys
       , make_obj = Object.create
+      , proto    = Object.getPrototypeOf
 
-    //// Function nplugin //////////////////////////////////////////////////////
+    //// Function plugin ///////////////////////////////////////////////////////
     //
     //   (object:Obj, mixins:Array) → Obj
     //
@@ -30,37 +31,15 @@ void function (root) {
     // of earlier ones.
     //
     // :warning: side-effects
-    //   The function will modify ~object~ in-place. For a pure version,
-    //   see [[fn:plugin]].
+    //   The function will modify ~object~ in-place.
     //
-    function nplugin(object, mixins) { var i, len, mixin
+    function plugin(object, mixins) { var i, len, mixin
         for (i = 0, len = mixins.length; i < len; ++i) {
             mixin = mixins[i]
             keys(mixin).forEach(function(key) {
                 object[key] = mixin[key] })}
 
         return object
-    }
-
-    //// Function plugin ///////////////////////////////////////////////////////
-    //
-    //   (object:Obj, mixins:Array) → Obj
-    //
-    // Copies the own enumerable properties from the mixin over to the
-    // ~object~.
-    //
-    // This is done without modifying the ~object~ (if you want in-place
-    // modification for performance or something, use
-    // [[!nplugin]]). Only the /own enumerable/ properties, alongside
-    // with the prototype chain of the ~object~ will be carried over to
-    // the clone.
-    //
-    // :see-also:
-    //   - [[fn:nplugin]] — the destructive (more reliable) version.
-    //   - [[fn:clone]]   — the object cloning routine used for purity.
-    //
-    function plugin(object, mixins) {
-        return nplugin(clone(object), mixins)
     }
 
     //// Function merge ////////////////////////////////////////////////////////
@@ -78,22 +57,7 @@ void function (root) {
     // the previous value.
     //
     function merge() {
-        return nplugin({}, slice.call(arguments))
-    }
-
-    //// Function clone ////////////////////////////////////////////////////////
-    //
-    //   (object:Obj) → Obj
-    //
-    // Returns a deep clone of the ~object~, but carrying over only the
-    // /own enumerable/ properties and the prototype chain.
-    //
-    // This is done in order to make it work on ancient environments
-    // which don't implement the ECMAScript 5 methods for inspecting an
-    // object's properties.
-    //
-    function clone(object) {
-        return object // evilness
+        return plugin({}, arguments)
     }
 
     //// Function inherit //////////////////////////////////////////////////////
@@ -104,10 +68,10 @@ void function (root) {
     // extending it with the given mixins.
     //
     // Mixin extension is done from left to right, as described in
-    // [[fn:merge]].
+    // [[fn:plugin]].
     //
     function inherit(proto) {
-        return nplugin(make_obj(proto), slice.call(arguments, 1))
+        return plugin(make_obj(proto), slice.call(arguments, 1))
     }
 
     //// Function receiver /////////////////////////////////////////////////////
@@ -170,10 +134,8 @@ void function (root) {
         boo = exports
 
     ///// -Properties under boo ////////////////////////////////////////////////
-    boo.nplugin = nplugin
     boo.plugin  = plugin
     boo.merge   = merge
-    boo.clone   = clone
     boo.inherit = inherit
 
 }(this)
