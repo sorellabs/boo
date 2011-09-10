@@ -9,28 +9,42 @@
 /// Module boo /////////////////////////////////////////////////////////////////
 void function (root) {
 
-    var __old, boo
+    var slice    = [].slice
+      , keys     = Object.keys
+      , make_obj = Object.create
 
     //// Function nplugin //////////////////////////////////////////////////////
     //
-    //   (object:Obj, mixin:Obj) → Obj
+    //   (object:Obj, mixins:Array) → Obj
     //
-    // Copies the own enumerable properties from the mixin over to the
+    // Copies the own enumerable properties from the mixins over to the
     // ~object~.
     //
-    // Only /own/ and /enumerable/ properties present on the ~mixin~
+    // Only /own/ and /enumerable/ properties present on the ~mixins~
     // will be copied, this ensures the function works the same even in
     // environments that don't support ECMAScript 5 object additions for
     // inspecting properties.
+    //
+    // This copying is done in order, from left to right, with
+    // properties of latter mixins taking priority over the properties
+    // of earlier ones.
     //
     // :warning: side-effects
     //   The function will modify ~object~ in-place. For a pure version,
     //   see [[fn:plugin]].
     //
+    function nplugin(object, mixins) { var i, len, mixin
+        for (i = 0, len = mixins.length; i < len; ++i) {
+            mixin = mixins[i]
+            keys(mixin).forEach(function(key) {
+                object[key] = mixin[key] })}
+
+        return object
+    }
 
     //// Function plugin ///////////////////////////////////////////////////////
     //
-    //   (object:Obj, mixin:Obj) → Obj
+    //   (object:Obj, mixins:Array) → Obj
     //
     // Copies the own enumerable properties from the mixin over to the
     // ~object~.
@@ -45,6 +59,9 @@ void function (root) {
     //   - [[fn:nplugin]] — the destructive (more reliable) version.
     //   - [[fn:clone]]   — the object cloning routine used for purity.
     //
+    function plugin(object, mixins) {
+        return nplugin(clone(object), mixins)
+    }
 
     //// Function merge ////////////////////////////////////////////////////////
     //
@@ -60,6 +77,9 @@ void function (root) {
     // property ~foo~, the latter mixin's property value will overwrite
     // the previous value.
     //
+    function merge() {
+        return nplugin({}, slice.call(arguments))
+    }
 
     //// Function clone ////////////////////////////////////////////////////////
     //
@@ -72,6 +92,9 @@ void function (root) {
     // which don't implement the ECMAScript 5 methods for inspecting an
     // object's properties.
     //
+    function clone(object) {
+        return object // evilness
+    }
 
     //// Function inherit //////////////////////////////////////////////////////
     //
@@ -83,6 +106,9 @@ void function (root) {
     // Mixin extension is done from left to right, as described in
     // [[fn:merge]].
     //
+    function inherit(proto) {
+        return nplugin(make_obj(proto), slice.call(arguments, 1))
+    }
 
     //// Function receiver /////////////////////////////////////////////////////
     //
@@ -130,18 +156,24 @@ void function (root) {
 
 
     ///// Exports //////////////////////////////////////////////////////////////
+    var old, boo
+
     if (typeof exports == 'undefined') {
-        __old = root.boo
-        boo   = root.boo = {}
+        old = root.boo
+        boo = root.boo = {}
 
         ///// Method boo.make_local ////////////////////////////////////////////
         boo.make_local = function() {
-            root.boo = __old
+            root.boo = old
             return boo }}
     else
         boo = exports
 
     ///// -Properties under boo ////////////////////////////////////////////////
-
+    boo.nplugin = nplugin
+    boo.plugin  = plugin
+    boo.merge   = merge
+    boo.clone   = clone
+    boo.inherit = inherit
 
 }(this)
