@@ -110,7 +110,7 @@ void function (root) {
         if (allow_mixins == null)  allow_mixins = true
         while (base) {
             parents = [get_parent(base)]
-            if (allow_mixins)  parents.concat(base.$boo_mixins || [])
+            if (allow_mixins)  parents = parents.concat(base.$boo_mixins || [])
 
             while (parents.length) {
                 current = parents.shift()
@@ -118,6 +118,7 @@ void function (root) {
 
             base = proto(base) }
     }
+
 
 
     ///// Exports //////////////////////////////////////////////////////////////
