@@ -10,114 +10,113 @@
 void function (root) {
 
     var slice    = [].slice
-      , has      = {}.hasOwnProperty
       , keys     = Object.keys
       , make_obj = Object.create
       , proto    = Object.getPrototypeOf
 
-    //// Function plugin ///////////////////////////////////////////////////////
+
+    //// Function clonablep ////////////////////////////////////////////////////
     //
-    //   (object:Obj, mixins:Array) → Obj
+    // : (object:Obj) → Obj
     //
-    // Copies the own enumerable properties from the mixins over to the
+    // Checks if an object implements a clone factory.
+    //
+    // A clonable object is any object that implements the special
+    // ~__clone__~ method. The clone method is called without arguments
+    // and is expected to return an object.
+    //
+    function clonablep(object) {
+        return Object(object) === object
+            && typeof object.__clone__ == 'function'
+    }
+
+    //// Function extend ///////////////////////////////////////////////////////
+    //
+    // : (object:Obj, mixins:Array) → Obj
+    //
+    // Copies all own enumerable properties from the mixins over to the
     // ~object~.
     //
     // Only /own/ and /enumerable/ properties present on the ~mixins~
-    // will be copied, this ensures the function works the same even in
-    // environments that don't support ECMAScript 5 object additions for
-    // inspecting properties.
+    // will be carried over, this ensures that the function works the
+    // same, even on environments that don't support ECMAScript 5
+    // additions for inspecting properties.
     //
-    // This copying is done in order, from left to right. If a previous
+    // The copying is done in order, from left to right, such that if a
     // mixin defines a property ~foo~, and a latter mixin also defines a
-    // property ~foo~, the latter mixin's property value will overwrite
+    // property foo, the latter mixin's property value will overwrite
     // the previous value.
     //
-    // :warning: side-effects
-    //   The function will modify ~object~ in-place.
+    // If the mixin provides a ~clone~ method, that method is expected
+    // to be called with no arguments and return a new object. The
+    // returned object will be copied over instead of the original
+    // one. This allows the mixin to provide a way of initialising
+    // properties that are not meant to be shared, for example, when
+    // using the mixin as a data-parent.
     //
-    function plugin(object, mixins) { var i, len, mixin
+    // :warning: side-effects
+    //    The function will modify the ~object~ in-place.
+    //
+    function extend(object, mixins) { var i, j, key, len, mixin, props
         for (i = 0, len = mixins.length; i < len; ++i) {
-            mixin = mixins[i]
-            keys(mixin).forEach(function(key) {
-                object[key] = mixin[key] })}
+            mixin = clonablep(mixins[i])?  mixins[i].__clone__()
+                                        :  mixins[i]
+            props = keys(mixin)
+            for (j = props.length; j--;) {
+                key         = props[j]
+                object[key] = mixin[key] }}
 
         object.$boo_mixins = (object.$boo_mixins || []).concat(mixins)
         return object
     }
 
+
     //// Function merge ////////////////////////////////////////////////////////
     //
-    //   (mixins:Obj...) → Obj
+    // : (mixins:Obj...) → Obj
     //
-    // Merges all given mixins into a single, fresh object.
+    // Merges all the given mixins into a single, fresh object.
     //
-    // Only the own enumerable properties of each mixin are carried over
-    // to the fresh object.
+    // This constructs an entirely new mixin — so, no parent here — by
+    // doing a set-union with all the given mixins. Only the /own/ and
+    // /enumerable/ properties are carried over to the resulting
+    // object.
     //
     // :see-also:
-    //   - [[fn:plugin]] — for information on how the copying is done.
+    //    - [[fn:extend]] — The semantics on carrying properties over.
     //
     function merge() {
-        return plugin({}, arguments)
+        return extend({}, arguments)
     }
 
-    //// Function inherit //////////////////////////////////////////////////////
+
+    //// Function clone ////////////////////////////////////////////////////////
     //
-    //   (proto:Obj, mixins:Obj...) → Obj
+    // : (proto:Obj, mixins:Obj...) → Obj
     //
-    // Creates a new object using ~proto~ as the ~[⁣[Prototype]⁣]~, and
-    // extending it with the given mixins.
+    // Creates a new object, inheriting from the given ~proto~.
     //
-    // Mixin extension is done from left to right, as described in
-    // [[fn:plugin]].
+    // The resulting fresh object is also extended with the provided
+    // mixins, if any, from left to right — where properties at right
+    // have higher precedence.
     //
-    function inherit(proto) {
-        return plugin(make_obj(proto), slice.call(arguments, 1))
+    // If the object implements the special method ~__init__~, that will
+    // be called to initialise the instance.
+    //
+    // :see-also:
+    //    - [[fn:extend]] — The semantics on copying mixins.
+    //
+    function clone(proto) {
+        return extend(make_obj(proto), slice.call(arguments, 1))
     }
 
-    //// Function receiver /////////////////////////////////////////////////////
+    //// Function proto ////////////////////////////////////////////////////////
     //
-    //   (base:Obj, message:String[, allow_mixins:Bool = true]) → Obj
+    // : (object:Obj) → Obj
     //
-    // Finds the closest ancestor of ~base~ which can handle the given
-    // ~message~.
+    // Returns the prototype of the given object.
     //
-    // Sometimes you want to know which ancestor exactly implements a
-    // given message (~property~), and in this case a simple ~in~ check
-    // will not do. This method will search up over the ancestor chain
-    // of a base object, optionally including the mixins that were set
-    // on it, and find the first ancestor that can receive that
-    // message.
-    //
-    // The prototype is searched first, then, if the functionality is
-    // not found, we move on to searching the mixin list (in the reverse
-    // order they were plugged in).
-    //
-    // If no immediate ancestor implements the message, the function
-    // will keep searching up the prototype chain to try to find the
-    // requested functionality. If it definitely can't find the any
-    // receiver, ~null~ is returned.
-    //
-    // :note:
-    //   the mixin's prototypes and the base object itself are
-    //   *not* included in this search chain. Mixins are expected to be
-    //   parent-less anyways.
-    //
-    function receiver(base, message, allow_mixins) { var parents, current
-        function get_parent(obj){ return obj.$boo_super || obj              }
-        function has_attr(attr) { return current && has.call(current, attr) }
-
-        if (allow_mixins == null)  allow_mixins = true
-        while (base) {
-            parents = [get_parent(base)]
-            if (allow_mixins)  parents = parents.concat(base.$boo_mixins || [])
-
-            while (parents.length) {
-                current = parents.shift()
-                if (has_attr(message))  return get_parent(base) }
-
-            base = proto(base) }
-    }
+    // :alias: Object.getPrototypeOf
 
 
 
@@ -136,9 +135,8 @@ void function (root) {
         boo = exports
 
     ///// -Properties under boo ////////////////////////////////////////////////
-    boo.plugin   = plugin
-    boo.merge    = merge
-    boo.inherit  = inherit
-    boo.receiver = receiver
-
+    boo.extend = extend
+    boo.merge  = merge
+    boo.clone  = clone
+    boo.proto  = proto
 }(this)
