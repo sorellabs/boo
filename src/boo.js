@@ -15,9 +15,30 @@ void function (root) {
       , proto    = Object.getPrototypeOf
 
 
-    //// Function clonablep ////////////////////////////////////////////////////
+
+    //// -Error handling ///////////////////////////////////////////////////////
+
+    ///// Function key_collision_error /////////////////////////////////////////
     //
-    // : (object:Obj) → Obj
+    // : (key:Str) →
+    //
+    // Throws an error signaling that a key collision happened when
+    // doing trait composition.
+    //
+    // The property names will have to be manually resolved by the
+    // programmer.
+    //
+    function key_collision_error(key) {
+        throw new Error('"' + key + '" already exists.')
+    }
+
+
+
+    //// -Interface testing ////////////////////////////////////////////////////
+
+    ///// Function clonablep ///////////////////////////////////////////////////
+    //
+    // : (object:Obj) → Bool
     //
     // Checks if an object implements a clone factory.
     //
@@ -30,7 +51,34 @@ void function (root) {
             && typeof object.__clone__ == 'function'
     }
 
-    //// Function extend ///////////////////////////////////////////////////////
+
+    ///// Function callablep ///////////////////////////////////////////////////
+    //
+    // : (object:Obj) → Bool
+    //
+    // Checks if the object can be called directly.
+    //
+    function callablep(object) {
+        return typeof object == 'function'
+    }
+
+
+    ///// Function testablep ///////////////////////////////////////////////////
+    //
+    // : (object:Obj) → Bool
+    //
+    // Checks if the object implements at ~test~ function.
+    //
+    function testablep(object) {
+        return object
+            && typeof object.test == 'function'
+    }
+
+
+
+    //// -Object Orientation Utilities /////////////////////////////////////////
+
+    ///// Function extend //////////////////////////////////////////////////////
     //
     // : (object:Obj, mixins:Array) → Obj
     //
@@ -66,12 +114,11 @@ void function (root) {
                 key         = props[j]
                 object[key] = mixin[key] }}
 
-        object.$boo_mixins = (object.$boo_mixins || []).concat(mixins)
         return object
     }
 
 
-    //// Function merge ////////////////////////////////////////////////////////
+    ///// Function merge ///////////////////////////////////////////////////////
     //
     // : (mixins:Obj...) → Obj
     //
@@ -90,7 +137,7 @@ void function (root) {
     }
 
 
-    //// Function clone ////////////////////////////////////////////////////////
+    ///// Function clone ///////////////////////////////////////////////////////
     //
     // : (proto:Obj, mixins:Obj...) → Obj
     //
@@ -110,6 +157,7 @@ void function (root) {
         return extend(make_obj(proto), slice.call(arguments, 1))
     }
 
+
     //// Function proto ////////////////////////////////////////////////////////
     //
     // : (object:Obj) → Obj
@@ -117,6 +165,120 @@ void function (root) {
     // Returns the prototype of the given object.
     //
     // :alias: Object.getPrototypeOf
+
+
+    ///// Function compose /////////////////////////////////////////////////////
+    //
+    // : (proto:Obj, traits:Obj...) → Obj
+    //
+    // Creates a new object, inheriting from the given ~proto~ and
+    // implementing the provided ~traits~.
+    //
+    // Differently from the simple ~extend~ approach, though, the
+    // ~compose~ function doesn't use property precedence, instead,
+    // trying to add duplicate properties to an object will throw an
+    // error.
+    //
+    // This is so that the developer can catch these errors and
+    // fix them, by mapping property names or by selectively importing
+    // names from objects. A ~resolve~ function is provided to take care
+    // of such things.
+    //
+    // :see-also:
+    //    - [[fn:resolve]] — Resolve name conflicts.
+    //
+    function compose(proto) { var i, j, key, trait, traits, object, props
+        traits = slice.call(arguments, 1)
+        object = clone(proto)
+        for (i = traits.length; i--;) {
+            trait = clonablep(traits[i])?  traits[i].__clone__()
+                                        :  traits[i]
+            props = keys(trait)
+            for (j = props.length; j--;) {
+                key = props[j]
+                if (key in object)  key_collision_error(key)
+                else                object[key] = trait[key] }}
+
+        return object
+    }
+
+
+
+    //// -Conflict resolution //////////////////////////////////////////////////
+
+    ///// Function resolve /////////////////////////////////////////////////////
+    //
+    // : (object:Object, mappings:Object) → Object
+    //
+    // Returns a new object, with its own properties ramapped.
+    //
+    function resolve(object, mappings) { var result, props, map, new_key
+        result = clone(proto(object))
+        props  = keys(object)
+        map    = mappings.map
+              || function(key){ return mappings.prefix?  mappings.prefix + key
+                                                      :  key }
+
+        if (mappings.only)     props =    keep(props, mappings.only)
+        if (mappings.exclude)  props = exclude(props, mappings.exclude)
+
+        props.forEach(function(key) {
+            if (map)  new_key = rename(key, map)
+            result[new_key] = object[key] })
+
+        return result
+    }
+
+
+    ///// Function take_keyp ///////////////////////////////////////////////////
+    //
+    // : (filter:Array|RegExp|Fn) → Fn(key:String) → Bool
+    //
+    // Higher-order function that applies a filter to a key, returning
+    // whether the filter rules passed or not.
+    //
+    function take_keyp(filter) {
+        return function(key) {
+            return callablep(filter)?  filter(key)
+                 : testablep(filter)?  filter.test(key)
+                 : /* array? */        ~filter.indexOf(key) }
+    }
+
+    ///// Function keep ////////////////////////////////////////////////////////
+    //
+    // : (keys:Array, filter:Array|RegExp|Fn) → Array
+    //
+    // Filters the array, leaving only the items that pass the provided
+    // filter rules.
+    //
+    function keep(keys, filter) {
+        return keys.filter(take_keyp(filter))
+    }
+
+
+    ///// Function exclude /////////////////////////////////////////////////////
+    //
+    // : (keys:Array, filter:Array|RegExp|Fn) → Array
+    //
+    // Filters the array, removing the items that pass the provided
+    // filter rules.
+    //
+    function exclude(keys, filter) {
+        filter = take_keyp(filter)
+        return keys.filter(function(key){ return !filter(key) })
+    }
+
+
+    ///// Function rename //////////////////////////////////////////////////////
+    //
+    // : (key:Str, mapper:Fn|Obj) → Str
+    //
+    // Transform the given key using the given mapping rules.
+    //
+    function rename(key, mapper) {
+        return callablep(mapper)?  mapper(key)
+             : /* dictionary? */   mapper[key]
+    }
 
 
 
@@ -135,8 +297,19 @@ void function (root) {
         boo = exports
 
     ///// -Properties under boo ////////////////////////////////////////////////
-    boo.extend = extend
-    boo.merge  = merge
-    boo.clone  = clone
-    boo.proto  = proto
+    boo.extend  = extend
+    boo.merge   = merge
+    boo.clone   = clone
+    boo.compose = compose
+    boo.resolve = resolve
+    boo.proto   = proto
+
+    boo.inernal = { key_collision_error: key_collision_error
+                  , clonablep:           clonablep
+                  , callablep:           callablep
+                  , testablep:           testablep
+                  , take_keyp:           take_keyp
+                  , exclude:             exclude
+                  , keep:                keep
+                  , rename:              rename }
 }(this)
