@@ -1,2 +1,7 @@
 { "name": "boo"
+, "version": "0.1.0"
+, "author": "Quildreen Motta (http://killdream.github.com/)"
+, "description": "Provides utilities for prototypical OO with mixins and trait composition."
+, "repository": { "type": "git"
+                , "url":  "http://github.com/killdream/boo.git" }
 , "main": "./src/boo.js" }
