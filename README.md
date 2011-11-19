@@ -1,57 +1,51 @@
 Boo
 ===
 
-Boo is a minimal javascript library to provide better prototypal inheritance,
-including a very basic trait system.
+Boo provides utilities to structure a program by means of prototypical
+object orientation and object composition, in an easy way. It provides
+you with inheritance, composition and mixin facilities, all packaged in
+a nice API.
 
-
-Downloading
------------
-
-Boo is nicely hosted (and developed) on [Github][]. You can
-[download the lastest snapshot][snapshot] or clone the entire
-repository:
-
-    $ git clone git://github.com/killdream/boo.git
+    var animal = boo.Base.clone({
+      name: 'Unknow'
     
-[Github]:   https://github.com/killdream/boo
-[snapshot]: https://github.com/killdream/boo/zipball/master
+    , say:
+      function say(thing) {
+        return this.name + ': ' + thing }
+    })
+    
+    var cat = animal.clone({
+      init:
+      function init(name) {
+        if (name) this.name = name }
+    })
+    
+    var Nyah = cat.make('Nyan Cat')
+    Nyah.say('Nyan nyan nyan~')
 
 
-Running tests
--------------
+Installing
+----------
 
-You'll need Node.js and [Claire][] to run the test cases. You should get
-Claire automagically while cloning the repository. If you're using git
-though, you'll have to clone it manually.
+With Node.js and NPM, you can do the easy-modo install:
 
-Please refer to the `.hgsub` file in the root directory for the path and
-url for each dependency.
+    $ npm install boo
+    # then require it as usual
+    node> var boo = require('boo')
 
-To run the test suite:
+In the browser, you have to include the script tag pointing to the
+`boo.js` file:
 
-    $ cd tests
-    $ node suite.js
-
-[Claire]: https://github.com/killdream/Claire
-
-
-Documentation
--------------
-
-Currently, there are no docs. Just refer to the source code, as they
-explain the code in great detail ({i,}literate programming, etc)
+    <script src="/path/to/boo.js"></script>
+    <script type="text/javascript">
+      // `boo' is in the global scope now
+    </script>
 
 
 Getting support
 ---------------
 
-- Use the [Github tracker][] to report bugs or request features. Like a
-  boss!
-  
-- Fork, do your changes and send me a pull request if you want to~
-
-- For general support, you can send me an e-mail on quildreen@gmail.com
+Boo uses the [Github tracker][] for tracking bugs and new features.
 
 [Github tracker]: https://github.com/killdream/boo/issues
 
@@ -59,7 +53,10 @@ Getting support
 Licence
 -------
 
-Boo is MIT/X11 licenced. Take a peek at the `LICENCE.txt` file for `less`
-details:
+Boo is licensed under the delicious and permissive [MIT][] licence. You
+can happily copy, share, modify, sell or whatever — refer to the actual
+licence text for `less` information:
 
     $ less LICENCE.txt
+
+[MIT]: https://github.com/killdream/boo/raw/master/LICENCE.txt
