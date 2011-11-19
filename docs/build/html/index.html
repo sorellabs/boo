@@ -1,0 +1,201 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Boo —at a glance— &mdash; Boo 1.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Boo 1.1.0 documentation" href="#" />
+    <link rel="next" title="Overview" href="user/intro.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="user/intro.html" title="Overview"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">Boo 1.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="boo-at-a-glance">
+<h1>Boo —at a glance—<a class="headerlink" href="#boo-at-a-glance" title="Permalink to this headline">¶</a></h1>
+<p>Boo provides <em>easy-modo</em> prototypical inheritance and object composition
+for JavaScript, through mixins and prototype cloning:</p>
+<div class="highlight-js"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">animal</span> <span class="o">=</span> <span class="nx">boo</span><span class="p">.</span><span class="nx">Base</span><span class="p">.</span><span class="nx">clone</span><span class="p">({</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Unknow&#39;</span>
+
+<span class="p">,</span> <span class="nx">say</span><span class="o">:</span>
+  <span class="kd">function</span> <span class="nx">say</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="nx">thing</span> <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="nx">animal</span><span class="p">.</span><span class="nx">clone</span><span class="p">({</span>
+  <span class="nx">init</span><span class="o">:</span>
+  <span class="kd">function</span> <span class="nx">init</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span> <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="kd">var</span> <span class="nx">Nyah</span> <span class="o">=</span> <span class="nx">cat</span><span class="p">.</span><span class="nx">make</span><span class="p">(</span><span class="s1">&#39;Nyan Cat&#39;</span><span class="p">)</span>
+<span class="nx">Nyah</span><span class="p">.</span><span class="nx">say</span><span class="p">(</span><span class="s1">&#39;Nyan nyan nyan~&#39;</span><span class="p">)</span>
+<span class="c1">// =&gt; &#39;Nyan Cat: Nyan nyan nyan~&#39;</span>
+</pre></div>
+</div>
+<div class="section" id="installing">
+<h2>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h2>
+<p>With Node.js and NPM, you can do the easy-modo install:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nv">$ </span>npm install boo
+
+<span class="c"># Then require it as usual</span>
+node&gt; var <span class="nv">boo</span> <span class="o">=</span> require<span class="o">(</span><span class="s1">&#39;boo&#39;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>In the browser, you have to include the script tag pointing to the
+<tt class="docutils literal"><span class="pre">boo.js</span></tt> file:</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/path/to/boo.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+  <span class="c1">// `boo&#39; is in the global scope now</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="platform-support">
+<h2>Platform Support<a class="headerlink" href="#platform-support" title="Permalink to this headline">¶</a></h2>
+<p>Boo should support all ECMAScript 5-compliant platforms. For the legacy
+ones, you&#8217;ll have to provide support for the following methods:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Object.keys</li>
+<li>Object.create</li>
+<li>Object.getPrototypeOf</li>
+<li>Array.prototype.forEach</li>
+<li>Array.prototype.filter</li>
+<li>Array.prototype.indexOf</li>
+</ul>
+</div></blockquote>
+<p>The nice <a class="reference external" href="https://github.com/kriskowal/es5-shim">es5-shim</a> library takes care of handling all of those for
+you.</p>
+</div>
+<div class="section" id="learning-boo">
+<h2>Learning Boo<a class="headerlink" href="#learning-boo" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user/intro.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/mixins.html">Mixins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user/mixins.html#data-objects">Data-objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/mixins.html#conflict-resolution">Conflict resolution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user/clone.html">Clones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/oo.html">Object Orientation</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="support">
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
+<p>Boo uses the <a class="reference external" href="https://github.com/killdream/boo/issues">Github tracker</a> for tracking bugs and new features.</p>
+</div>
+<div class="section" id="licence">
+<h2>Licence<a class="headerlink" href="#licence" title="Permalink to this headline">¶</a></h2>
+<p>Boo is licensed under the delicious and premissive <a class="reference external" href="https://github.com/killdream/boo/raw/master/LICENCE.txt">MIT</a> licence. You
+can happily copy, share, modify, sell or whatever — refer to the actual
+licence text for <tt class="docutils literal"><span class="pre">less</span></tt> information:</p>
+<div class="highlight-js"><div class="highlight"><pre><span class="nx">$</span> <span class="nx">less</span> <span class="nx">LICENCE</span><span class="p">.</span><span class="nx">txt</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Boo —at a glance—</a><ul>
+<li><a class="reference internal" href="#installing">Installing</a></li>
+<li><a class="reference internal" href="#platform-support">Platform Support</a></li>
+<li><a class="reference internal" href="#learning-boo">Learning Boo</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#support">Support</a></li>
+<li><a class="reference internal" href="#licence">Licence</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="user/intro.html"
+                        title="next chapter">Overview</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="user/intro.html" title="Overview"
+             >next</a> |</li>
+        <li><a href="#">Boo 1.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Quildreen Motta.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

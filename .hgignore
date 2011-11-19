@@ -9,4 +9,5 @@ syntax:glob
 dist
 .git
 ignore
-.hyde_deps
+doctrees
+.buildinfo

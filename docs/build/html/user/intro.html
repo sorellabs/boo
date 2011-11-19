@@ -1,0 +1,142 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Overview &mdash; Boo 1.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Boo 1.1.0 documentation" href="../index.html" />
+    <link rel="next" title="Mixins" href="mixins.html" />
+    <link rel="prev" title="Boo —at a glance—" href="../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="mixins.html" title="Mixins"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Boo —at a glance—"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Boo 1.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p><strong>Boo</strong> is an object orientation library that abstracts the semantics of
+prototypical inheritance, as implemented by <em>JavaScript</em>, so they can be
+explored with a more usable interface.</p>
+<p>This aims to make programs both easier to extend and better structured,
+such that they can be more modular and easier to understand for people
+reading the code — one of the main goals for all <strong>OrpheOS</strong> projects.</p>
+<p>The additional expressiveness are mostly syntatic abstractions to the
+already expressive framework for code structuration provided by the
+language, which is that of prototypical inheritance. <strong>Boo</strong> takes that
+very feature and provides a thin layer over it for making it easier to
+define objects in terms of other objects, but also provides a series of
+new primitives to do general object composition — the latter, however,
+poses some overhead on the code since it&#8217;s not supported natively by the
+language.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The document assumes that the reader is familiar with all the
+particularities of JavaScript&#8217;s implementation of prototypical
+inheritance. Although <strong>Boo</strong> itself abstracts prototypical
+inheritance and deals with it in a high-level way, the underlying
+semantics are left untouched, and need to be understood in order to
+structure one&#8217;s code better.</p>
+<p class="last">For an explanation of the semantics in details, you can refer to
+this blog post on the subject: <a class="reference external" href="http://killdream.github.com/blog/2011/10/understanding-javascript-oop/index.html">Understanding JavaScript OOP</a>. There
+are also other takes on JavaScript&#8217;s implementation of prototypical
+OOP, which you may refer to. At any rate, an understanding of the
+underlying semantics — sans constructors — will be assumed
+hereinafter.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">Boo —at a glance—</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mixins.html"
+                        title="next chapter">Mixins</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="mixins.html" title="Mixins"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Boo —at a glance—"
+             >previous</a> |</li>
+        <li><a href="../index.html">Boo 1.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Quildreen Motta.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>
