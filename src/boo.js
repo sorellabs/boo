@@ -36,7 +36,7 @@ void function (root, exports_p) {
   ///// Function obj_p
   // Checks if something is an object, as opposed to a primitive.
   //
-  // Obj :: Any → Bool
+  // obj? :: Any → Bool
   function obj_p(subject) {
     return Object(subject) === subject }
 
@@ -47,7 +47,7 @@ void function (root, exports_p) {
   // ``toData`` method, which is called without arguments
   // and is expected to return an object.
   //
-  // DataObj :: Obj → Bool
+  // data-obj? :: Obj → Bool
   function data_obj_p(subject) {
     return obj_p(subject)
         && typeof subject.toData == 'function' }
@@ -55,7 +55,7 @@ void function (root, exports_p) {
   ///// Function callable_p
   // Checks if the object can be called directly.
   //
-  // Callable :: Obj → Bool
+  // callable? :: Obj → Bool
   function callable_p(subject) {
     return typeof subject == 'function' }
 
@@ -131,7 +131,7 @@ void function (root, exports_p) {
     function make() { var result
       result = inherit(this)
       if (callable_p(result.init))
-        result.init.apply(result, slice.call(arguments))
+        result.init.apply(result, arguments)
 
       return result },
 
