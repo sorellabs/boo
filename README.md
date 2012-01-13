@@ -6,7 +6,7 @@ object orientation and object composition, in an easy way. It provides
 you with inheritance, composition and mixin facilities, all packaged in
 a nice API.
 
-    var animal = boo.Base.clone({
+    var Animal = boo.Base.derive({
       name: 'Unknow'
     
     , say:
@@ -14,14 +14,14 @@ a nice API.
         return this.name + ': ' + thing }
     })
     
-    var cat = animal.clone({
+    var Cat = Animal.derive({
       init:
       function init(name) {
         if (name) this.name = name }
     })
     
-    var Nyah = cat.make('Nyan Cat')
-    Nyah.say('Nyan nyan nyan~')
+    var nyah = Cat.make('Nyan Cat')
+    nyah.say('Nyan nyan nyan~')
 
 
 Installing
@@ -40,6 +40,37 @@ In the browser, you have to include the script tag pointing to the
     <script type="text/javascript">
       // `boo' is in the global scope now
     </script>
+
+
+Testing
+-------
+
+Boo's test cases use [Mocha][] with the BDD assertion module
+[should.js][]. For testing on Node.js, you can just grab the module from
+NPM and run the test cases by issuing `mocha` from the command line:
+
+    $ sudo npm install -g mocha
+    $ mocha
+
+[Mocha]: visionmedia.github.com/mocha/
+[should.js]: https://github.com/visionmedia/should.js
+
+
+Learning
+--------
+
+Boo ships with a [full narrated reference manual][ref], covering the
+concepts and designs you need to know to use the library effectively.
+You can either read it online, or locally — from the file
+:file:`docs/build/html/index.html`. 
+
+Additionally, you can read the following introduction to Boo:
+
+- [Yay for sugary JavaScript OO][intro]
+
+
+[ref]: http://killdream.github.com/boo
+[intro]: http://killdream.github.com/blog/2011/11/for-sugary-object-oriented-js/index.html
 
 
 Getting support
