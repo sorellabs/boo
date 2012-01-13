@@ -25,6 +25,26 @@ describe('Module: boo', function() {
       x.data[0].should.equal(1) })
   })
 
+  describe('merge', function() {
+    it('- Should return merge all mixins in one object', function() {
+      var x = {a: 1}
+      var y = {b: 2}
+      var z = {a: 3}
+      var a = boo.merge(x, y, z)
+      a.a.should.equal(3)
+      a.b.should.equal(2)
+    })
+    it('- Should not modify any mixins', function() {
+      var x = {a: 1}
+      var y = {b: 2}
+      var z = {a: 3}
+      var a = boo.merge(x, y, z)
+      x.a.should.equal(1)
+      y.b.should.equal(2)
+      z.a.should.equal(3)
+    })
+  })
+
   describe('derive', function() {
     it('- Should make a new object inheriting from proto', function() {
       var foo = {a:1}
