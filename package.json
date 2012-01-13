@@ -1,5 +1,5 @@
 { "name":    "boo"
-, "version": "1.1.0"
+, "version": "1.2.0"
 , "author":  "Quildreen Motta (http://killdream.github.com/)"
 , "description": "Prototypical utilities for Object Orientation / Composition"
 , "repository": { "type": "git"
