@@ -1,7 +1,7 @@
-{ "name":    "boo"
-, "version": "1.2.0"
-, "author":  "Quildreen Motta (http://killdream.github.com/)"
+{ "name":        "boo"
+, "version":     "1.2.0"
+, "author":      "Quildreen Motta (http://killdream.github.com/)"
 , "description": "Prototypical utilities for Object Orientation / Composition"
-, "repository": { "type": "git"
-                , "url":  "http://github.com/killdream/boo.git" }
-, "main": "./src/boo.js" }
+, "repository":  { "type": "git"
+                 , "url":  "http://github.com/killdream/boo.git" }
+, "main":        "./src/boo.js" }
