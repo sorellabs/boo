@@ -1,4 +1,4 @@
-/// boo.js --- Prototypical utilities for Object Orientation / Composition
+/// boo.js --- Prototypical utilities
 //
 // Copyright (c) 2011 Quildreen Motta
 //
@@ -22,66 +22,60 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /// Module boo
-void function (root, exports_p) {
-
+void function(root, exports) {
   var slice   = [].slice
     , keys    = Object.keys
     , inherit = Object.create
-    , proto   = Object.getPrototypeOf
 
 
-
-  //// -Interface testing
+  
+  //// - Interfaces -----------------------------------------------------------
 
-  ///// Function obj_p
-  // Checks if something is an object, as opposed to a primitive.
-  //
-  // obj? :: Any → Bool
-  function obj_p(subject) {
-    return Object(subject) === subject }
+  ///// Interface DataObject
+  // :: { "to_data" -> () -> Object }
+
+
+  
+  //// - Helpers --------------------------------------------------------------
 
   ///// Function data_obj_p
-  // Checks if an object implements a mixin factory.
+  // :internal:
+  // Checks if the given subject matches the DataObject interface
   //
-  // A data-object is any object that implements the special
-  // ``toData`` method, which is called without arguments
-  // and is expected to return an object.
-  //
-  // data-obj? :: Obj → Bool
+  // data_obj_p :: Any -> Bool
   function data_obj_p(subject) {
-    return obj_p(subject)
-        && typeof subject.toData == 'function' }
-
-  ///// Function callable_p
-  // Checks if the object can be called directly.
-  //
-  // callable? :: Obj → Bool
-  function callable_p(subject) {
-    return typeof subject == 'function' }
+    return subject != null
+    &&     typeof subject.to_data == 'function' }
 
 
-
-  //// -Object Orientation Utilities
+  ///// Function resolve_mixins
+  // :internal:
+  // Returns the proper mixin for the given object.
+  //
+  // resolve_mixin :: Object -> Object
+  function resolve_mixin(object) {
+    return data_obj_p(object)?  object.to_data()
+    :                           object }
 
-  ///// Function extend
-  // Copies all *own enumerable* properties from the mixin list over to
-  // the target ``object``.
+
+  ///// Function fast_extend
+  // :internal:
+  // Extends the target object with the provided mixins, using a
+  // right-most precedence rule — when a there's a property conflict, the
+  // property defined in the last object wins.
   //
-  // The copying is done in order, from left to right, using right-most
-  // priority — that is, if there's a property conflict, the property
-  // defined in the last mixin is used.
+  // DataObjects are properly handled by the :fun:`resolve_mixin`
+  // function.
   //
-  // Data-objects will be handled accordingly, by allowing them to
-  // return a new instance with the properties that should be copied.
+  // :warning: low-level
+  //    This function is not meant to be called directly from end-user
+  //    code, use the :fun:`extend` function instead.
   //
-  // :warning: side-effects
-  //    The function will modify ``object`` in-place.
-  //
-  // extend :: Obj, [Obj] → Obj
-  function extend(object, mixins) { var i, j, key, len, mixin, props
+  // fast_extend :: Object, [Object | DataObject] -> Object
+  function fast_extend(object, mixins) {
+    var i, j, len, mixin, props, key
     for (i = 0, len = mixins.length; i < len; ++i) {
-      mixin = data_obj_p(mixins[i])?  mixins[i].toData()
-                                   :  mixins[i]
+      mixin = resolve_mixin(mixins[i])
       props = keys(mixin)
       for (j = props.length; j--;) {
         key         = props[j]
@@ -89,94 +83,79 @@ void function (root, exports_p) {
 
     return object }
 
-  ///// Function merge
-  // Merges all the given mixins into a single, fresh object.
-  //
-  // This constructs an entirely new mixin — so, no parent here — by
-  // doing a set-union with all the given mixins. Semantics are the same
-  // as {:fn:extend}.
-  //
-  // merge :: Obj... → Obj
-  function merge() {
-    return extend({}, arguments) }
 
-  ///// Function clone
-  // Creates a new object, inheriting from the given ``[[Prototype]]``.
-  //
-  // The resulting fresh object is also extended with the provided
-  // mixins, if any, from left to right — where properties at right
-  // have higher precedence.
-  //
-  // clone :: Obj, Obj... → Obj
-  function clone(proto) {
-    return extend(inherit(proto), slice.call(arguments, 1)) }
+  
+  //// - Basic primitives -----------------------------------------------------
 
-  //// Function proto
-  // Returns the ``[[Prototype]]`` of the given object.
+  ///// Function extend
+  // Extends the target object with the provided mixins, using a
+  // right-most precedence rule.
   //
-  // proto :: Obj → Obj
-  // :alias: Object.getPrototypeOf
+  // :see-also:
+  //   - fun:`fast_extend` — lower level function.
+  //
+  // extend :: Object, (Object | DataObject)... -> Object
+  function extend(target) {
+    var args = [target]
+    args.push(slice.call(arguments, 1))
+    return fast_extend.apply(null, args) }
 
-
-  //// -Basic objects
+
+  ///// Function derive
+  // Creates a new object inheriting from the given prototype and extends
+  // the new instance with the provided mixins.
+  //
+  // derive :: Object, (Object | DataObject)... -> Object
+  function derive(proto) {
+    return fast_extend(inherit(proto), slice.call(arguments, 1)) }
+
+
+  
+  //// - Root object ----------------------------------------------------------
 
   ///// Object Base
+  // The root object for basing all the OOP code. Provides the previous
+  // primitive combinators in an easy and OOP-way.
   var Base = {
+
     ////// Function make
-    // Creates a new instance of the object, initialising it if the
-    // object provides an ``init`` method.
+    // Constructs new instances of the object the function is being
+    // applied to.
     //
-    // make :: Any... → Obj
+    // If the object provides an ``init`` function, that function is
+    // invoked to do initialisation on the new instance.
+    //
+    // make :: Any... -> Object
     make:
-    function make() { var result
-      result = inherit(this)
-      if (callable_p(result.init))
+    function _make() {
+      var result = inherit(this)
+      if (typeof result.init == 'function')
         result.init.apply(result, arguments)
 
-      return result },
+      return result }
 
-    ////// Function clone
-    // Creates a new object inheriting from this one, and optionally
-    // extending it with additonal objects.
+    ////// Function derive
+    // Constructs a new object that inherits from the object this function
+    // is being applied to, and extends it with the provided mixins.
     //
-    // clone :: Obj... → Obj
-    clone:
-    function clone() {
-      return extend(inherit(this), arguments) }
-  }
+    // derive :: (Object | DataObject)... -> Object
+  , derive:
+    function _derive() {
+      return fast_extend(inherit(this), arguments) }}
 
 
-
-  //// -Exports
-  var old, boo
+  
+  //// - Exports --------------------------------------------------------------
+  exports.extend   = extend
+  exports.derive   = derive
+  exports.Base     = Base
+  exports.internal = { data_obj_p    : data_obj_p
+                     , fast_extend   : fast_extend
+                     , resolve_mixin : resolve_mixin
+                     }
 
-  if (!exports_p) {
-    old = root.boo
-    boo = root.boo = {}
-
-    //// Function make_local
-    // Removes ``boo`` from the global object.
-    //
-    // make-local :: → boo
-    boo.make_local = function() {
-      root.boo = old
-      return boo }}
-  else
-    boo = exports
-
-
-  boo.extend  = extend
-  boo.merge   = merge
-  boo.clone   = clone
-  boo.proto   = proto
-  boo.Base    = Base
-
-  boo.internal = { data_obj_p: data_obj_p
-                 , callable_p: callable_p }
-
-// --
 }
 ( this
-, typeof exports != 'undefined'
+, typeof exports == 'undefined'? this.boo = this.boo || {}
+  /* otherwise, yay modules! */: exports
 )
-// -- boo.js ends here --
