@@ -64,12 +64,12 @@ void function(root, exports) {
   // right-most precedence rule — when a there's a property conflict, the
   // property defined in the last object wins.
   //
-  // DataObjects are properly handled by the :fun:`resolve_mixin`
+  // `DataObject's are properly handled by the `resolve_mixin'
   // function.
   //
   // :warning: low-level
   //    This function is not meant to be called directly from end-user
-  //    code, use the :fun:`extend` function instead.
+  //    code, use the `extend' function instead.
   //
   // fast_extend :: Object, [Object | DataObject] -> Object
   function fast_extend(object, mixins) {
@@ -92,14 +92,24 @@ void function(root, exports) {
   // right-most precedence rule.
   //
   // :see-also:
-  //   - fun:`fast_extend` — lower level function.
+  //   - `fast_extend' — lower level function.
+  //   - `merge'       — pure version.
   //
   // extend :: Object, (Object | DataObject)... -> Object
   function extend(target) {
-    var args = [target]
-    args.push(slice.call(arguments, 1))
-    return fast_extend.apply(null, args) }
+    return fast_extend(target, slice.call(arguments, 1)) }
 
+
+  ///// Function merge
+  // Creates a new object that merges the provided mixins, using a
+  // right-most precedence rule.
+  //
+  // :see-also:
+  //   - `extend' — impure version.
+  //
+  // merge :: (Object | DataObject)... -> Object
+  function merge() {
+    return fast_extend({}, arguments) }
 
   ///// Function derive
   // Creates a new object inheriting from the given prototype and extends
@@ -147,6 +157,7 @@ void function(root, exports) {
   
   //// - Exports --------------------------------------------------------------
   exports.extend   = extend
+  exports.merge    = merge
   exports.derive   = derive
   exports.Base     = Base
   exports.internal = { data_obj_p    : data_obj_p
