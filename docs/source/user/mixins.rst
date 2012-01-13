@@ -16,7 +16,7 @@ objects::
 
    var x = { a: 1 }
    var y = { b: 2 }
-   var z = boo.extend({ c: 3 }, [x, y])
+   var z = boo.extend({ c: 3 }, x, y)
    console.log(z)
    // => { a: 1, b: 2, c: 3 }
 
@@ -76,7 +76,7 @@ conventional interface — an object with an ``items`` array and a numeric
 And with this basic setup we can start creating new objects by composing
 the two. For example, a new ring is just::
 
-  var my_ring = boo.extend({}, [ring, default_ring])
+  var my_ring = boo.extend({}, ring, default_ring)
   my_ring.push(1)
   console.log(default_ring.items)
   // => [ 1 ]
@@ -103,7 +103,7 @@ exposed, by creating a new object::
       return { items: [], max: this.max }}
   }
 
-  var my_ring = boo.extend({}, [ring, default_ring])
+  var my_ring = boo.extend({}, ring, default_ring)
   my_ring.push(1)
   console.log(default_ring.items)
   // => [ ]

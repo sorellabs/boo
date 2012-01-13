@@ -7,13 +7,13 @@ behaviours but different identities. **Boo** provides a thin layer on
 top of these semantics for making defining objects in terms of other
 objects easier and sweeter.
 
-The ``clone`` method takes care of setting the *[[Prototoype]]* link of
+The ``derive`` method takes care of setting the *[[Prototoype]]* link of
 an object, and optionally extending the new instance with some
 :doc:`mixins <mixins>`. The advantage is that property inheritance is
 shared and delegative, which makes it both efficient and extensible:
 
 Since inheritance and instantiation have no real difference in a
-prototypical language, ``clone`` is used for both. As such, we could
+prototypical language, ``derive`` is used for both. As such, we could
 easily make a ``Token`` object that spawns new instances freely. The way
 ``this`` works in JavaScript makes these particularly sweet::
 
@@ -22,9 +22,9 @@ easily make a ``Token`` object that spawns new instances freely. The way
     // object and extending it with some behaviour. We also do some
     // processing to set the parent-chain of the tokens.
     make: function(value, parent) { var instance
-      // Instantiation is done by the clone method, it'll clone whatever
-      // thing the `make' function was applied to.
-      instance = boo.clone(this, {
+      // Instantiation is done by the derive method, it'll clone whatever
+      // thing the `make' function was applied to, and extend that thing.
+      instance = boo.derive(this, {
         value:    value
       , children: [] })
 
@@ -67,7 +67,7 @@ And then we can define other objects that extend the behaviour of a
 ``Token``, by the same means we used to create new instances of
 ``Token``::
 
-  var number = boo.clone(token, {
+  var number = boo.derive(token, {
     toString: function() {
       return '#<Number ' + this.value + '>' }
   })

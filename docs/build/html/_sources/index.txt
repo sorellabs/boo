@@ -4,7 +4,7 @@ Boo —at a glance—
 Boo provides *easy-modo* prototypical inheritance and object composition
 for JavaScript, through mixins and prototype cloning::
 
-    var animal = boo.Base.clone({
+    var Animal = boo.Base.derive({
       name: 'Unknow'
     
     , say:
@@ -12,14 +12,14 @@ for JavaScript, through mixins and prototype cloning::
         return this.name + ': ' + thing }
     })
     
-    var cat = animal.clone({
+    var Cat = Animal.derive({
       init:
       function init(name) {
         if (name) this.name = name }
     })
     
-    var Nyah = cat.make('Nyan Cat')
-    Nyah.say('Nyan nyan nyan~')
+    var nyah = Cat.make('Nyan Cat')
+    nyah.say('Nyan nyan nyan~')
     // => 'Nyan Cat: Nyan nyan nyan~'
 
 
@@ -32,7 +32,6 @@ With Node.js and NPM, you can do the easy-modo install:
 .. code-block:: sh
 
     $ npm install boo
-
     # Then require it as usual
     node> var boo = require('boo')
 

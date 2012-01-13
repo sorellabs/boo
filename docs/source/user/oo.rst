@@ -3,40 +3,40 @@ Object Orientation
 
 The last layer of abstraction defined by ``boo`` is a layer on top of
 the previously discussed primitives: :doc:`extend <mixins>` and
-:doc:`clone <clone>`. This provides a simple way for developers to
+:doc:`derive <clone>`. This provides a simple way for developers to
 structure their code in terms of objects, composition and inheritance.
 
 The ``boo.Base`` object provides the developer with two simple methods
-``clone``, to inherit from the object as you saw in the :doc:`clone`
+``derive``, to inherit from the object as you saw in the :doc:`clone`
 section; and ``make``, which constructs new instances of the object, and
 allowing for separate initialisation.
 
 This allows objects to be easily defined in terms of other objects, by
 delegative inheritance::
 
-  var Animal = boo.Base.clone({
+  var Animal = boo.Base.derive({
     name: 'Unknow'
   , say:  function(thing){ return this.name + ': ' + thing }
   })
 
-  var Cat = Animal.clone({
+  var Cat = Animal.derive({
     init: function(name) {
       this.name = name }
   })
 
-  var Nyan = Cat.make('Nyan Cat')
-  Nyan.say('Nyan nyan nyan~')
+  var nyan = Cat.make('Nyan Cat')
+  nyan.say('Nyan nyan nyan~')
   // => 'Nyan Cat: Nyan nyan nyan~
 
-Where the ``clone`` method is the same as the previously discussed, but
+Where the ``derive`` method is the same as the previously discussed, but
 relying on ``this`` rather than taking a parent. This allows for code to
-be inherited easily, and shared easily. Note that ``clone`` and ``make``
+be inherited easily, and shared easily. Note that ``derive`` and ``make``
 both create a brand new object with the *[[Prototype]]* of whatever
 thing they're applied to.
 
 So, you could write::
 
-  var OtherNyan = Nyan.clone()
+  var OtherNyan = nyan.clone()
 
   OtherNyan.isPrototypeOf(Nyan)
   // => True

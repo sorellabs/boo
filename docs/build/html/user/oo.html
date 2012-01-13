@@ -57,36 +57,36 @@
 <h1>Object Orientation<a class="headerlink" href="#object-orientation" title="Permalink to this headline">¶</a></h1>
 <p>The last layer of abstraction defined by <tt class="docutils literal"><span class="pre">boo</span></tt> is a layer on top of
 the previously discussed primitives: <a class="reference internal" href="mixins.html"><em>extend</em></a> and
-<a class="reference internal" href="clone.html"><em>clone</em></a>. This provides a simple way for developers to
+<a class="reference internal" href="clone.html"><em>derive</em></a>. This provides a simple way for developers to
 structure their code in terms of objects, composition and inheritance.</p>
 <p>The <tt class="docutils literal"><span class="pre">boo.Base</span></tt> object provides the developer with two simple methods
-<tt class="docutils literal"><span class="pre">clone</span></tt>, to inherit from the object as you saw in the <a class="reference internal" href="clone.html"><em>Clones</em></a>
+<tt class="docutils literal"><span class="pre">derive</span></tt>, to inherit from the object as you saw in the <a class="reference internal" href="clone.html"><em>Clones</em></a>
 section; and <tt class="docutils literal"><span class="pre">make</span></tt>, which constructs new instances of the object, and
 allowing for separate initialisation.</p>
 <p>This allows objects to be easily defined in terms of other objects, by
 delegative inheritance:</p>
-<div class="highlight-js"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">Animal</span> <span class="o">=</span> <span class="nx">boo</span><span class="p">.</span><span class="nx">Base</span><span class="p">.</span><span class="nx">clone</span><span class="p">({</span>
+<div class="highlight-js"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">Animal</span> <span class="o">=</span> <span class="nx">boo</span><span class="p">.</span><span class="nx">Base</span><span class="p">.</span><span class="nx">derive</span><span class="p">({</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Unknow&#39;</span>
 <span class="p">,</span> <span class="nx">say</span><span class="o">:</span>  <span class="kd">function</span><span class="p">(</span><span class="nx">thing</span><span class="p">){</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="nx">thing</span> <span class="p">}</span>
 <span class="p">})</span>
 
-<span class="kd">var</span> <span class="nx">Cat</span> <span class="o">=</span> <span class="nx">Animal</span><span class="p">.</span><span class="nx">clone</span><span class="p">({</span>
+<span class="kd">var</span> <span class="nx">Cat</span> <span class="o">=</span> <span class="nx">Animal</span><span class="p">.</span><span class="nx">derive</span><span class="p">({</span>
   <span class="nx">init</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span> <span class="p">}</span>
 <span class="p">})</span>
 
-<span class="kd">var</span> <span class="nx">Nyan</span> <span class="o">=</span> <span class="nx">Cat</span><span class="p">.</span><span class="nx">make</span><span class="p">(</span><span class="s1">&#39;Nyan Cat&#39;</span><span class="p">)</span>
-<span class="nx">Nyan</span><span class="p">.</span><span class="nx">say</span><span class="p">(</span><span class="s1">&#39;Nyan nyan nyan~&#39;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">nyan</span> <span class="o">=</span> <span class="nx">Cat</span><span class="p">.</span><span class="nx">make</span><span class="p">(</span><span class="s1">&#39;Nyan Cat&#39;</span><span class="p">)</span>
+<span class="nx">nyan</span><span class="p">.</span><span class="nx">say</span><span class="p">(</span><span class="s1">&#39;Nyan nyan nyan~&#39;</span><span class="p">)</span>
 <span class="c1">// =&gt; &#39;Nyan Cat: Nyan nyan nyan~</span>
 </pre></div>
 </div>
-<p>Where the <tt class="docutils literal"><span class="pre">clone</span></tt> method is the same as the previously discussed, but
+<p>Where the <tt class="docutils literal"><span class="pre">derive</span></tt> method is the same as the previously discussed, but
 relying on <tt class="docutils literal"><span class="pre">this</span></tt> rather than taking a parent. This allows for code to
-be inherited easily, and shared easily. Note that <tt class="docutils literal"><span class="pre">clone</span></tt> and <tt class="docutils literal"><span class="pre">make</span></tt>
+be inherited easily, and shared easily. Note that <tt class="docutils literal"><span class="pre">derive</span></tt> and <tt class="docutils literal"><span class="pre">make</span></tt>
 both create a brand new object with the <em>[[Prototype]]</em> of whatever
 thing they&#8217;re applied to.</p>
 <p>So, you could write:</p>
-<div class="highlight-js"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">OtherNyan</span> <span class="o">=</span> <span class="nx">Nyan</span><span class="p">.</span><span class="nx">clone</span><span class="p">()</span>
+<div class="highlight-js"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">OtherNyan</span> <span class="o">=</span> <span class="nx">nyan</span><span class="p">.</span><span class="nx">clone</span><span class="p">()</span>
 
 <span class="nx">OtherNyan</span><span class="p">.</span><span class="nx">isPrototypeOf</span><span class="p">(</span><span class="nx">Nyan</span><span class="p">)</span>
 <span class="c1">// =&gt; True</span>

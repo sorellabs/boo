@@ -64,12 +64,12 @@ making a brand new instance out of another instance, with the same
 behaviours but different identities. <strong>Boo</strong> provides a thin layer on
 top of these semantics for making defining objects in terms of other
 objects easier and sweeter.</p>
-<p>The <tt class="docutils literal"><span class="pre">clone</span></tt> method takes care of setting the <em>[[Prototoype]]</em> link of
+<p>The <tt class="docutils literal"><span class="pre">derive</span></tt> method takes care of setting the <em>[[Prototoype]]</em> link of
 an object, and optionally extending the new instance with some
 <a class="reference internal" href="mixins.html"><em>mixins</em></a>. The advantage is that property inheritance is
 shared and delegative, which makes it both efficient and extensible:</p>
 <p>Since inheritance and instantiation have no real difference in a
-prototypical language, <tt class="docutils literal"><span class="pre">clone</span></tt> is used for both. As such, we could
+prototypical language, <tt class="docutils literal"><span class="pre">derive</span></tt> is used for both. As such, we could
 easily make a <tt class="docutils literal"><span class="pre">Token</span></tt> object that spawns new instances freely. The way
 <tt class="docutils literal"><span class="pre">this</span></tt> works in JavaScript makes these particularly sweet:</p>
 <div class="highlight-js"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="p">{</span>
@@ -77,9 +77,9 @@ easily make a <tt class="docutils literal"><span class="pre">Token</span></tt> o
   <span class="c1">// object and extending it with some behaviour. We also do some</span>
   <span class="c1">// processing to set the parent-chain of the tokens.</span>
   <span class="nx">make</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">parent</span><span class="p">)</span> <span class="p">{</span> <span class="kd">var</span> <span class="nx">instance</span>
-    <span class="c1">// Instantiation is done by the clone method, it&#39;ll clone whatever</span>
-    <span class="c1">// thing the `make&#39; function was applied to.</span>
-    <span class="nx">instance</span> <span class="o">=</span> <span class="nx">boo</span><span class="p">.</span><span class="nx">clone</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="p">{</span>
+    <span class="c1">// Instantiation is done by the derive method, it&#39;ll clone whatever</span>
+    <span class="c1">// thing the `make&#39; function was applied to, and extend that thing.</span>
+    <span class="nx">instance</span> <span class="o">=</span> <span class="nx">boo</span><span class="p">.</span><span class="nx">derive</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="p">{</span>
       <span class="nx">value</span><span class="o">:</span>    <span class="nx">value</span>
     <span class="p">,</span> <span class="nx">children</span><span class="o">:</span> <span class="p">[]</span> <span class="p">})</span>
 
@@ -122,7 +122,7 @@ describe itself and all of its children:</p>
 <p>And then we can define other objects that extend the behaviour of a
 <tt class="docutils literal"><span class="pre">Token</span></tt>, by the same means we used to create new instances of
 <tt class="docutils literal"><span class="pre">Token</span></tt>:</p>
-<div class="highlight-js"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">number</span> <span class="o">=</span> <span class="nx">boo</span><span class="p">.</span><span class="nx">clone</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span> <span class="p">{</span>
+<div class="highlight-js"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">number</span> <span class="o">=</span> <span class="nx">boo</span><span class="p">.</span><span class="nx">derive</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span> <span class="p">{</span>
   <span class="nx">toString</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">return</span> <span class="s1">&#39;#&lt;Number &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="s1">&#39;&gt;&#39;</span> <span class="p">}</span>
 <span class="p">})</span>
