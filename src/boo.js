@@ -24,19 +24,19 @@
 /// Module boo
 void function(root, exports) {
   var slice   = [].slice
-    , keys    = Object.keys
-    , inherit = Object.create
+  var keys    = Object.keys
+  var inherit = Object.create
 
 
   
-  //// - Interfaces -----------------------------------------------------------
+  //// -- Interfaces ----------------------------------------------------------
 
   ///// Interface DataObject
   // :: { "to_data" -> () -> Object }
 
 
   
-  //// - Helpers --------------------------------------------------------------
+  //// -- Helpers -------------------------------------------------------------
 
   ///// Function data_obj_p
   // :internal:
@@ -55,7 +55,7 @@ void function(root, exports) {
   // resolve_mixin :: Object -> Object
   function resolve_mixin(object) {
     return data_obj_p(object)?  object.to_data()
-    :                           object }
+    :      /* otherwise */      object }
 
 
   ///// Function fast_extend
@@ -85,7 +85,7 @@ void function(root, exports) {
 
 
   
-  //// - Basic primitives -----------------------------------------------------
+  //// -- Basic primitives ----------------------------------------------------
 
   ///// Function extend
   // Extends the target object with the provided mixins, using a
@@ -111,6 +111,7 @@ void function(root, exports) {
   function merge() {
     return fast_extend({}, arguments) }
 
+
   ///// Function derive
   // Creates a new object inheriting from the given prototype and extends
   // the new instance with the provided mixins.
@@ -121,7 +122,7 @@ void function(root, exports) {
 
 
   
-  //// - Root object ----------------------------------------------------------
+  //// -- Root object ---------------------------------------------------------
 
   ///// Object Base
   // The root object for basing all the OOP code. Provides the previous
@@ -155,7 +156,7 @@ void function(root, exports) {
 
 
   
-  //// - Exports --------------------------------------------------------------
+  //// -- Exports -------------------------------------------------------------
   exports.extend   = extend
   exports.merge    = merge
   exports.derive   = derive
