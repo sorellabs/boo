@@ -23,9 +23,18 @@
 
 /// Module boo
 void function(root, exports) {
-  var slice   = [].slice
-  var keys    = Object.keys
-  var inherit = Object.create
+  var slice        = [].slice
+  var keys         = Object.keys
+  var inherit      = Object.create
+  var define       = Object.defineProperty
+  var descriptor   = Object.getOwnPropertyDescriptor
+  var has_getter_p = function () {
+                       try {
+                         return true === Object.create( {}
+                                                      , { x: { get:
+                                                               function(){
+                                                                 return true }}}).x }
+                       catch(e){ return false }}()
 
 
   
@@ -37,6 +46,18 @@ void function(root, exports) {
 
   
   //// -- Helpers -------------------------------------------------------------
+
+  ///// Function copy_property
+  // :internal:
+  // Copies a property from `source' to `target'.
+  //
+  // copy_property! :: Object, target:Object*, String -> target
+  function copy_property(source, target, property) {
+    !has_getter_p?     target[property] = source[property]
+    : /* otherwise */  define(target, property, descriptor(source, property))
+
+    return target
+  }
 
   ///// Function data_obj_p
   // :internal:
@@ -79,7 +100,7 @@ void function(root, exports) {
       props = keys(mixin)
       for (j = props.length; j--;) {
         key         = props[j]
-        object[key] = mixin[key] }}
+        copy_property(mixin, object, key) }}
 
     return object }
 
@@ -164,10 +185,11 @@ void function(root, exports) {
   exports.internal = { data_obj_p    : data_obj_p
                      , fast_extend   : fast_extend
                      , resolve_mixin : resolve_mixin
+                     , copy_property : copy_property
                      }
 
 }
 ( this
-, typeof exports == 'undefined'? this.boo = this.boo || {}
-  /* otherwise, yay modules! */: exports
+, typeof exports == 'undefined'?  this.boo = this.boo || {}
+  /* otherwise, yay modules! */:  exports
 )
