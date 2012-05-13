@@ -1,3 +1,5 @@
+.. title:: Discover Boo › Mixins
+
 Mixins
 ======
 

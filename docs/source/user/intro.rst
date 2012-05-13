@@ -1,3 +1,5 @@
+.. title:: Discover Boo › Overview
+
 Overview
 ========
 
@@ -34,10 +36,6 @@ language.
    underlying semantics — sans constructors — will be assumed
    hereinafter.
 
+
+
 .. _Understanding JavaScript OOP: http://killdream.github.com/blog/2011/10/understanding-javascript-oop/index.html
-
-
-
-
-
-

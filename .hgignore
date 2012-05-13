@@ -11,3 +11,5 @@ dist
 ignore
 doctrees
 .buildinfo
+build
+npm-debug.log
