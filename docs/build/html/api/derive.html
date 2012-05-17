@@ -1,0 +1,253 @@
+
+
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>λ derive() &mdash; Boo v1.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/screen.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Boo v1.1.0 documentation" href="../index.html" />
+    <link rel="up" title="{} boo" href="boo.html" />
+    <link rel="next" title="{} Base" href="base.html" />
+    <link rel="prev" title="λ merge()" href="merge.html" /> 
+  </head>
+  <body>
+   <div id="header">
+     <h1 class="project-name"><a href="../index.html">Boo</a></h1>
+     <div class="project-version">version 1.1.0</div>
+     <div class="chapter-wrapper">
+       <h2 class="chapter">
+           <a href="index.html"
+              >API Reference</a>
+            › 
+           <a href="boo.html"accesskey="U"
+              >{} boo</a>
+            ›               
+         λ derive()
+       </h2>
+     </div>
+   </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="derive">
+<h1>λ derive()<a class="headerlink" href="#derive" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="boo.derive">
+<tt class="descclassname">boo.</tt><tt class="descname">derive</tt><big>(</big><em>prototype</em>, <em>sources...</em><big>)</big><a class="headerlink" href="#boo.derive" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-haskell"><div class="highlight"><pre><span class="nf">derive</span> <span class="ow">::</span> <span class="kt">Object</span><span class="p">,</span> <span class="p">(</span><span class="kt">Object</span> <span class="o">|</span> <span class="kt">DataObject</span><span class="p">)</span><span class="o">...</span> <span class="ow">-&gt;</span> <span class="kt">Object</span>
+</pre></div>
+</div>
+<p>Creates a new object inheriting from the given prototype, and extends
+the new instance with the provided <em>mixins</em>.</p>
+</dd></dl>
+
+<p>This function works as a higher-level alternative to the standard
+<a class="reference external" href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/create">Object.create</a> function. Instead of passing an object with property
+descriptors as the second parameter, you may pass any number of plain
+JavaScript objects, which will have their <em>own enumerable</em> properties copied
+over to the new instance.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">say</span><span class="o">:</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">thing</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="nx">thing</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">Sophie</span> <span class="o">=</span> <span class="nx">boo</span><span class="p">.</span><span class="nx">derive</span><span class="p">(</span><span class="nx">Person</span><span class="p">,</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Sophie&#39;</span>
+<span class="p">})</span>
+
+<span class="nx">Sophie</span><span class="p">.</span><span class="nx">say</span><span class="p">(</span><span class="s1">&#39;hello.&#39;</span><span class="p">)</span>
+<span class="c1">// =&gt; &#39;Sophie: hello.&#39;</span>
+</pre></div>
+</div>
+<div class="section" id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">derive</span></tt> fills the hole left by <tt class="docutils literal"><span class="pre">Object.create</span></tt> for the end-user, who does
+not care about setting every one of their properties&#8217; flags. As such,
+<tt class="docutils literal"><span class="pre">derive</span></tt> provides a lightweight of creating a new object, setting its
+<em>[[Prototype]]</em> slot and initialising it with properties, but doesn&#8217;t give the
+user any additional power — all properties will be <em>enumerable</em>, <em>configurable</em> and
+<em>writable</em>.</p>
+<p>Only <em>own enumerable</em> properties from the <tt class="docutils literal"><span class="pre">sources</span></tt> is copied over, and
+conflict resolution works in the same manner as <a class="reference internal" href="extend.html"><em>extend()&#8217;s</em></a>.</p>
+</div>
+<div class="section" id="tutorials-and-examples">
+<h2>Tutorials and examples<a class="headerlink" href="#tutorials-and-examples" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://killdream.github.com/blog/2011/10/understanding-javascript-oop/index.html#sec-3">Understanding JavaScript OOP</a> describes JavaScript&#8217;s particular
+implementation of Object Orientation — the prototypical model, — which is
+required to understand the implications of using <tt class="docutils literal"><span class="pre">derive</span></tt>.</li>
+<li>The <a class="reference internal" href="../user/oo.html"><em>Object Orientation</em></a> chapter in the <a class="reference internal" href="../user/index.html"><em>Discover Boo</em></a>
+reference describes the usage and implications of <tt class="docutils literal"><span class="pre">derive</span></tt> at length.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="related-functionality">
+<h2>Related functionality<a class="headerlink" href="#related-functionality" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><a class="reference internal" href="extend.html"><em>λ extend()</em></a></dt>
+<dd>The core implementation of <tt class="docutils literal"><span class="pre">derive's</span></tt> instance initialisation.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+    <form class="search"
+          action="../search.html"
+          method="get">
+      <input type="text" name="q" size="18" 
+             placeholder="Search the docs..." />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+<div id="toc">
+  <ul>
+<li><a class="reference internal" href="#">λ derive()</a><ul>
+<li><a class="reference internal" href="#limitations">Limitations</a></li>
+<li><a class="reference internal" href="#tutorials-and-examples">Tutorials and examples</a></li>
+<li><a class="reference internal" href="#related-functionality">Related functionality</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+ <div id="footer">
+   <ul class="panel-links">
+     <li>
+       <a href="../index.html" accesskey="H">Home</a>
+     </li>
+     <li>
+       <a href="../search.html" accesskey="S">Search</a>
+     </li>
+     <li>
+       <a href="../genindex.html" accesskey="I">Index</a>
+     </li>
+     
+     <li>
+       <a href="merge.html"
+          title="previous chapter"
+          accesskey="P">‹ Previous</a>
+     </li>
+     
+     
+     <li>
+       <a href="../_sources/api/derive.txt"
+          rel="nofollow">Source</a>
+     </li>
+     
+     
+     <li>
+       <a href="base.html"
+          title="next chapter"
+          accesskey="N">Next ›</a>
+     </li>
+     
+   </ul>
+   <div class="copyright">
+     <span class="copy-info">
+       
+         &copy; 2011, Quildreen Motta
+       
+     </span>
+     <span class="gen-info">
+       
+         Hacked on <a href="https://github.com/killdream/caffeine-theme">C<sub>8</sub>H<sub>10</sub>N<sub>4</sub>O<sub>2</sub></a> + <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7
+       
+     </span>
+   </div>
+ </div>
+
+<script>
+void function($) {
+  var sidebar   = $('.sphinxsidebar')
+  var sidebar_y = sidebar.offset().top
+  var breath    = $('#footer').height() * 2 + 20
+  var toc       = []
+
+
+  // Maps a reference to a (referedOffset, referee) tuple
+  // with_distance :: jQuery -> [Number, jQuery]
+  function with_distance(e) {
+    return { offset: $($(e).attr('href')).offset().top
+           , item:   $(e) } }
+
+  // Highlights the current active topic, based on the given offset
+  // highlight_current_topic :: [(Number, jQuery)], Number -> ()
+  function highlight_current_topic(topics, offset) {
+    var active = topics[0]?  topics[0].item : $()
+    topics.forEach(function(e){ e.item.removeClass('active') })
+    topics.every(function(e) {
+      if (e.offset <= offset)  return active = e.item  })
+    active.addClass('active') }
+
+  // Normalises the sidebar positioning for readability depending on the offset
+  // normalise_sidebar :: Number, Number, Number -> ()
+  function normalise_sidebar(offset, height, breath) {
+    if (offset > sidebar_y)
+      sidebar.css({ position: 'fixed'
+                  , top: '10px'
+                  , height: height - breath
+                  , width: '210px' })
+    else
+      sidebar.css({ position: 'static'
+                  , top: 'auto'
+                  , height: 'auto'
+                  , width: '200px' })}
+                      
+
+  $(window).bind('scroll', function() {
+    normalise_sidebar(window.scrollY, window.innerHeight, breath)
+    highlight_current_topic(toc, window.scrollY)
+  })
+
+  $(window).bind('resize', function() {
+    if (sidebar.css('position') == 'fixed')
+      sidebar.height(window.innerHeight - breath)
+  })
+
+  $(window).bind('load', function() {
+    toc = $('.sphinxsidebar #toc ul ul a.reference.internal').toArray()
+                                                             .map(with_distance) })
+
+}(jQuery)
+</script>
+
+  </body>
+</html>

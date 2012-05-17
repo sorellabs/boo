@@ -1,0 +1,205 @@
+
+
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Discover Boo &mdash; Boo v1.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/screen.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Boo v1.1.0 documentation" href="../index.html" />
+    <link rel="next" title="Overview" href="intro.html" />
+    <link rel="prev" title="Boo —at a glance—" href="../index.html" /> 
+  </head>
+  <body>
+   <div id="header">
+     <h1 class="project-name"><a href="../index.html">Boo</a></h1>
+     <div class="project-version">version 1.1.0</div>
+     <div class="chapter-wrapper">
+       <h2 class="chapter">              
+         Discover Boo
+       </h2>
+     </div>
+   </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="discover-boo">
+<h1>Discover Boo<a class="headerlink" href="#discover-boo" title="Permalink to this headline">¶</a></h1>
+<p>This document will guide you through the concepts abstracted by the
+<strong>Boo</strong> library, so you can leverage them to better structure your
+code-base.</p>
+<div class="section" id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mixins.html">Mixins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mixins.html#data-objects">Data-objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mixins.html#conflict-resolution">Conflict resolution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="clone.html">Clones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oo.html">Object Orientation</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+    <form class="search"
+          action="../search.html"
+          method="get">
+      <input type="text" name="q" size="18" 
+             placeholder="Search the docs..." />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+<div id="toc">
+  <ul>
+<li><a class="reference internal" href="#">Discover Boo</a><ul>
+<li><a class="reference internal" href="#table-of-contents">Table of Contents</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+ <div id="footer">
+   <ul class="panel-links">
+     <li>
+       <a href="../index.html" accesskey="H">Home</a>
+     </li>
+     <li>
+       <a href="../search.html" accesskey="S">Search</a>
+     </li>
+     <li>
+       <a href="../genindex.html" accesskey="I">Index</a>
+     </li>
+     
+     <li>
+       <a href="../index.html"
+          title="previous chapter"
+          accesskey="P">‹ Previous</a>
+     </li>
+     
+     
+     <li>
+       <a href="../_sources/user/index.txt"
+          rel="nofollow">Source</a>
+     </li>
+     
+     
+     <li>
+       <a href="intro.html"
+          title="next chapter"
+          accesskey="N">Next ›</a>
+     </li>
+     
+   </ul>
+   <div class="copyright">
+     <span class="copy-info">
+       
+         &copy; 2011, Quildreen Motta
+       
+     </span>
+     <span class="gen-info">
+       
+         Hacked on <a href="https://github.com/killdream/caffeine-theme">C<sub>8</sub>H<sub>10</sub>N<sub>4</sub>O<sub>2</sub></a> + <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7
+       
+     </span>
+   </div>
+ </div>
+
+<script>
+void function($) {
+  var sidebar   = $('.sphinxsidebar')
+  var sidebar_y = sidebar.offset().top
+  var breath    = $('#footer').height() * 2 + 20
+  var toc       = []
+
+
+  // Maps a reference to a (referedOffset, referee) tuple
+  // with_distance :: jQuery -> [Number, jQuery]
+  function with_distance(e) {
+    return { offset: $($(e).attr('href')).offset().top
+           , item:   $(e) } }
+
+  // Highlights the current active topic, based on the given offset
+  // highlight_current_topic :: [(Number, jQuery)], Number -> ()
+  function highlight_current_topic(topics, offset) {
+    var active = topics[0]?  topics[0].item : $()
+    topics.forEach(function(e){ e.item.removeClass('active') })
+    topics.every(function(e) {
+      if (e.offset <= offset)  return active = e.item  })
+    active.addClass('active') }
+
+  // Normalises the sidebar positioning for readability depending on the offset
+  // normalise_sidebar :: Number, Number, Number -> ()
+  function normalise_sidebar(offset, height, breath) {
+    if (offset > sidebar_y)
+      sidebar.css({ position: 'fixed'
+                  , top: '10px'
+                  , height: height - breath
+                  , width: '210px' })
+    else
+      sidebar.css({ position: 'static'
+                  , top: 'auto'
+                  , height: 'auto'
+                  , width: '200px' })}
+                      
+
+  $(window).bind('scroll', function() {
+    normalise_sidebar(window.scrollY, window.innerHeight, breath)
+    highlight_current_topic(toc, window.scrollY)
+  })
+
+  $(window).bind('resize', function() {
+    if (sidebar.css('position') == 'fixed')
+      sidebar.height(window.innerHeight - breath)
+  })
+
+  $(window).bind('load', function() {
+    toc = $('.sphinxsidebar #toc ul ul a.reference.internal').toArray()
+                                                             .map(with_distance) })
+
+}(jQuery)
+</script>
+
+  </body>
+</html>
