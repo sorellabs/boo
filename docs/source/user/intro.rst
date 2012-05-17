@@ -1,7 +1,5 @@
-.. title:: Discover Boo › Overview
-
 Overview
-========
+********
 
 **Boo** is an object orientation library that abstracts the semantics of
 prototypical inheritance, as implemented by *JavaScript*, so they can be

@@ -1,7 +1,7 @@
-.. title:: Discover Boo › Object Orientation
+.. index:: object orientation, prototypical
 
 Object Orientation
-==================
+******************
 
 The last layer of abstraction defined by ``boo`` is a layer on top of
 the previously discussed primitives: :doc:`extend <mixins>` and

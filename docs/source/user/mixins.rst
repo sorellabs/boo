@@ -1,7 +1,7 @@
-.. title:: Discover Boo › Mixins
+.. index:: mixin, extend
 
 Mixins
-======
+******
 
 The first level of abstraction defined in **Boo** is carried by mixins,
 which we define as parent-less objects that can be copied into other
@@ -31,8 +31,10 @@ However, the ``extend`` method, and those who build upon it have some
 particularities that we will discuss in the following sections.
 
 
+.. index:: data-objects
+
 Data-objects
-''''''''''''
+============
 
 As you should know, if you set an *Object* as the value of a property
 slot in JavaScript, that only makes a shallow copy of the *Object*. That
@@ -111,8 +113,10 @@ exposed, by creating a new object::
   // => [ ]
 
 
+.. index:: conflict resolution
+
 Conflict resolution
-'''''''''''''''''''
+===================
 
 When mixing objects in the naivë way, naming conflicts may arise. For
 example, if one attempted to merge a self-implemented ``list`` with

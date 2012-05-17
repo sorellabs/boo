@@ -22,7 +22,15 @@ Guides
         A quick reference on the minimal Boo's API, including plenty of
         usage examples and cross-references.
 
+.. toctree::
+   :hidden:
+ 
+   user/index
+   api/index
 
+
+
+.. index:: installing, downloading
 
 Installing
 ----------
@@ -48,6 +56,8 @@ In the browser, you have to include the script tag pointing to the
     </script>
 
 
+
+.. index:: platform support
 
 Platform Support
 ----------------
@@ -85,6 +95,8 @@ you.
 
 
 
+.. index:: support, tracker, issues
+
 Support
 -------
 
@@ -93,6 +105,8 @@ Boo uses the `Github tracker`_ for tracking bugs and new features.
 .. _Github tracker: https://github.com/killdream/boo/issues
 
 
+
+.. index:: licence, license
 
 Licence
 -------

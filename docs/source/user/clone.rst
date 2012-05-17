@@ -1,7 +1,7 @@
-.. title:: Discover Boo › Clones
+.. index:: clone, derive, delegation, inheritance
 
 Clones
-======
+******
 
 In prototypical object-oriented languages, *cloning* is the act of
 making a brand new instance out of another instance, with the same
