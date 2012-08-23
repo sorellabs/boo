@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/killdream/boo.png)](http://travis-ci.org/killdream/boo)
 Boo
 ===
 
