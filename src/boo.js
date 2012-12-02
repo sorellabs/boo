@@ -1,6 +1,6 @@
-/// boo.js --- Prototypical utilities
+/// boo.js --- Base primitives for prototypical OO
 //
-// Copyright (c) 2011 Quildreen Motta
+// Copyright (c) 2011 The Orphoundation
 //
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation files
@@ -23,6 +23,8 @@
 
 /// Module boo
 void function(root, exports) {
+
+  //// -- Aliases -------------------------------------------------------------
   var slice        = [].slice
   var keys         = Object.keys
   var inherit      = Object.create
@@ -49,7 +51,7 @@ void function(root, exports) {
 
   ///// Function copy_property
   // :internal:
-  // Copies a property from `source' to `target'.
+  // Copies a property from ``source`' to ``target`'.
   //
   // copy_property! :: Object, target:Object*, String -> target
   function copy_property(source, target, property) {
@@ -61,7 +63,7 @@ void function(root, exports) {
 
   ///// Function data_obj_p
   // :internal:
-  // Checks if the given subject matches the DataObject interface
+  // Checks if the given subject matches the ``DataObject`` interface
   //
   // data_obj_p :: Any -> Bool
   function data_obj_p(subject) {
@@ -85,12 +87,12 @@ void function(root, exports) {
   // right-most precedence rule — when a there's a property conflict, the
   // property defined in the last object wins.
   //
-  // `DataObject's are properly handled by the `resolve_mixin'
+  // ``DataObject``s are properly handled by the ``resolve_mixin``
   // function.
   //
   // :warning: low-level
   //    This function is not meant to be called directly from end-user
-  //    code, use the `extend' function instead.
+  //    code, use the ``extend`` function instead.
   //
   // fast_extend :: Object, [Object | DataObject] -> Object
   function fast_extend(object, mixins) {
@@ -113,8 +115,8 @@ void function(root, exports) {
   // right-most precedence rule.
   //
   // :see-also:
-  //   - `fast_extend' — lower level function.
-  //   - `merge'       — pure version.
+  //   - ``fast_extend`` — lower level function.
+  //   - ``merge``       — pure version.
   //
   // extend :: Object, (Object | DataObject)... -> Object
   function extend(target) {
@@ -126,7 +128,7 @@ void function(root, exports) {
   // right-most precedence rule.
   //
   // :see-also:
-  //   - `extend' — impure version.
+  //   - ``extend`` — impure version.
   //
   // merge :: (Object | DataObject)... -> Object
   function merge() {
