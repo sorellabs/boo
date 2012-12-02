@@ -78,7 +78,7 @@ Getting support
 
 Boo uses the [Github tracker][] for tracking bugs and new features.
 
-[Github tracker]: https://github.com/killdream/boo/issues
+[Github tracker]: https://github.com/Orphoundation/boo/issues
 
 
 Licence
@@ -90,4 +90,4 @@ licence text for `less` information:
 
     $ less LICENCE.txt
 
-[MIT]: https://github.com/killdream/boo/raw/master/LICENCE.txt
+[MIT]: https://github.com/Orphoundation/boo/raw/master/LICENCE.txt
