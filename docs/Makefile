@@ -37,8 +37,6 @@ clean:
 	-rm -rf $(BUILDDIR)/*
 
 html:
-	stylus -o ~/work/caffeine-theme/caffeine/static ~/work/caffeine-theme/caffeine/stylus/screen.styl
-	mv ~/work/caffeine-theme/caffeine/static/screen.css ~/work/caffeine-theme/caffeine/static/screen.css_t
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."

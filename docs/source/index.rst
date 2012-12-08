@@ -102,7 +102,7 @@ Support
 
 Boo uses the `Github tracker`_ for tracking bugs and new features.
 
-.. _Github tracker: https://github.com/killdream/boo/issues
+.. _Github tracker: https://github.com/Orphoundation/boo/issues
 
 
 
@@ -121,7 +121,7 @@ licence text for ``less`` information:
 
    # The MIT License
    # 
-   # Copyright (c) 2011 Quildreen Motta <http://killdream.github.com/>
+   # Copyright (c) 2011 Orphoundation
    # 
    # Permission is hereby granted, free of charge, to any person obtaining a copy
    # of this software and associated documentation files (the "Software"), to deal
@@ -143,4 +143,4 @@ licence text for ``less`` information:
 
    (END)
 
-.. _MIT: https://github.com/killdream/boo/raw/master/LICENCE.txt
+.. _MIT: https://github.com/Orphoundation/boo/raw/master/LICENCE.txt
