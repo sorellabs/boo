@@ -144,6 +144,17 @@ void function(root, exports) {
     return fast_extend(inherit(proto), slice.call(arguments, 1)) }
 
 
+  ///// Function make
+  // Constructs a new instance of the given object.
+  //
+  // If the object provides an ``init`` function, that function is
+  // invoked to do initialisation on the new instance.
+  //
+  // make :: a:Object, Any... -> Object <| a
+  function make(base) {
+    return Base.make.apply(base, slice.call(arguments, 1)) }
+
+
   
   //// -- Root object ---------------------------------------------------------
 
@@ -183,6 +194,7 @@ void function(root, exports) {
   exports.extend   = extend
   exports.merge    = merge
   exports.derive   = derive
+  exports.make     = make
   exports.Base     = Base
   exports.internal = { data_obj_p    : data_obj_p
                      , fast_extend   : fast_extend
