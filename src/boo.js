@@ -43,7 +43,7 @@ void function(root, exports) {
   //// -- Interfaces ----------------------------------------------------------
 
   ///// Interface DataObject
-  // :: { "to_data" -> () -> Object }
+  // DataObject :: { "to_data" -> () -> Object }
 
 
   
