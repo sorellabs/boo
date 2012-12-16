@@ -24,7 +24,8 @@
 /// -- Helpers ----------------------------------------------------------------
 function run(name, suite, cb) {
   var err = 0
-  suite.on('cycle', function(event, bench) {
+  suite.on('cycle', function(event) {
+    var bench = event.target
     if (bench.error)
       console.error( '\x1B[0;31m' + ++err + ')'
                    , String(bench)
