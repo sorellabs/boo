@@ -1,17 +1,31 @@
-{ "name"           : "boo"
-, "version"        : "1.2.1"
-, "author"         : "Orphoundation"
-, "description"    : "Prototypical utilities for Object Orientation / Composition"
-, "contributors"   : [{ "name" : "Quildreen Motta"
-                      , "email": "quildreen@gmail.com" }]
-, "repository"     : { "type": "git"
-                     , "url" : "http://github.com/Orphoundation/boo.git" }
-, "main"           : "./src/boo.js"
-, "keywords"       : [ "object orientation"
-                     , "oop"
-                     , "mixins"
-                     , "prototypes" ]
-, "devDependencies": { "mocha" : "*"
-                     , "should": "*" }
-, "licence"        : "MIT"
+{
+  "name": "boo",
+  "version": "1.2.1",
+  "author": "Orphoundation",
+  "description": "Core prototypical primitives for Object Orientation/Composition.",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/Orphoundation/boo.git"
+  },
+  "bugs": {
+    "url": "http://github.com/Orphoundation/boo/issues"
+  },
+  "scripts": {
+    "test": "mocha",
+    "benchmark": "node ./test/benchmarks/suite"
+  },
+  "main": "./src/boo.js",
+  "keywords": [
+    "object orientation",
+    "oop",
+    "mixins",
+    "prototypes"
+  ],
+  "licence": "MIT",
+  "devDependencies": {
+    "mocha": "~1.7.4",
+    "should": "~1.2.1",
+    "benchmark": "~1.0.0",
+    "microtime": "~0.3.3"
+  }
 }
