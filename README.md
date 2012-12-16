@@ -69,7 +69,7 @@ Additionally, you can read the following introduction to Boo:
 - [Yay for sugary JavaScript OO][intro]
 
 
-[ref]: http://orphoundation.github.com/boo
+[ref]: http://boo.readthedocs.org/
 [intro]: http://killdream.github.com/blog/2011/11/for-sugary-object-oriented-js/index.html
 
 
