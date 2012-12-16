@@ -6,7 +6,7 @@
 
    .. code-block:: haskell
 
-      derive :: @this:Object, (Object | DataObject)... -> Object <| this
+      derive :: @this:Object, Mixin... -> Object <| this
 
    Constructs a new object that inherits from the object this function is
    being applied to, and extends it with the provided *mixins*.

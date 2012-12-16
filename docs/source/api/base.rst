@@ -35,7 +35,7 @@ Creating instances
 
    .. code-block:: haskell
 
-      derive :: @this:Object, (Object | DataObject)... -> Object <| this
+      derive :: @this:Object, Mixin... -> Object <| this
 
    Constructs a new object that inherits from the object this function is
    being applied to, and extends it with the provided *mixins*.
@@ -53,7 +53,7 @@ Summary
 
    init!  :: @this:Object*, Any... -> this
    make   :: @this:Object, Any... -> Object <| this
-   derive :: @this:Object, Any... -> Object <| this
+   derive :: @this:Object, Mixin... -> Object <| this
 
 
 .. -------------------------------------------------------------------------

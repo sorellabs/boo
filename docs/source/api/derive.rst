@@ -6,7 +6,7 @@
 
    .. code-block:: haskell
    
-      derive :: Object, (Object | DataObject)... -> Object
+      derive :: proto:Object, Mixin... -> Object <| proto
 
    Creates a new object inheriting from the given prototype, and extends
    the new instance with the provided *mixins*.

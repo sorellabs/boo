@@ -65,9 +65,9 @@ Helpers
 
    .. code-block:: haskell
 
-      resolve_mixin :: Object -> Object
+      resolve_mixin :: Mixin -> Object
 
-   Returns the proper mixin for the given ``object``.
+   Returns the proper object for the given ``Mixin``.
 
 
 
@@ -97,7 +97,7 @@ Basic primitives
 
    .. code-block:: haskell
 
-      extend!:: Object*, Mixin... -> Object
+      extend!:: target:Object*, Mixin... -> target
 
    Extends the target object with the provided ``mixins``, using a
    right-most precedence rule.
@@ -127,7 +127,7 @@ Basic primitives
 
    .. code-block:: haskell
 
-      derive :: Object, Mixin... -> Object
+      derive :: proto:Object, Mixin... -> Object <| proto
 
    Creates a new object inheriting from the given ``prototype`` and
    extends the new instance with the provided ``mixins``.
@@ -135,6 +135,17 @@ Basic primitives
    .. rst-class:: detail-link
 
       :doc:`+ <derive>`
+
+
+.. function:: make(base, mixins...)
+   :noindex:
+
+   .. code-block:: haskell
+
+      make :: proto:Object, Mixin... -> Object <| proto
+
+   Constructs a new instance of the given object. This is a convenience generic
+   function for the :func:`Base.make` method.
 
 
 
@@ -148,7 +159,7 @@ Root object
 
       object Base :: { init!  :: @this:Object*, Any... -> this
                        make   :: @this:Object, Any... -> Object <| this
-                       derive :: @this:Object, Any... -> Object <| this
+                       derive :: @this:Object, Mixin... -> Object <| this
                      }
 
    The root object for basing all the OOP code. Provides all of
@@ -170,18 +181,19 @@ Summary
       type Mixin      :: Object | DataObject
 
    -- Internal
-      copy_property! :: Object, target:Object*, String -> target
+      copy_property! :: Object, taget:Object*, String -> target
       data_obj?      :: Any -> Bool
-      resolve_mixin  :: Object -> Object
-      fast_extend!   :: target:Object*, [Mixin] -> target
+      resolve_mixin  :: Mixin -> Object
+      fast_extend!   :: target:Object*, [Mixin] -> a
 
    -- Public
-      extend!     :: Object*, Mixin... -> Object
+      extend!     :: target:Object*, Mixin... -> target
       merge       :: Mixin... -> Object
-      derive      :: Object, Mixin... -> Object
+      derive      :: proto:Object, Mixin... -> Object <| proto
+      make        :: proto:Object, Any... -> Object <| proto
       object Base :: { init!  :: @this:Object*, Any... -> this
                        make   :: @this:Object, Any... -> Object <| this
-                       derive :: @this:Object, Any... -> Object <| this
+                       derive :: @this:Object, Mixin... -> Object <| this
                      }
 
 

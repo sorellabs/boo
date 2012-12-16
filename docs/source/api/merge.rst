@@ -6,7 +6,7 @@
 
    .. code-block:: haskell
    
-      merge :: (Object | DataObject)... -> Object
+      merge :: Mixin... -> Object
 
    Creates a new object that merges the provided mixins, using a
    right-most precedence rule.

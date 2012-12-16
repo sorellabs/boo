@@ -6,7 +6,7 @@
 
    .. code-block:: haskell
    
-      extend :: Object, (Object | DataObject)... -> Object
+      extend! :: target:Object*, Mixin... -> target
 
    Extends the target object with the provided mixins, using a right-most
    precedence rule.

@@ -45,6 +45,8 @@ void function(root, exports) {
   ///// Interface DataObject
   // DataObject :: { "to_data" -> () -> Object }
 
+  ///// Interface Mixin
+  // Mixin :: Object | DataObject
 
   
   //// -- Helpers -------------------------------------------------------------
@@ -73,12 +75,12 @@ void function(root, exports) {
 
   ///// Function resolve_mixins
   // :internal:
-  // Returns the proper mixin for the given object.
+  // Returns the proper object for the given mixin.
   //
-  // resolve_mixin :: Object -> Object
-  function resolve_mixin(object) {
-    return data_obj_p(object)?  object.to_data()
-    :      /* otherwise */      object }
+  // resolve_mixin :: Mixin -> Object
+  function resolve_mixin(subject) {
+    return data_obj_p(subject)?  subject.to_data()
+    :      /* otherwise */       subject }
 
 
   ///// Function fast_extend
@@ -94,7 +96,7 @@ void function(root, exports) {
   //    This function is not meant to be called directly from end-user
   //    code, use the ``extend`` function instead.
   //
-  // fast_extend :: Object, [Object | DataObject] -> Object
+  // fast_extend! :: target:Object*, [Mixin] -> target
   function fast_extend(object, mixins) {
     var i, j, len, mixin, props, key
     for (i = 0, len = mixins.length; i < len; ++i) {
@@ -118,7 +120,7 @@ void function(root, exports) {
   //   - ``fast_extend`` — lower level function.
   //   - ``merge``       — pure version.
   //
-  // extend :: Object, (Object | DataObject)... -> Object
+  // extend! :: target:Object*, Mixin... -> target
   function extend(target) {
     return fast_extend(target, slice.call(arguments, 1)) }
 
@@ -130,7 +132,7 @@ void function(root, exports) {
   // :see-also:
   //   - ``extend`` — impure version.
   //
-  // merge :: (Object | DataObject)... -> Object
+  // merge :: Mixin... -> Object
   function merge() {
     return fast_extend({}, arguments) }
 
@@ -139,7 +141,7 @@ void function(root, exports) {
   // Creates a new object inheriting from the given prototype and extends
   // the new instance with the provided mixins.
   //
-  // derive :: Object, (Object | DataObject)... -> Object
+  // derive :: proto:Object, Mixin... -> Object <| proto
   function derive(proto) {
     return fast_extend(inherit(proto), slice.call(arguments, 1)) }
 
@@ -150,7 +152,7 @@ void function(root, exports) {
   // If the object provides an ``init`` function, that function is
   // invoked to do initialisation on the new instance.
   //
-  // make :: a:Object, Any... -> Object <| a
+  // make :: proto:Object, Any... -> Object <| proto
   function make(base) {
     return Base.make.apply(base, slice.call(arguments, 1)) }
 
@@ -170,7 +172,7 @@ void function(root, exports) {
     // If the object provides an ``init`` function, that function is
     // invoked to do initialisation on the new instance.
     //
-    // make :: Any... -> Object
+    // make :: @this:Object, Any... -> Object <| this
     make:
     function _make() {
       var result = inherit(this)
@@ -183,7 +185,7 @@ void function(root, exports) {
     // Constructs a new object that inherits from the object this function
     // is being applied to, and extends it with the provided mixins.
     //
-    // derive :: (Object | DataObject)... -> Object
+    // derive :: @this:Object, Mixin... -> Object <| this
   , derive:
     function _derive() {
       return fast_extend(inherit(this), arguments) }}
