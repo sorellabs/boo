@@ -61,8 +61,8 @@ Learning
 
 Boo ships with a [full narrated reference manual][ref], covering the
 concepts and designs you need to know to use the library effectively.
-You can either read it online, or locally — from the file
-:file:`docs/build/html/index.html`. 
+You can either read it online, or locally — from the file 
+`docs/build/html/index.html`. 
 
 Additionally, you can read the following introduction to Boo:
 
