@@ -1,0 +1,16 @@
+syntax:glob
+
+# Usual Emacs backup stuff
+*~
+\#*\#
+.\#*
+
+# Built things that shouldn't be part of the source tree
+dist
+.git
+ignore
+doctrees
+.buildinfo
+npm-debug.log
+node_modules
+docs
