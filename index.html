@@ -2,14 +2,90 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Boo — takes the "scary" away from JavaScript's OO</title>
+    <title>Boo — takes the “scary” away from JavaScript's OO</title>
     <meta name="description" content="Core prototypical primitives for Object
     Orientation/Composition.">
     <meta name="keywords" content="javascript oop, object orientation, oop, mixins,
     prototypes">
-    <link href="/media/css/screen.css" rel="stylesheet" type="text/css">
+    <link href="media/css/screen.css" rel="stylesheet" type="text/css">
   </head>
   <body>
+    <!-- github ribbon -->
+    <a href="https://github.com/Orphoundation/boo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+
+    <!-- le page -->
+    <div id="wrapper">
+      <div class="constrained">
+        <div id="logo-panel">
+          <h1 id="logo">Boo</h1>
+          <div class="description">Boo <em>takes the “scary” away</em> from
+          JavaScript's OO by providing you with the right <strong>prototypical
+          primitives for composing</strong> and extending objects.</div>
+        </div>
+        <div id="usage-panel">
+          <ul class="usage-platforms" data-reflect-on=".platform">
+            <li class="platform-item active"><a href="#platform-node">Node.js</a></li>
+            <li class="platform-item"><a href="#platform-browser">Browser</a></li>
+          </ul>
+          <div class="platform" id="platform-node">
+            <h2>Installing</h2>
+            <code><pre>$ npm install boo</pre></code>
+
+            <h2>Usage</h2>
+            <code><pre>var boo = require('boo')
+
+var Shape = boo.Base.derive({
+  init: function(colour) {
+    this.colour = colour }})
+
+var Rect = Shape.derive({
+  init: function(x, y, width, height, colour) {
+    Shape.init.call(this, colour)
+    this.x = x;         this.y = y
+    this.width = width; this.height = height }})
+
+var r1 = Rect.make(0, 0, 50, 50, 'crimson')
+// => { x: 0, y: 0, width: 50, height: 50, colour: 'crimson' }</pre></code>
+          </div>
+
+          <div class="platform" id="platform-browser">
+            <h2>Installing</h2>
+            <p>Add the script tag just before <tt>&lt;/body&gt;</tt> and the
+            script that depends on <strong>Boo</strong>.</p>
+            <code><pre>&lt;script src="/path/to/boo.js"&gt;&lt;/script&gt;</pre></code>
+
+            <h2>Usage</h2>
+            <code><pre>var boo = window.boo
+
+var Shape = boo.Base.derive({
+  init: function(colour) {
+    this.colour = colour }})
+
+var Rect = Shape.derive({
+  init: function(x, y, width, height, colour) {
+    Shape.init.call(this, colour)
+    this.x = x;         this.y = y
+    this.width = width; this.height = height }})
+
+var r1 = Rect.make(0, 0, 50, 50, 'crimson')
+// => { x: 0, y: 0, width: 50, height: 50, colour: 'crimson' }</pre></code>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="footer">
+      <div class="constrained">
+        <div id="links-panel">
+          <ul class="links navigation footer-navigation">
+            <li class="item"><a href="http://github.com/Orphoundation/boo">Source Code</a></li>
+            <li class="item"><a href="http://github.com/Orphoundation/boo/issues">Report Bugs</a></li>
+            <li class="item"><a href="http://boo.rtfd.org/">Documentation</a></li>
+          </ul>
+        </div>
+        <div id="copyright-panel">
+          Copyright &copy; 2012 <a href="http://orphoundation.org/">The
+          Orphoundation</a>.
+        </div>
   </body>
 </html>
   
