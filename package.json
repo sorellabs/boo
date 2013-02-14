@@ -1,14 +1,14 @@
 {
   "name": "boo",
   "version": "1.2.2",
-  "author": "Orphoundation",
+  "author": "Quildreen \"Sorella\" Motta <quildreen@gmail.com>",
   "description": "Core prototypical primitives for Object Orientation/Composition.",
   "repository": {
     "type": "git",
-    "url": "http://github.com/Orphoundation/boo.git"
+    "url": "http://github.com/killdream/boo.git"
   },
   "bugs": {
-    "url": "http://github.com/Orphoundation/boo/issues"
+    "url": "http://github.com/killdream/boo/issues"
   },
   "scripts": {
     "test": "mocha",

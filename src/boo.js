@@ -1,6 +1,6 @@
 /// boo.js --- Base primitives for prototypical OO
 //
-// Copyright (c) 2011 The Orphoundation
+// Copyright (c) 2011 Quildreen "Sorella" Motta <quildreen@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation files

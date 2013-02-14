@@ -84,10 +84,4 @@ Boo uses the [Github tracker][] for tracking bugs and new features.
 Licence
 -------
 
-Boo is licensed under the delicious and permissive [MIT][] licence. You
-can happily copy, share, modify, sell or whatever — refer to the actual
-licence text for `less` information:
-
-    $ less LICENCE.txt
-
-[MIT]: https://github.com/Orphoundation/boo/raw/master/LICENCE.txt
+MIT/X11.
