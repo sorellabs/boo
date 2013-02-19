@@ -1,6 +1,6 @@
 {
   "name": "boo",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "author": "Quildreen \"Sorella\" Motta <quildreen@gmail.com>",
   "description": "Core prototypical primitives for Object Orientation/Composition.",
   "repository": {
@@ -14,7 +14,7 @@
     "test": "mocha",
     "benchmark": "node ./test/benchmarks/suite"
   },
-  "main": "./src/boo.js",
+  "main": "./lib/boo.js",
   "keywords": [
     "object orientation",
     "oop",
