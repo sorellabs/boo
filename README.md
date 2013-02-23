@@ -56,6 +56,20 @@ NPM and run the test cases by issuing `mocha` from the command line:
 [should.js]: https://github.com/visionmedia/should.js
 
 
+Reference
+---------
+
+You can build the API documentation using **Calliope**. It depends on node-ffi,
+so you'll need to be able to compile C++ modules:
+
+```bash
+$ npm install -g calliope
+$ calliope build
+```
+
+Then open the file `docs/api/index.html` in your browser.
+
+
 Learning
 --------
 
