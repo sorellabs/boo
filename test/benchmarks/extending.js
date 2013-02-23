@@ -1,5 +1,5 @@
 var Benchmark = require('benchmark')
-var boo       = require('../../src/boo')
+var boo       = require('../../')
 var suite     = new Benchmark.Suite
 var x
 

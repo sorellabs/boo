@@ -70,6 +70,16 @@ $ calliope build
 Then open the file `docs/api/index.html` in your browser.
 
 
+Benchmarks
+----------
+
+There are a few benchmarks you can run:
+
+```bash
+$ npm run-script benchmark
+```
+
+
 Learning
 --------
 
