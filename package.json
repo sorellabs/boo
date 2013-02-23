@@ -27,5 +27,10 @@
     "should": "~1.2.1",
     "benchmark": "~1.0.0",
     "microtime": "~0.3.3"
+  },
+  "calliope": {
+    "output": "docs/api",
+    "copyright": "© 2013 Quildreen \"Sorella\" Motta",
+    "packages": [{ "files": ["lib/*.js"] }]
   }
 }
