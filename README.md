@@ -1,6 +1,8 @@
 Boo
 ===
 
+[![Build Status](https://travis-ci.org/killdream/boo.png)](https://travis-ci.org/killdream/boo)
+
 Boo provides utilities to structure a program by means of prototypical
 object orientation and object composition, in an easy way. It provides
 you with inheritance, composition and mixin facilities, all packaged in
