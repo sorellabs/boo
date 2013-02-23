@@ -31,6 +31,15 @@
   "calliope": {
     "output": "docs/api",
     "copyright": "© 2013 Quildreen \"Sorella\" Motta",
-    "packages": [{ "files": ["lib/*.js"] }]
+    "packages": [
+      {
+        "files": [
+          "lib/*.js"
+        ]
+      }
+    ]
+  },
+  "dependencies": {
+    "should": "~1.2.2"
   }
 }

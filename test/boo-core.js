@@ -1,4 +1,4 @@
-var boo = require('../src/boo')
+var boo = require('../')
 
 describe('Module: boo', function() {
 
