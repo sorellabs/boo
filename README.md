@@ -1,7 +1,5 @@
-Boo
+Boo [![Build Status](https://travis-ci.org/killdream/boo.png)](https://travis-ci.org/killdream/boo) ![Dependencies Status](https://david-dm.org/killdream/boo.png)
 ===
-
-[![Build Status](https://travis-ci.org/killdream/boo.png)](https://travis-ci.org/killdream/boo)
 
 Boo provides utilities to structure a program by means of prototypical
 object orientation and object composition, in an easy way. It provides
@@ -17,12 +15,12 @@ a nice API.
     })
     
     var Cat = Animal.derive({
-      init:
-      function init(name) {
-        if (name) this.name = name }
+      withName:
+      function _withName(name) {
+        return this.derive({ name: name }) }
     })
     
-    var nyah = Cat.make('Nyan Cat')
+    var nyah = Cat.withName('Nyan Cat')
     nyah.say('Nyan nyan nyan~')
 
 
