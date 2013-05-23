@@ -42,32 +42,28 @@ In the browser, you have to include the script tag pointing to the
     </script>
 
 
+Platform support
+----------------
+
+ES3 and beyond!
+
+[![browser support](https://ci.testling.com/killdream/spice.png)](http://ci.testling.com/killdream/spice)
+
+
 Testing
 -------
 
-Boo's test cases use [Mocha][] with the BDD assertion module
-[should.js][]. For testing on Node.js, you can just grab the module from
-NPM and run the test cases by issuing `mocha` from the command line:
+For Node, just:
 
-    $ sudo npm install -g mocha
-    $ mocha
+    $ npm test
+    
+    
+For the browser:
 
-[Mocha]: visionmedia.github.com/mocha/
-[should.js]: https://github.com/visionmedia/should.js
-
-
-Reference
----------
-
-You can build the API documentation using **Calliope**. It depends on node-ffi,
-so you'll need to be able to compile C++ modules:
-
-```bash
-$ npm install -g calliope
-$ calliope build
-```
-
-Then open the file `docs/api/index.html` in your browser.
+    $ npm install -g brofist-browser
+    $ make test
+    $ brofist-browser serve test/specs
+    # Then point your browsers to the URL on yer console.
 
 
 Benchmarks
@@ -95,6 +91,51 @@ Additionally, you can read the following introduction to Boo:
 
 [ref]: http://boo.readthedocs.org/
 [intro]: http://killdream.github.com/blog/2011/11/for-sugary-object-oriented-js/index.html
+
+
+Reference
+---------
+
+### `extend(target, mixins...)`
+
+Extends the target with the provided mixins, using a right-most precedence
+rule.
+
+```hs
+extend: object, mixin... -> object
+```
+
+### `merge(mixins...)`
+
+Like `extend`, but pure.
+
+```hs
+merge: mixin... -> object
+```
+
+### `derive(proto, mixin...)`
+
+Constructs a new object that inherits from `proto`.
+
+```hs
+derive: object, mixin... -> object
+```
+
+### `Base:make(...)`
+
+Instantiates a new object, and initialises it by calling the `init` method.
+
+```hs
+make: @object => A... -> this <| object
+```
+
+### `Base:derive(mixin...)`
+
+Like `derive`, but the prototype is the `this` object.
+
+```hs
+derive: @object => mixin... -> this <| object
+```
 
 
 Getting support
