@@ -29,5 +29,4 @@ function run_all(suites) {
   next() }
 
 /// -- Suite ------------------------------------------------------------------
-run_all([ require('./extending')
-        , require('./instantiation') ])
+run_all([ require('./instantiation') ])

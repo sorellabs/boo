@@ -13,16 +13,13 @@ var Animal = boo.Base.derive({
 var Cat = Animal.derive({
   init:
   function(name, colour) {
-    Animal.init.call(this)
+    Animal.init.call(this, name)
     this.colour = colour }
 })
 
 suite.add('λ Base#make', function() {
   x = Cat.make('Nyah', 'rainbow-coloured')
 })
-
-suite.add('λ make (generic)', function() {
-  x = boo.make(Cat, 'Nyah', 'rainbow-coloured') })
 
 // -- Native ------------------------------------------------------------------
 function nAnimal(name) {

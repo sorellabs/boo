@@ -14,11 +14,11 @@ function data_object() {
   return { c: [1], d: [2], to_data: function(){ return z }}}
 
 // ----------------------------------------------------------------------------
-var o1 = make_object(100, 'a')
-var o2 = make_object(100, 'b')
-
-suite.add('λ fast-extend', function() {
-  x = boo.internal.fast_extend(o1, [o2]) })
+// var o1 = make_object(100, 'a')
+// var o2 = make_object(100, 'b')
+//
+// suite.add('λ fast-extend', function() {
+//   x = boo.internal.fast_extend(o1, [o2]) })
 
 // ----------------------------------------------------------------------------
 var o3 = make_object(100, 'a')
@@ -35,11 +35,11 @@ suite.add('λ merge', function() {
   x = boo.merge(o5, o6) })
 
 // ----------------------------------------------------------------------------
-var o7 = make_object(100, 'a')
-var o8 = data_object()
-
-suite.add('λ fast-extend (DataObject)', function() {
-  x = boo.internal.fast_extend(o7, [o8]) })
+// var o7 = make_object(100, 'a')
+// var o8 = data_object()
+//
+// suite.add('λ fast-extend (DataObject)', function() {
+//   x = boo.internal.fast_extend(o7, [o8]) })
 
 // ----------------------------------------------------------------------------
 var o9 = make_object(100, 'a')
