@@ -11,8 +11,8 @@
     "url": "http://github.com/killdream/boo/issues"
   },
   "scripts": {
-    "test": "node test/node",
-    "benchmark": "node ./test/benchmarks/suite"
+    "test": "make test",
+    "benchmark": "make benchmark"
   },
   "main": "./lib/boo.js",
   "keywords": [

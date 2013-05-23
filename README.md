@@ -55,14 +55,13 @@ Testing
 
 For Node, just:
 
-    $ npm test
+    $ npm test          # (or make test)
     
     
 For the browser:
 
     $ npm install -g brofist-browser
-    $ make test
-    $ brofist-browser serve test/specs
+    $ make browser-test
     # Then point your browsers to the URL on yer console.
 
 
@@ -72,7 +71,7 @@ Benchmarks
 There are a few benchmarks you can run:
 
 ```bash
-$ npm run-script benchmark
+$ make benchmark
 ```
 
 
