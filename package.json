@@ -24,7 +24,6 @@
   "licence": "MIT",
   "devDependencies": {
     "benchmark": "~1.0.0",
-    "microtime": "~0.3.3",
     "brofist-tap": "~0.1.0",
     "brofist": "~0.2.3",
     "brofist-minimal": "~0.1.1"
