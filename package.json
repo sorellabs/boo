@@ -1,6 +1,6 @@
 {
   "name": "boo",
-  "version": "1.2.4",
+  "version": "2.0.0",
   "author": "Quildreen \"Sorella\" Motta <quildreen@gmail.com>",
   "description": "Core prototypical primitives for Object Orientation/Composition.",
   "repository": {
@@ -11,7 +11,7 @@
     "url": "http://github.com/killdream/boo/issues"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "node test/node",
     "benchmark": "node ./test/benchmarks/suite"
   },
   "main": "./lib/boo.js",
@@ -23,10 +23,11 @@
   ],
   "licence": "MIT",
   "devDependencies": {
-    "mocha": "~1.7.4",
-    "should": "~1.2.1",
     "benchmark": "~1.0.0",
-    "microtime": "~0.3.3"
+    "microtime": "~0.3.3",
+    "brofist-tap": "~0.1.0",
+    "brofist": "~0.2.3",
+    "brofist-minimal": "~0.1.1"
   },
   "calliope": {
     "output": "docs/api",
@@ -39,7 +40,16 @@
       }
     ]
   },
-  "dependencies": {
-    "should": "~1.2.2"
+  "testling": {
+    "files": "test/tap.js",
+    "browsers": [
+      "ie/6..latest",
+      "chrome/20..latest",
+      "firefox/15..latest",
+      "safari/latest",
+      "opera/11.0..latest",
+      "iphone/6",
+      "ipad/6"
+    ]
   }
 }
