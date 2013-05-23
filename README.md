@@ -47,7 +47,7 @@ Platform support
 
 ES3 and beyond!
 
-[![browser support](https://ci.testling.com/killdream/spice.png)](http://ci.testling.com/killdream/spice)
+[![browser support](https://ci.testling.com/killdream/boo.png)](http://ci.testling.com/killdream/boo)
 
 
 Testing
