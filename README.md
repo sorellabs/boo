@@ -1,5 +1,10 @@
-Boo [![Build Status](https://travis-ci.org/killdream/boo.png)](https://travis-ci.org/killdream/boo) ![Dependencies Status](https://david-dm.org/killdream/boo.png)
-===
+Boo v2.0.0
+==========
+
+[![Build Status](https://travis-ci.org/killdream/boo.png)](https://travis-ci.org/killdream/boo)
+[![Dependencies Status](https://david-dm.org/killdream/boo.png)](https://david-dm.org/killdream/boo)
+
+[![browser support](https://ci.testling.com/killdream/boo.png)](http://ci.testling.com/killdream/boo)
 
 Boo provides utilities to structure a program by means of prototypical
 object orientation and object composition, in an easy way. It provides
@@ -40,14 +45,6 @@ In the browser, you have to include the script tag pointing to the
     <script type="text/javascript">
       // `boo' is in the global scope now
     </script>
-
-
-Platform support
-----------------
-
-ES3 and beyond!
-
-[![browser support](https://ci.testling.com/killdream/boo.png)](http://ci.testling.com/killdream/boo)
 
 
 Testing
