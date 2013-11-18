@@ -86,7 +86,7 @@ Additionally, you can read the following introduction to Boo:
 
 
 [ref]: http://boo.readthedocs.org/
-[intro]: http://killdream.github.com/blog/2011/11/for-sugary-object-oriented-js/index.html
+[intro]: http://killdream.github.io/2011/11/19/for-sugary-object-oriented-js.html
 
 
 Reference
