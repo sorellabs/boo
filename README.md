@@ -1,58 +1,99 @@
-Boo v2.0.0
-==========
+Boo
+===
 
-[![Build Status](https://travis-ci.org/killdream/boo.png)](https://travis-ci.org/killdream/boo)
-[![Dependencies Status](https://david-dm.org/killdream/boo.png)](https://david-dm.org/killdream/boo)
+[![Build Status](https://secure.travis-ci.org/robotlolita/boo.png?branch=master)](https://travis-ci.org/robotlolita/boo)
+[![NPM version](https://badge.fury.io/js/boo.png)](http://badge.fury.io/js/boo)
+[![Dependencies Status](https://david-dm.org/robotlolita/boo.png)](https://david-dm.org/robotlolita/boo)
+[![stable](http://hughsk.github.io/stability-badges/dist/stable.svg)](http://github.com/hughsk/stability-badges)
 
-[![browser support](https://ci.testling.com/killdream/boo.png)](http://ci.testling.com/killdream/boo)
+[![browser support](https://ci.testling.com/robotlolita/boo.png)](http://ci.testling.com/robotlolita/boo)
 
 Boo provides utilities to structure a program by means of prototypical
 object orientation and object composition, in an easy way. It provides
 you with inheritance, composition and mixin facilities, all packaged in
 a nice API.
 
-    var Animal = boo.Base.derive({
-      name: 'Unknow'
-    
-    , say:
-      function say(thing) {
-        return this.name + ': ' + thing }
-    })
-    
-    var Cat = Animal.derive({
-      withName:
-      function _withName(name) {
-        return this.derive({ name: name }) }
-    })
-    
-    var nyah = Cat.withName('Nyan Cat')
-    nyah.say('Nyan nyan nyan~')
 
+## Example
 
-Installing
-----------
+```js
+var Animal = boo.Base.derive({
+  name: 'Unknow'
 
-With Node.js and NPM, you can do the easy-modo install:
+, say:
+  function say(thing) {
+    return this.name + ': ' + thing }
+})
+
+var Cat = Animal.derive({
+  withName:
+  function _withName(name) {
+    return this.derive({ name: name }) }
+})
+
+var nyah = Cat.withName('Nyan Cat')
+nyah.say('Nyan nyan nyan~')
+```
+
+## Installing
+
+The easiest way is to grab it from NPM. If you're running in a Browser
+environment, you can use [Browserify][]:
 
     $ npm install boo
-    # then require it as usual
-    node> var boo = require('boo')
-
-In the browser, you have to include the script tag pointing to the
-`boo.js` file:
-
-    <script src="/path/to/boo.js"></script>
-    <script type="text/javascript">
-      // `boo' is in the global scope now
-    </script>
 
 
-Testing
--------
+### Using with CommonJS
+
+If you're not using NPM, [Download the latest release][release], and require
+the `boo.umd.js` file:
+
+```js
+var boo = require('boo')
+```
+
+
+### Using with AMD
+
+[Download the latest release][release], and require the `boo.umd.js`
+file:
+
+```js
+require(['boo'], function(boo) {
+  ( ... )
+})
+```
+
+
+### Using without modules
+
+[Download the latest release][release], and load the `boo.umd.js`
+file. The properties are exposed in the global `boo` object:
+
+```html
+<script src="/path/to/boo.umd.js"></script>
+```
+
+
+### Compiling from source
+
+If you want to compile this library from the source, you'll need [Git][],
+[Make][], [Node.js][], and run the following commands:
+
+    $ git clone git://github.com/robotlolita/boo.git
+    $ cd boo
+    $ npm install
+    $ make bundle
+
+This will generate the `dist/boo.umd.js` file, which you can load in
+any JavaScript environment.
+
+
+## Testing
 
 For Node, just:
 
-    $ npm test          # (or make test)
+    $ make test
     
     
 For the browser:
@@ -62,8 +103,7 @@ For the browser:
     # Then point your browsers to the URL on yer console.
 
 
-Benchmarks
-----------
+## Benchmarks
 
 There are a few benchmarks you can run:
 
@@ -72,8 +112,7 @@ $ make benchmark
 ```
 
 
-Learning
---------
+## Learning
 
 Boo ships with a [full narrated reference manual][ref], covering the
 concepts and designs you need to know to use the library effectively.
@@ -86,7 +125,7 @@ Additionally, you can read the following introduction to Boo:
 
 
 [ref]: http://boo.readthedocs.org/
-[intro]: http://killdream.github.io/2011/11/19/for-sugary-object-oriented-js.html
+[intro]: http://robotlolita.github.io/2011/11/19/for-sugary-object-oriented-js.html
 
 
 Reference
@@ -139,10 +178,21 @@ Getting support
 
 Boo uses the [Github tracker][] for tracking bugs and new features.
 
-[Github tracker]: https://github.com/Orphoundation/boo/issues
+[Github tracker]: https://github.com/robotlolita/boo/issues
 
 
 Licence
 -------
 
-MIT/X11.
+Copyright (c) 2011-2014 Quildreen Motta.
+
+Released under the [MIT licence](https://github.com/robotlolita/boo/blob/master/LICENCE).
+
+
+
+[Browserify]: http://browserify.org/
+[Git]: http://git-scm.com/
+[Make]: http://www.gnu.org/software/make/
+[Node.js]: http://nodejs.org/
+[es5-shim]: https://github.com/kriskowal/es5-shim
+[release]: https://github.com/robotlolita/boo/releases/download/v2.0.0/boo-2.0.0.tar.gz
