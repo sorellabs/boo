@@ -26,7 +26,9 @@
     "benchmark": "~1.0.0",
     "brofist-tap": "~0.1.0",
     "brofist": "~0.2.3",
-    "brofist-minimal": "~0.1.1"
+    "brofist-minimal": "~0.1.1",
+    "browserify": "^3.38.1",
+    "uglify-js": "^2.4.13"
   },
   "calliope": {
     "output": "docs/api",

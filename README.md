@@ -195,4 +195,7 @@ Released under the [MIT licence](https://github.com/robotlolita/boo/blob/master/
 [Make]: http://www.gnu.org/software/make/
 [Node.js]: http://nodejs.org/
 [es5-shim]: https://github.com/kriskowal/es5-shim
-[release]: https://github.com/robotlolita/boo/releases/download/v2.0.0/boo-2.0.0.tar.gz
+<!-- [release: https://github.com/robotlolita/boo/releases/download/v$VERSION/boo-$VERSION.tar.gz] -->
+[release]: https://github.com/robotlolita/boo/releases/download/v2.0.0/boo-1.0.2.tar.gz
+<!-- [/release] -->
+
